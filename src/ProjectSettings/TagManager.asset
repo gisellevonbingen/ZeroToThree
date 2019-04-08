@@ -38,6 +38,9 @@ TagManager:
   - 
   - 
   m_SortingLayers:
+  - name: Background
+    uniqueID: 3020159039
+    locked: 0
   - name: Board
     uniqueID: 56356307
     locked: 0
@@ -49,9 +52,6 @@ TagManager:
     locked: 0
   - name: Block.TileMask
     uniqueID: 543020135
-    locked: 0
-  - name: Background
-    uniqueID: 3020159039
     locked: 0
   - name: Default
     uniqueID: 0
