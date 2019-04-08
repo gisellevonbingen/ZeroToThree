@@ -1,0 +1,9 @@
+# eclipse
+.svn
+.gradle
+.vs
+Builds
+Library
+Logs
+obj
+Temp
