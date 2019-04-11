@@ -50,9 +50,13 @@ namespace Assets.ZeroToThree.Scripts
 
         public void SetGoal(int goal)
         {
-            this.PrevGoal = this.Tracking;
-            this.NextGoal = goal;
-            this.TrackingTime = 0;
+            if (this.NextGoal != goal)
+            {
+                this.PrevGoal = this.Tracking;
+                this.NextGoal = goal;
+                this.TrackingTime = 0;
+            }
+
         }
 
         public void SetImmediately(int value)

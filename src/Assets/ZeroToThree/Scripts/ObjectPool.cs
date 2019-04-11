@@ -1,13 +1,14 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace Assets.ZeroToThree.Scripts
 {
-    public class ObjectPool<T> : IEnumerable<T> where T : PoolingObject
+    public class ObjectPool<T> where T : PoolingObject
     {
         private readonly T Prefab;
         private readonly List<T> Pool;
@@ -22,6 +23,21 @@ namespace Assets.ZeroToThree.Scripts
             this.Pool = new List<T>();
             this.Ready = new Queue<T>();
             this.Obtains = new List<T>();
+        }
+
+        public List<T> GetPool()
+        {
+            return new List<T>(this.Pool);
+        }
+
+        public List<T> GetReady()
+        {
+            return new List<T>(this.Ready);
+        }
+
+        public List<T> GetObtains()
+        {
+            return new List<T>(this.Obtains);
         }
 
         public void FreeAll()
@@ -113,16 +129,6 @@ namespace Assets.ZeroToThree.Scripts
             obj.OnFree();
         }
 
-        public T this[int index] => this.Get(index);
-
-        public T Get(int index) => this.Obtains[index];
-
-        public int Count => this.Obtains.Count;
-
-        public int PoolCount => this.Pool.Count;
-
-        public int ReadyCount => this.Ready.Count;
-
         public void Grow(int amount)
         {
             var pool = this.Pool;
@@ -144,16 +150,6 @@ namespace Assets.ZeroToThree.Scripts
         protected virtual void OnGrowed(PoolGrowEventArgs<T> e)
         {
             this.Growed?.Invoke(this, e);
-        }
-
-        public IEnumerator<T> GetEnumerator()
-        {
-            return this.Obtains.GetEnumerator();
-        }
-
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return this.GetEnumerator();
         }
 
     }

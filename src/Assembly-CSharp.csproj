@@ -66,13 +66,19 @@
     <Compile Include="Assets\ZeroToThree\Scripts\Board.cs" />
     <Compile Include="Assets\ZeroToThree\Scripts\BoardLineEventArgs.cs" />
     <Compile Include="Assets\ZeroToThree\Scripts\BoardSprite.cs" />
-    <Compile Include="Assets\ZeroToThree\Scripts\GameManager.cs" />
+    <Compile Include="Assets\ZeroToThree\Scripts\GameSession.cs" />
+    <Compile Include="Assets\ZeroToThree\Scripts\LabelButton.cs" />
     <Compile Include="Assets\ZeroToThree\Scripts\ObjectPool.cs" />
     <Compile Include="Assets\ZeroToThree\Scripts\PoolGrowEventArgs.cs" />
     <Compile Include="Assets\ZeroToThree\Scripts\PoolingObject.cs" />
-    <Compile Include="Assets\ZeroToThree\Scripts\RestartButton.cs" />
     <Compile Include="Assets\ZeroToThree\Scripts\ScoreText.cs" />
     <Compile Include="Assets\ZeroToThree\Scripts\TimeIntTracker.cs" />
+    <Compile Include="Assets\ZeroToThree\Scripts\UIBase.cs" />
+    <Compile Include="Assets\ZeroToThree\Scripts\UIButton.cs" />
+    <Compile Include="Assets\ZeroToThree\Scripts\UIManager.cs" />
+    <Compile Include="Assets\ZeroToThree\Scripts\UIScreen.cs" />
+    <Compile Include="Assets\ZeroToThree\Scripts\UIScreenGame.cs" />
+    <Compile Include="Assets\ZeroToThree\Scripts\UIScreenMain.cs" />
     <Reference Include="Unity.TextMeshPro.Editor">
       <HintPath>C:/Develop/Workspace/ZeroToThree/src/Library/ScriptAssemblies/Unity.TextMeshPro.Editor.dll</HintPath>
     </Reference>

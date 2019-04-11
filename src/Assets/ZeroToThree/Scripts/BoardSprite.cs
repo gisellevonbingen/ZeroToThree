@@ -31,6 +31,8 @@ namespace Assets.ZeroToThree.Scripts
 
         public void Init(Board board)
         {
+            this.Reset();
+
             this.Board = board;
 
             if (board != null)
@@ -40,6 +42,8 @@ namespace Assets.ZeroToThree.Scripts
                 board.BlocksUpdate += this.OnBlocksUpdate;
                 board.BlocksBreak += this.OnBlocksBreak;
                 board.BlocksExhaust += this.OnBlocksExhaust;
+
+                board.ValueRange = this.BlockPrefab.ValueColors.Length;
             }
 
         }
@@ -151,9 +155,10 @@ namespace Assets.ZeroToThree.Scripts
                 board.GetBlockIndex(block, out var col, out var row);
 
                 var sprite = this.BlockSpritePool.Obtain();
-                sprite.Reset(block);
+                sprite.Reset();
                 sprite.MaskingDuration = 0.3F;
                 sprite.Gravity = gravity;
+                sprite.Block = block;
 
                 sprite.transform.localPosition = this.GetBlockGenPosition(col, board.Height - bounds.y + row);
                 sprite.MoveStart(this.GetBlockGoalPosition(col, row));
@@ -176,14 +181,23 @@ namespace Assets.ZeroToThree.Scripts
             sprite.name = $"Block({col},{row})=" + block.Value;
         }
 
-        public void Restart()
+        public void Reset()
         {
+            var pool = this.BlockSpritePool;
+
+            foreach (var sprite in pool.GetPool())
+            {
+                sprite.Reset();
+            }
+
+            pool.FreeAll();
+            this.BlockSprites.Clear();
+
             var board = this.Board;
 
             if (board != null)
             {
-                board.Restart();
-                board.ValueRange = this.BlockPrefab.ValueColors.Length;
+                board.Clear();
             }
 
         }

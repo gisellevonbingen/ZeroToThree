@@ -20,7 +20,7 @@ namespace Assets.ZeroToThree.Scripts
         public Text Text;
         public Color[] ValueColors;
 
-        public Block Block { get; private set; }
+        public Block Block { get; set; }
 
         public float MaskingDuration;
         public float Gravity;
@@ -103,10 +103,9 @@ namespace Assets.ZeroToThree.Scripts
 
         }
 
-        public void Reset(Block block)
+        public void Reset()
         {
-            this.Block = block;
-
+            this.Block = null;
             this.StopAllCoroutines();
 
             this.GoalPosition = new Vector2();

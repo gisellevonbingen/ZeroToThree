@@ -8,13 +8,18 @@ using UnityEngine.EventSystems;
 
 namespace Assets.ZeroToThree.Scripts
 {
-    public class RestartButton : MonoBehaviour, IPointerClickHandler
+    public class UIButton : UIBase, IPointerClickHandler
     {
-        public GameManager GameManager;
+        public event EventHandler Click;
+
+        protected virtual void OnClick(EventArgs e)
+        {
+            this.Click?.Invoke(this, e);
+        }
 
         public void OnPointerClick(PointerEventData e)
         {
-            this.GameManager.Restart();
+            this.OnClick(new EventArgs());
         }
 
     }

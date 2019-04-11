@@ -23,10 +23,10 @@ namespace Assets.ZeroToThree.Scripts
         public Board()
         {
             this.Blocks = new Block[this.Width * this.Height];
-            this.Restart();
+            this.Clear();
         }
 
-        public void Restart()
+        public void Clear()
         {
             this.ValueRange = 0;
             this.ClickIndex = -1;
