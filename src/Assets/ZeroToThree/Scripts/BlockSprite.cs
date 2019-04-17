@@ -11,13 +11,12 @@ using UnityEngine.UI;
 
 namespace Assets.ZeroToThree.Scripts
 {
-    public class BlockSprite : PoolingObject, IPointerClickHandler
+    public class BlockSprite : UIObject
     {
-        public SpriteRenderer TileRenderer;
-        public SpriteRenderer BreakRenderer;
-        public SpriteRenderer TileMaskRenderer;
-        public BoxCollider2D TileCollider;
-        public Text Text;
+        public UIImage TileRenderer;
+        public UIImage BreakRenderer;
+        public UIImage TileMaskRenderer;
+        public UILabel Text;
         public Color[] ValueColors;
 
         public Block Block { get; set; }
@@ -30,11 +29,15 @@ namespace Assets.ZeroToThree.Scripts
         public bool IsBreaked;
         public bool IsMasked;
 
-        public event EventHandler Click;
         public event EventHandler Breaked;
         public event EventHandler Masked;
 
         public Coroutine AnimatingRoutine;
+
+        protected override UIObject QueryChildren(Vector2 worldPosition)
+        {
+            return null;
+        }
 
         public Coroutine NewAnimationRoutine(IEnumerator routine)
         {
@@ -88,21 +91,6 @@ namespace Assets.ZeroToThree.Scripts
 
         }
 
-        public override void OnObtain()
-        {
-            base.OnObtain();
-        }
-
-        public override void OnFree()
-        {
-            base.OnFree();
-        }
-
-        private void Start()
-        {
-
-        }
-
         public void Reset()
         {
             this.Block = null;
@@ -113,10 +101,10 @@ namespace Assets.ZeroToThree.Scripts
             this.IsBreaked = false;
             this.IsMasked = false;
 
-            this.Text.enabled = true;
-            this.TileRenderer.enabled = true;
-            this.BreakRenderer.enabled = false;
-            this.TileMaskRenderer.enabled = false;
+            this.Text.gameObject.SetActive(true);
+            this.TileRenderer.gameObject.SetActive(true);
+            this.BreakRenderer.gameObject.SetActive(false);
+            this.TileMaskRenderer.gameObject.SetActive(false);
         }
 
         private void Update()
@@ -126,15 +114,15 @@ namespace Assets.ZeroToThree.Scripts
             if (block != null)
             {
                 var value = block.Value;
-                this.TileRenderer.color = this.ValueColors[value];
-                this.Text.text = value.ToString();
+                this.TileRenderer.Image.color = this.ValueColors[value];
+                this.Text.Text.text = value.ToString();
             }
 
         }
 
         public Vector2 GetTileSize()
         {
-            return this.TileCollider.size;
+            return this.transform.sizeDelta;
         }
 
         public void BreakStart()
@@ -149,17 +137,17 @@ namespace Assets.ZeroToThree.Scripts
             var startStamp = Time.time;
 
             var tileRenderer = this.TileRenderer;
-            tileRenderer.enabled = false;
+            tileRenderer.gameObject.SetActive(false);
 
             var text = this.Text;
-            text.enabled = false;
+            text.gameObject.SetActive(false);
 
             var breakRenderer = this.BreakRenderer;
-            breakRenderer.color = tileRenderer.color;
-            breakRenderer.enabled = true;
+            breakRenderer.Image.color = tileRenderer.Image.color;
+            breakRenderer.gameObject.SetActive(true);
 
             var tileMaskRenderer = this.TileMaskRenderer;
-            tileMaskRenderer.enabled = false;
+            tileMaskRenderer.gameObject.SetActive(false);
 
             while (true)
             {
@@ -169,9 +157,9 @@ namespace Assets.ZeroToThree.Scripts
                 {
                     this.IsBreaked = true;
 
-                    tileRenderer.enabled = true;
-                    text.enabled = true;
-                    breakRenderer.enabled = false;
+                    tileRenderer.gameObject.SetActive(true);
+                    text.gameObject.SetActive(true);
+                    breakRenderer.gameObject.SetActive(false);
 
                     this.Breaked?.Invoke(this, new EventArgs());
                     break;
@@ -196,7 +184,7 @@ namespace Assets.ZeroToThree.Scripts
             var startStamp = Time.time;
 
             var tileMaskRenderer = this.TileMaskRenderer;
-            tileMaskRenderer.enabled = true;
+            tileMaskRenderer.gameObject.SetActive(true);
 
             while (true)
             {
@@ -204,14 +192,14 @@ namespace Assets.ZeroToThree.Scripts
                 float maskingDuration = this.MaskingDuration;
                 var alphaRatio = Math.Min((time - startStamp) / maskingDuration, 1.0F);
 
-                var color = tileMaskRenderer.color;
+                var color = tileMaskRenderer.Image.color;
                 color.a = alphaRatio;
-                tileMaskRenderer.color = color;
+                tileMaskRenderer.Image.color = color;
 
                 if (time - startStamp >= maskingDuration)
                 {
                     this.IsMasked = true;
-                    this.Masked?.Invoke(this, new EventArgs());
+                    this.OnMasked();
 
                     break;
                 }
@@ -225,7 +213,12 @@ namespace Assets.ZeroToThree.Scripts
 
         }
 
-        public bool CanClick()
+        private void OnMasked()
+        {
+            this.Masked?.Invoke(this, new EventArgs());
+        }
+
+        public bool CanMask()
         {
             if (this.AnimatingRoutine != null || this.IsMasked == true)
             {
@@ -233,15 +226,6 @@ namespace Assets.ZeroToThree.Scripts
             }
 
             return true;
-        }
-
-        public void OnPointerClick(PointerEventData e)
-        {
-            if (this.CanClick() == true)
-            {
-                this.Click?.Invoke(this, new EventArgs());
-            }
-
         }
 
     }

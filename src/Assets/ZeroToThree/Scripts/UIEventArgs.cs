@@ -6,16 +6,13 @@ using System.Threading.Tasks;
 
 namespace Assets.ZeroToThree.Scripts
 {
-    public class UIBase : PoolingObject
+    public class UIEventArgs : EventArgs
     {
-        public override void OnObtain()
-        {
-            base.OnObtain();
-        }
+        public UIObject Source { get; private set;}
 
-        public override void OnFree()
+        public UIEventArgs(UIObject source)
         {
-            base.OnFree();
+            this.Source = source;
         }
 
     }

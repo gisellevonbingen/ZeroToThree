@@ -9,10 +9,9 @@ using UnityEngine;
 
 namespace Assets.ZeroToThree.Scripts
 {
-    public class BoardSprite : MonoBehaviour
+    public class BoardSprite : UIImage
     {
         public GameObject BoardObject;
-        public BoxCollider2D BoardCollider;
         public BlockSprite BlockPrefab;
         public int Offset;
         public float Gravity;
@@ -22,8 +21,10 @@ namespace Assets.ZeroToThree.Scripts
         private ObjectPool<BlockSprite> BlockSpritePool;
         private List<BlockSprite> BlockSprites;
 
-        private void Awake()
+        protected override void Awake()
         {
+            base.Awake();
+
             this.BlockSpritePool = new ObjectPool<BlockSprite>(this.BlockPrefab);
             this.BlockSpritePool.Growed += this.OnBlockPoolGrowed;
             this.BlockSprites = new List<BlockSprite>();
@@ -234,9 +235,10 @@ namespace Assets.ZeroToThree.Scripts
 
         private void OnBlockClick(object sender, EventArgs e)
         {
-            if (this.CanStep() == true)
+            var sprite = (BlockSprite)sender;
+
+            if (this.CanStep() == true && sprite.CanMask() == true)
             {
-                var sprite = (BlockSprite)sender;
                 var block = sprite.Block;
                 var index = this.Board.GetBlockIndex(block);
 
@@ -255,7 +257,7 @@ namespace Assets.ZeroToThree.Scripts
             var position = new Vector2
             {
                 x = +xi * (size.x + offset),
-                y = this.BoardCollider.size.y - yi * (size.y + offset)
+                y = this.transform.sizeDelta.y - yi * (size.y + offset)
             };
 
             return position;

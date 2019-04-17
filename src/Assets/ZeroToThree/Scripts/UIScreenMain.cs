@@ -9,16 +9,24 @@ namespace Assets.ZeroToThree.Scripts
 {
     public class UIScreenMain : UIScreen
     {
-        public LabelButton Standard;
-        public LabelButton Option;
+        public UICommonButton Standard;
+        public UICommonButton Option;
 
-        private void Awake()
+        protected override void Awake()
         {
+            base.Awake();
+
             this.Standard.Click += this.OnStandardClick;
             this.Option.Click += this.OnOptionClick;
         }
 
-        private void OnStandardClick(object sender, EventArgs e)
+        protected override void Start()
+        {
+            base.Start();
+
+        }
+
+        private void OnStandardClick(object sender, UIEventArgs e)
         {
             var um = UIManager.Instance;
             var screen = um.ShowScreen(um.Game);
@@ -27,9 +35,14 @@ namespace Assets.ZeroToThree.Scripts
             screen.SetSession(session);
         }
 
-        private void OnOptionClick(object sender, EventArgs e)
+        private void OnOptionClick(object sender, UIEventArgs e)
         {
+            var prefab = Resources.Load("UI/UIDialogYesNo");
+            var dialog  = (GameObject.Instantiate(prefab) as GameObject).GetComponent<UIDialog>();
+            dialog.gameObject.SetActive(true);
 
+            dialog.transform.SetParent(UIManager.Instance.transform, false);
+            dialog.transform.SetAsFirstSibling();
         }
 
     }

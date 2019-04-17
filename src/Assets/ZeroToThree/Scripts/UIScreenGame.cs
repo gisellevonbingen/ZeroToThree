@@ -11,8 +11,8 @@ namespace Assets.ZeroToThree.Scripts
     {
         public BoardSprite BoardSprite;
         public ScoreText ScoreText;
-        public UIButton BackButton;
-        public UIButton ResetButton;
+        public UIImage BackButton;
+        public UIImage ResetButton;
 
         public GameSession Session { get; private set; }
 
@@ -25,19 +25,26 @@ namespace Assets.ZeroToThree.Scripts
             this.ScoreText.SetScoreImmediately(session.Score);
         }
 
-        private void Awake()
+        protected override void Awake()
         {
+            base.Awake();
+
             this.BackButton.Click += this.OnBackButtonClick;
             this.ResetButton.Click += this.OnResetButtonClick;
         }
 
-        private void OnBackButtonClick(object sender, EventArgs e)
+        protected override void Start()
+        {
+            base.Start();
+        }
+
+        private void OnBackButtonClick(object sender, UIEventArgs e)
         {
             var ui = UIManager.Instance;
             ui.ShowScreen(ui.Main);
         }
 
-        private void OnResetButtonClick(object sender, EventArgs e)
+        private void OnResetButtonClick(object sender, UIEventArgs e)
         {
             this.Restart();
         }
@@ -50,7 +57,7 @@ namespace Assets.ZeroToThree.Scripts
         private void Update()
         {
             var session = this.Session;
-            
+
             if (session != null)
             {
                 this.ScoreText.SetScoreGoal(session.Score);

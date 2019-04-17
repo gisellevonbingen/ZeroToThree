@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Assets.ZeroToThree.Scripts
 {
-    public class UIScreen : UIBase
+    public class UIScreen : UIObject
     {
         public void OnOpen()
         {
