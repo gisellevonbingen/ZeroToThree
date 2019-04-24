@@ -157,7 +157,7 @@ namespace Assets.ZeroToThree.Scripts
 
                 var sprite = this.BlockSpritePool.Obtain();
                 sprite.Reset();
-                sprite.MaskingDuration = 0.3F;
+                sprite.MaskingDuration = 0.1F;
                 sprite.Gravity = gravity;
                 sprite.Block = block;
 
