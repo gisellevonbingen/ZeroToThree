@@ -23,7 +23,6 @@ namespace Assets.ZeroToThree.Scripts
         protected override void Start()
         {
             base.Start();
-
         }
 
         private void OnStandardClick(object sender, UIEventArgs e)
@@ -37,12 +36,7 @@ namespace Assets.ZeroToThree.Scripts
 
         private void OnOptionClick(object sender, UIEventArgs e)
         {
-            var prefab = Resources.Load("UI/UIDialogYesNo");
-            var dialog  = (GameObject.Instantiate(prefab) as GameObject).GetComponent<UIDialog>();
-            dialog.gameObject.SetActive(true);
-
-            dialog.transform.SetParent(UIManager.Instance.transform, false);
-            dialog.transform.SetAsFirstSibling();
+            UIManager.Instance.PopupYesNoDialog("Dialog\nTest");
         }
 
     }

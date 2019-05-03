@@ -86,6 +86,7 @@
     <Compile Include="Assets\ZeroToThree\Scripts\UIScreenMain.cs" />
     <Compile Include="Assets\ZeroToThree\Scripts\UIWindow.cs" />
     <Compile Include="Assets\ZeroToThree\Scripts\UpdateArgs.cs" />
+    <Compile Include="Assets\ZeroToThree\Scripts\YesNoResult.cs" />
     <Reference Include="Unity.TextMeshPro.Editor">
       <HintPath>C:/Develop/Workspace/ZeroToThree/src/Library/ScriptAssemblies/Unity.TextMeshPro.Editor.dll</HintPath>
     </Reference>

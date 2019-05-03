@@ -10,24 +10,37 @@ namespace Assets.ZeroToThree.Scripts
 {
     public class UIDialogYesNo : UIDialog
     {
-        protected override void Start()
+        public UICommonButton YesButton;
+        public UICommonButton NoButton;
+        public UILabel Message;
+
+        public YesNoResult Result { get; private set; }
+
+        protected override void Awake()
         {
-            base.Start();
+            base.Awake();
 
-            foreach (var child in this.Children)
-            {
-                if ( child is UIImage button)
-                {
-                    button.Click += this.UIDialogYesNo_Click;
-                }
-
-            }
-
+            this.YesButton.Click += this.OnYesButtonClick;
+            this.NoButton.Click += this.OnNoButtonClick;
         }
 
-        private void UIDialogYesNo_Click(object sender, UIEventArgs e)
+        protected override void OnOpened(UIEventArgs e)
         {
-            Debug.Log(e.Source.name);
+            base.OnOpened(e);
+
+            this.Result = YesNoResult.None;
+        }
+
+        private void OnYesButtonClick(object sender, UIEventArgs e)
+        {
+            this.Result = YesNoResult.Yes;
+            this.Close();
+        }
+
+        private void OnNoButtonClick(object sender, UIEventArgs e)
+        {
+            this.Result = YesNoResult.No;
+            this.Close();
         }
 
     }

@@ -40,8 +40,22 @@ namespace Assets.ZeroToThree.Scripts
 
         private void OnBackButtonClick(object sender, UIEventArgs e)
         {
-            var ui = UIManager.Instance;
-            ui.ShowScreen(ui.Main);
+            var dialog = UIManager.Instance.PopupYesNoDialog("Quit?");
+            this.StartCoroutine(dialog.WaitForClose(this.OnQuitClosed));
+        }
+
+        private void OnQuitClosed(UIWindow window)
+        {
+            if (window is UIDialogYesNo dialog)
+            {
+                if (dialog.Result == YesNoResult.Yes)
+                {
+                    var ui = UIManager.Instance;
+                    ui.ShowScreen(ui.Main);
+                }
+
+            }
+
         }
 
         private void OnResetButtonClick(object sender, UIEventArgs e)

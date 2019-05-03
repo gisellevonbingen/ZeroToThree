@@ -18,6 +18,9 @@ namespace Assets.ZeroToThree.Scripts
         public UIScreenGame Game;
         private UIScreen Current;
 
+        public UIDialogYesNo YesNoDialogPref;
+        private ObjectPool<UIDialogYesNo> YesNoDialogPool;
+
         public Vector2 MousePosition;
         private bool PrevMouseDown;
         public bool MouseDown;
@@ -32,9 +35,24 @@ namespace Assets.ZeroToThree.Scripts
             Application.targetFrameRate = 60;
 
             Instance = this;
+
+            this.YesNoDialogPool = new ObjectPool<UIDialogYesNo>(this.YesNoDialogPref);
+            this.YesNoDialogPool.Growed += this.OnYesNoDialogPoolGrowed;
+
             this.Windows = new List<UIWindow>() { this.MainWindow };
 
             this.ShowScreen(this.Main);
+        }
+
+        private void OnYesNoDialogPoolGrowed(object sender, PoolGrowEventArgs<UIDialogYesNo> e)
+        {
+            var dialog = e.Obj;
+            dialog.Closed += this.OnYesNoDialogClosed;
+        }
+
+        private void OnYesNoDialogClosed(object sender, UIEventArgs e)
+        {
+            this.YesNoDialogPool.Free(e.Source as UIDialogYesNo);
         }
 
         private void Update()
@@ -91,6 +109,33 @@ namespace Assets.ZeroToThree.Scripts
 
             var nextHover = topWindow.Query(this.MousePosition);
             this.HoveringObject = nextHover;
+        }
+
+        public UIDialogYesNo PopupYesNoDialog(string message)
+        {
+            var dialog = this.YesNoDialogPool.Obtain();
+            dialog.Message.Text.text = message;
+            this.PopupWindow(dialog);
+
+            return dialog;
+        }
+
+        public void PopupWindow(UIWindow window)
+        {
+            window.transform.SetParent(UIManager.Instance.transform, false);
+            window.transform.SetAsLastSibling();
+            window.Closed += this.OnWindowClosed;
+            window.Open();
+
+            this.Windows.Add(window);
+        }
+
+        private void OnWindowClosed(object sender, UIEventArgs e)
+        {
+            var window = e.Source as UIWindow;
+            window.Closed -= this.OnWindowClosed;
+
+            this.Windows.Remove(window);
         }
 
         public T ShowScreen<T>(T screen) where T : UIScreen

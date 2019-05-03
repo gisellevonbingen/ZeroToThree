@@ -6,13 +6,11 @@ using System.Threading.Tasks;
 
 namespace Assets.ZeroToThree.Scripts
 {
-    public class UIDialog : UIWindow
+    public enum YesNoResult : byte
     {
-        protected override void Awake()
-        {
-            base.Awake();
-        }
-
+        None = 0,
+        Yes = 1,
+        No = 2,
     }
 
 }
