@@ -21,7 +21,9 @@ namespace Assets.ZeroToThree.Scripts
 
         public Block Block { get; set; }
 
-        public float MaskingDuration;
+        public float ZoomOutDuration;
+        public float ZoomInDuration;
+        public float BreakDuration;
         public float Gravity;
 
         public Vector2 GoalPosition;
@@ -109,6 +111,11 @@ namespace Assets.ZeroToThree.Scripts
 
         private void Update()
         {
+
+        }
+
+        public void UpdateValue()
+        {
             var block = this.Block;
 
             if (block != null)
@@ -117,7 +124,6 @@ namespace Assets.ZeroToThree.Scripts
                 this.TileRenderer.Image.color = this.ValueColors[value];
                 this.Text.Text.text = value.ToString();
             }
-
         }
 
         public Vector2 GetTileSize()
@@ -153,7 +159,7 @@ namespace Assets.ZeroToThree.Scripts
             {
                 var time = Time.time;
 
-                if (time - startStamp >= 0.5F)
+                if (time - startStamp >= this.BreakDuration)
                 {
                     this.IsBreaked = true;
 
@@ -181,34 +187,60 @@ namespace Assets.ZeroToThree.Scripts
         public IEnumerator MaskRoutine()
         {
             this.IsMasked = false;
-            var startStamp = Time.time;
+            var startStamp = 0.0F;
 
-            var tileMaskRenderer = this.TileMaskRenderer;
-            tileMaskRenderer.gameObject.SetActive(true);
+            int phase = 0;
 
             while (true)
             {
                 var time = Time.time;
-                float maskingDuration = this.MaskingDuration;
-                var alphaRatio = Math.Min((time - startStamp) / maskingDuration, 1.0F);
 
-                var color = tileMaskRenderer.Image.color;
-                color.a = alphaRatio;
-                tileMaskRenderer.Image.color = color;
+                if (phase == 0)
+                {
+                    startStamp = Time.time;
+                    phase = 1;
+                }
+                else if (phase == 1)
+                {
+                    var zoomOutDuration = this.ZoomOutDuration;
+                    var ratio = Math.Min((time - startStamp) / zoomOutDuration, 1.0F);
+                    var scale = 1 - ratio;
+                    this.transform.localScale = new Vector3(scale, scale, scale);
 
-                if (time - startStamp >= maskingDuration)
+                    if (time - startStamp >= zoomOutDuration)
+                    {
+                        startStamp = Time.time;
+                        phase = 2;
+                    }
+
+                }
+                else if (phase == 2)
+                {
+                    this.UpdateValue();
+
+                    var tileMaskRenderer = this.TileMaskRenderer;
+                    tileMaskRenderer.gameObject.SetActive(true);
+
+                    var zoomInDuration = this.ZoomInDuration;
+                    var ratio = Math.Min((time - startStamp) / zoomInDuration, 1.0F);
+                    this.transform.localScale = new Vector3(ratio, ratio, ratio);
+
+                    if (time - startStamp >= zoomInDuration)
+                    {
+                        startStamp = Time.time;
+                        phase = 3;
+                    }
+
+                }
+                else if (phase == 3)
                 {
                     this.IsMasked = true;
                     this.OnMasked();
 
                     break;
                 }
-                else
-                {
-                    yield return null;
-                }
 
-
+                yield return null;
             }
 
         }

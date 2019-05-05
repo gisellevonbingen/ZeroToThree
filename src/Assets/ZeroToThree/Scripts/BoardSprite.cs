@@ -14,7 +14,6 @@ namespace Assets.ZeroToThree.Scripts
         public GameObject BoardObject;
         public BlockSprite BlockPrefab;
         public int Offset;
-        public float Gravity;
 
         public Board Board { get; private set; }
 
@@ -149,20 +148,17 @@ namespace Assets.ZeroToThree.Scripts
             var blocks = e.Blocks;
             var bounds = this.GetBounds(board, blocks);
 
-            float gravity = this.Gravity;
-
             foreach (var block in blocks)
             {
                 board.GetBlockIndex(block, out var col, out var row);
 
                 var sprite = this.BlockSpritePool.Obtain();
                 sprite.Reset();
-                sprite.MaskingDuration = 0.1F;
-                sprite.Gravity = gravity;
                 sprite.Block = block;
 
                 sprite.transform.localPosition = this.GetBlockGenPosition(col, board.Height - bounds.y + row);
                 sprite.MoveStart(this.GetBlockGoalPosition(col, row));
+                sprite.UpdateValue();
 
                 this.BlockSprites.Add(sprite);
                 this.UpdateSpriteName(board, sprite);
