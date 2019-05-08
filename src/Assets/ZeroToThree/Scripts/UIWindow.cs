@@ -17,14 +17,12 @@ namespace Assets.ZeroToThree.Scripts
             base.Awake();
         }
 
-        public IEnumerator WaitForClose(Action<UIWindow> callback)
+        public IEnumerator WaitForClose()
         {
             while (true)
             {
                 if (this.Visible == false)
                 {
-                    callback?.Invoke(this);
-
                     break;
                 }
 

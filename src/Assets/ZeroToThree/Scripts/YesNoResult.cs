@@ -8,9 +8,8 @@ namespace Assets.ZeroToThree.Scripts
 {
     public enum YesNoResult : byte
     {
-        None = 0,
-        Yes = 1,
-        No = 2,
+        Yes = 0,
+        No = 1,
     }
 
 }

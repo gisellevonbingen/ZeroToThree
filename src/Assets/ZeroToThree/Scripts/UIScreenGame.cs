@@ -40,20 +40,15 @@ namespace Assets.ZeroToThree.Scripts
 
         private void OnBackButtonClick(object sender, UIEventArgs e)
         {
-            var dialog = UIManager.Instance.PopupYesNoDialog("Quit?");
-            this.StartCoroutine(dialog.WaitForClose(this.OnQuitClosed));
+            UIManager.Instance.PopupYesNoDialog("Quit\nGame?").ListenDetermine(this.OnQuitClosed);
         }
 
-        private void OnQuitClosed(UIWindow window)
+        private void OnQuitClosed(object sender, YesNoDetermineEventArgs e)
         {
-            if (window is UIDialogYesNo dialog)
+            if (e.Result == YesNoResult.Yes)
             {
-                if (dialog.Result == YesNoResult.Yes)
-                {
-                    var ui = UIManager.Instance;
-                    ui.ShowScreen(ui.Main);
-                }
-
+                var ui = UIManager.Instance;
+                ui.ShowScreen(ui.Main);
             }
 
         }

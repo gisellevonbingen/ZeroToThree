@@ -14,7 +14,19 @@ namespace Assets.ZeroToThree.Scripts
         public UICommonButton NoButton;
         public UILabel Message;
 
-        public YesNoResult Result { get; private set; }
+        public event EventHandler<YesNoDetermineEventArgs> Determine;
+
+        public void ListenDetermine(EventHandler<YesNoDetermineEventArgs> callback)
+        {
+            void wrapper(object sender, YesNoDetermineEventArgs e)
+            {
+                this.Determine -= wrapper;
+
+                callback?.Invoke(sender, e);
+            }
+
+            this.Determine += wrapper;
+        }
 
         protected override void Awake()
         {
@@ -27,20 +39,23 @@ namespace Assets.ZeroToThree.Scripts
         protected override void OnOpened(UIEventArgs e)
         {
             base.OnOpened(e);
-
-            this.Result = YesNoResult.None;
         }
 
         private void OnYesButtonClick(object sender, UIEventArgs e)
         {
-            this.Result = YesNoResult.Yes;
+            this.OnDetermine(new YesNoDetermineEventArgs(YesNoResult.Yes));
             this.Close();
         }
 
         private void OnNoButtonClick(object sender, UIEventArgs e)
         {
-            this.Result = YesNoResult.No;
+            this.OnDetermine(new YesNoDetermineEventArgs(YesNoResult.No));
             this.Close();
+        }
+
+        protected virtual void OnDetermine(YesNoDetermineEventArgs e)
+        {
+            this.Determine?.Invoke(this, e);
         }
 
     }
