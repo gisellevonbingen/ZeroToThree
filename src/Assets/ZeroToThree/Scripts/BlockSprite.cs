@@ -107,6 +107,8 @@ namespace Assets.ZeroToThree.Scripts
             this.TileRenderer.gameObject.SetActive(true);
             this.BreakRenderer.gameObject.SetActive(false);
             this.TileMaskRenderer.gameObject.SetActive(false);
+
+            this.transform.localScale = new Vector3(1.0F, 1.0F, 1.0F);
         }
 
         private void Update()
