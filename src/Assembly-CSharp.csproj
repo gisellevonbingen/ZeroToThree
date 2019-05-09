@@ -60,6 +60,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\ZeroToThree\Scripts\ApplicationUtils.cs" />
     <Compile Include="Assets\ZeroToThree\Scripts\Block.cs" />
     <Compile Include="Assets\ZeroToThree\Scripts\BlocksEventArgs.cs" />
     <Compile Include="Assets\ZeroToThree\Scripts\BlockSprite.cs" />

@@ -30,20 +30,7 @@ namespace Assets.ZeroToThree.Scripts
 
         private void OnBackClick(object sender, UIEventArgs e)
         {
-            UIManager.Instance.PopupYesNoDialog("Quit\nApplication?").ListenDetermine(this.OnQuitClosed);
-        }
-
-        private void OnQuitClosed(object sender, YesNoDetermineEventArgs e)
-        {
-            if (e.Result == YesNoResult.Yes)
-            {
-#if UNITY_EDITOR
-                EditorApplication.isPlaying = false;
-#else
-        Application.Quit();
-#endif
-            }
-
+            UIManager.Instance.QuitDialogStart();
         }
 
         private void OnStandardClick(object sender, UIEventArgs e)

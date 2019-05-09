@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -18,6 +19,9 @@ namespace Assets.ZeroToThree.Scripts
         public UIScreenGame Game;
         private UIScreen Current;
 
+        private bool QuitSure;
+        private Coroutine QuitCoroutine;
+
         public UIDialogYesNo YesNoDialogPref;
         private ObjectPool<UIDialogYesNo> YesNoDialogPool;
 
@@ -33,6 +37,9 @@ namespace Assets.ZeroToThree.Scripts
         private void Awake()
         {
             Application.targetFrameRate = 60;
+            Application.wantsToQuit += this.OnApplicationWantsToQuit;
+            this.QuitSure = false;
+            this.QuitCoroutine = null;
 
             Instance = this;
 
@@ -42,6 +49,45 @@ namespace Assets.ZeroToThree.Scripts
             this.Windows = new List<UIWindow>() { this.MainWindow };
 
             this.ShowScreen(this.Main);
+        }
+
+        public void QuitDialogStart()
+        {
+            this.QuitCoroutine = this.StartCoroutine(this.QuitDialogRoutine());
+
+        }
+
+        private IEnumerator QuitDialogRoutine()
+        {
+            var dialog = this.PopupYesNoDialog("Quit\nApplication");
+            dialog.ListenDetermine((sender, e)=>
+            {
+                if (e.Result == YesNoResult.Yes)
+                {
+                    this.QuitSure = true;
+                    ApplicationUtils.Quit();
+                }
+
+            });
+
+            yield return dialog.WaitForClose();
+
+            this.QuitCoroutine = null;
+        }
+
+        private bool OnApplicationWantsToQuit()
+        {
+            if (this.QuitSure == true)
+            {
+                return true;
+            }
+
+            if (this.QuitCoroutine == null)
+            {
+                this.QuitDialogStart();
+            }
+
+            return false;
         }
 
         private void OnYesNoDialogPoolGrowed(object sender, PoolGrowEventArgs<UIDialogYesNo> e)
