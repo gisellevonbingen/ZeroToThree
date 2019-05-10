@@ -21,7 +21,8 @@ namespace Assets.ZeroToThree.Scripts
 
         public Block Block { get; set; }
 
-        public float ZoomOutMin;
+        public float ZoomMinScale;
+        public float ZoomMaxScale;
         public float ZoomOutDuration;
         public float ZoomInDuration;
         public float BreakDuration;
@@ -109,7 +110,8 @@ namespace Assets.ZeroToThree.Scripts
             this.BreakRenderer.gameObject.SetActive(false);
             this.TileMaskRenderer.gameObject.SetActive(false);
 
-            this.transform.localScale = new Vector3(1.0F, 1.0F, 1.0F);
+            var scale = this.ZoomMaxScale;
+            this.transform.localScale = new Vector3(scale, scale, scale);
         }
 
         private void Update()
@@ -127,6 +129,7 @@ namespace Assets.ZeroToThree.Scripts
                 this.TileRenderer.Image.color = this.ValueColors[value];
                 this.Text.Text.text = value.ToString();
             }
+
         }
 
         public Vector2 GetTileSize()
@@ -191,8 +194,8 @@ namespace Assets.ZeroToThree.Scripts
         {
             this.IsMasked = false;
             var startStamp = 0.0F;
-            var min = this.ZoomOutMin;
-            var max = 1.0F;
+            var min = this.ZoomMinScale;
+            var max = this.ZoomMaxScale;
 
             int phase = 0;
 
@@ -209,7 +212,7 @@ namespace Assets.ZeroToThree.Scripts
                 {
                     var zoomOutDuration = this.ZoomOutDuration;
                     var ratio = Math.Min((time - startStamp) / zoomOutDuration, 1.0F);
-                    var scale = max - (max - min) *  ratio;
+                    var scale = max - (max - min) * ratio;
                     this.transform.localScale = new Vector3(scale, scale, scale);
 
                     if (time - startStamp >= zoomOutDuration)
