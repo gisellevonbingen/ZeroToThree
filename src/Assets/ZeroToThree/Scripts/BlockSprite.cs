@@ -21,6 +21,7 @@ namespace Assets.ZeroToThree.Scripts
 
         public Block Block { get; set; }
 
+        public float ZoomOutMin;
         public float ZoomOutDuration;
         public float ZoomInDuration;
         public float BreakDuration;
@@ -190,6 +191,8 @@ namespace Assets.ZeroToThree.Scripts
         {
             this.IsMasked = false;
             var startStamp = 0.0F;
+            var min = this.ZoomOutMin;
+            var max = 1.0F;
 
             int phase = 0;
 
@@ -206,7 +209,7 @@ namespace Assets.ZeroToThree.Scripts
                 {
                     var zoomOutDuration = this.ZoomOutDuration;
                     var ratio = Math.Min((time - startStamp) / zoomOutDuration, 1.0F);
-                    var scale = 1 - ratio;
+                    var scale = max - (max - min) *  ratio;
                     this.transform.localScale = new Vector3(scale, scale, scale);
 
                     if (time - startStamp >= zoomOutDuration)
@@ -225,7 +228,8 @@ namespace Assets.ZeroToThree.Scripts
 
                     var zoomInDuration = this.ZoomInDuration;
                     var ratio = Math.Min((time - startStamp) / zoomInDuration, 1.0F);
-                    this.transform.localScale = new Vector3(ratio, ratio, ratio);
+                    var scale = max - (max - min) * (1.0F - ratio);
+                    this.transform.localScale = new Vector3(scale, scale, scale);
 
                     if (time - startStamp >= zoomInDuration)
                     {

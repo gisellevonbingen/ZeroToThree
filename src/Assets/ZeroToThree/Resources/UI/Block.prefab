@@ -61,6 +61,7 @@ MonoBehaviour:
   - {r: 0.7764706, g: 0.8235294, b: 0.68235296, a: 1}
   - {r: 0.654902, g: 0.8, b: 0.8352941, a: 1}
   - {r: 0.90588236, g: 0.76862746, b: 0.6509804, a: 1}
+  ZoomOutMin: 0.5
   ZoomOutDuration: 0.05
   ZoomInDuration: 0.05
   BreakDuration: 0.25
