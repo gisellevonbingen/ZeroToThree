@@ -77,6 +77,11 @@ namespace Assets.ZeroToThree.Scripts
 
         private bool OnApplicationWantsToQuit()
         {
+            if (ApplicationUtils.IsPlayingInEditor() == true)
+            {
+                return true;
+            }
+
             if (this.QuitSure == true)
             {
                 return true;

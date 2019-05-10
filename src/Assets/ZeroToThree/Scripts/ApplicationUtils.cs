@@ -4,18 +4,32 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using UnityEditor;
+using UnityEngine;
 
 namespace Assets.ZeroToThree.Scripts
 {
     public static class ApplicationUtils
     {
-        public static void Quit()
+        public static bool IsPlayingInEditor()
         {
 #if UNITY_EDITOR
-            EditorApplication.isPlaying = false;
+            return EditorApplication.isPlaying;
 #else
-            UnityEngine.Application.Quit();
+            return false;
 #endif
+        }
+
+        public static void Quit()
+        {
+            if (IsPlayingInEditor() == true)
+            {
+                EditorApplication.isPlaying = false;
+            }
+            else
+            {
+                Application.Quit();
+            }
+
         }
 
     }
