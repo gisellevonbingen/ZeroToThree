@@ -23,7 +23,9 @@ namespace Assets.ZeroToThree.Scripts
         {
             if (IsPlayingInEditor() == true)
             {
+#if UNITY_EDITOR
                 EditorApplication.isPlaying = false;
+#endif
             }
             else
             {
