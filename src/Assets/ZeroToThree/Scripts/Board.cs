@@ -97,28 +97,31 @@ namespace Assets.ZeroToThree.Scripts
                     }
 
                 }
-
-                var childSolutions = clone.Solve(first);
-
-                if (childSolutions.Count > 0)
+                else
                 {
-                    foreach (var sol in childSolutions)
+                    var childSolutions = clone.Solve(first);
+
+                    if (childSolutions.Count > 0)
                     {
-                        var solution = new BoardSolution();
-                        solution.Indices.Add(item);
-                        solution.Indices.AddRange(sol.Indices);
-                        solutions.Add(solution);
+                        foreach (var sol in childSolutions)
+                        {
+                            var solution = new BoardSolution();
+                            solution.Indices.Add(item);
+                            solution.Indices.AddRange(sol.Indices);
+                            solutions.Add(solution);
+
+                            if (first == true)
+                            {
+                                break;
+                            }
+
+                        }
 
                         if (first == true)
                         {
                             break;
                         }
 
-                    }
-
-                    if (first == true)
-                    {
-                        break;
                     }
 
                 }
@@ -277,7 +280,7 @@ namespace Assets.ZeroToThree.Scripts
 
                     if (block != null && blocks.Contains(block) == false)
                     {
-                        if (baseBlock.Value ==  block.Value)
+                        if (baseBlock.Value == block.Value)
                         {
                             blocks.Add(block);
                             this.GetConnectedBlocks(block, blocks);
