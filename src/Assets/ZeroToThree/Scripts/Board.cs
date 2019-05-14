@@ -55,7 +55,7 @@ namespace Assets.ZeroToThree.Scripts
             }
 
             var unmasks = blocks.Where(b => b != null && b.Masking == false).ToList();
-            var unmaskPairs = new List<Block[]>();
+            var connetedSets = new List<Block[]>();
 
             while (true)
             {
@@ -66,16 +66,16 @@ namespace Assets.ZeroToThree.Scripts
                     break;
                 }
 
-                var conneteds = this.GetConnectedBlocks(block, (bb, b) => bb.Value == b.Value).ToArray();
+                var conneteds = this.GetConnectedBlocks(block).ToArray();
                 EnumerableUtils.RemoveAll(unmasks, conneteds);
-                unmaskPairs.Add(conneteds);
+                connetedSets.Add(conneteds);
             }
 
-            foreach (var pairs in unmaskPairs)
+            foreach (var set in connetedSets)
             {
                 var clone = new Board(this);
 
-                foreach (var block in pairs)
+                foreach (var block in set)
                 {
                     var index = this.GetBlockIndex(block);
                     var cblock = clone.Blocks[index];
@@ -83,7 +83,7 @@ namespace Assets.ZeroToThree.Scripts
                 }
 
                 var completeLines = clone.FindCompleteLines(new List<Block>());
-                var item = pairs.Select(b => this.GetBlockIndex(b)).ToArray();
+                var item = set.Select(b => this.GetBlockIndex(b)).ToArray();
 
                 if (completeLines > 0)
                 {
@@ -256,7 +256,7 @@ namespace Assets.ZeroToThree.Scripts
             return false;
         }
 
-        private void GetConnectedBlocks(Block baseBlock, List<Block> blocks, Func<Block, Block, bool> func)
+        private void GetConnectedBlocks(Block baseBlock, List<Block> blocks)
         {
             var directions = new List<Vector2Int>();
             directions.Add(Vector2Int.left);
@@ -277,10 +277,10 @@ namespace Assets.ZeroToThree.Scripts
 
                     if (block != null && blocks.Contains(block) == false)
                     {
-                        if (func == null || func(baseBlock, block) == true)
+                        if (baseBlock.Value ==  block.Value)
                         {
                             blocks.Add(block);
-                            this.GetConnectedBlocks(block, blocks, func);
+                            this.GetConnectedBlocks(block, blocks);
                         }
 
                     }
@@ -291,12 +291,12 @@ namespace Assets.ZeroToThree.Scripts
 
         }
 
-        private List<Block> GetConnectedBlocks(Block block, Func<Block, Block, bool> func)
+        private List<Block> GetConnectedBlocks(Block block)
         {
             var blocks = new List<Block>();
             blocks.Add(block);
 
-            this.GetConnectedBlocks(block, blocks, func);
+            this.GetConnectedBlocks(block, blocks);
 
             return blocks;
         }
@@ -392,7 +392,7 @@ namespace Assets.ZeroToThree.Scripts
 
                 if (block.Masking == false)
                 {
-                    var connecteds = this.GetConnectedBlocks(block, (bb, b) => bb.Value == b.Value);
+                    var connecteds = this.GetConnectedBlocks(block);
 
                     foreach (var cb in connecteds)
                     {
