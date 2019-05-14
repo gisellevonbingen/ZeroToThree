@@ -66,7 +66,9 @@
     <Compile Include="Assets\ZeroToThree\Scripts\BlockSprite.cs" />
     <Compile Include="Assets\ZeroToThree\Scripts\Board.cs" />
     <Compile Include="Assets\ZeroToThree\Scripts\BoardLineEventArgs.cs" />
+    <Compile Include="Assets\ZeroToThree\Scripts\BoardSolution.cs" />
     <Compile Include="Assets\ZeroToThree\Scripts\BoardSprite.cs" />
+    <Compile Include="Assets\ZeroToThree\Scripts\EnumerableUtils.cs" />
     <Compile Include="Assets\ZeroToThree\Scripts\GameSession.cs" />
     <Compile Include="Assets\ZeroToThree\Scripts\ObjectPool.cs" />
     <Compile Include="Assets\ZeroToThree\Scripts\PoolGrowEventArgs.cs" />

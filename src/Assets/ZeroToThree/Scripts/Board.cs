@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -24,6 +25,107 @@ namespace Assets.ZeroToThree.Scripts
         {
             this.Blocks = new Block[this.Width * this.Height];
             this.Clear();
+        }
+
+        public Board(Board other)
+        {
+            var oblocks = other.Blocks;
+            this.Blocks = new Block[oblocks.Length];
+            this.Clear();
+
+            var tblocks = this.Blocks;
+
+            for (int i = 0; i < tblocks.Length; i++)
+            {
+                tblocks[i] = other.Blocks[i]?.Clone();
+            }
+
+            this.ValueRange = other.ValueRange;
+            this.ClickIndex = other.ClickIndex;
+        }
+
+        public List<BoardSolution> Solve(bool first)
+        {
+            var solutions = new List<BoardSolution>();
+            var blocks = this.Blocks;
+
+            if (blocks.Any(b => b == null) == true)
+            {
+                return solutions;
+            }
+
+            var unmasks = blocks.Where(b => b != null && b.Masking == false).ToList();
+            var unmaskPairs = new List<Block[]>();
+
+            while (true)
+            {
+                var block = unmasks.FirstOrDefault();
+
+                if (block == null)
+                {
+                    break;
+                }
+
+                var conneteds = this.GetConnectedBlocks(block, (bb, b) => bb.Value == b.Value).ToArray();
+                EnumerableUtils.RemoveAll(unmasks, conneteds);
+                unmaskPairs.Add(conneteds);
+            }
+
+            foreach (var pairs in unmaskPairs)
+            {
+                var clone = new Board(this);
+
+                foreach (var block in pairs)
+                {
+                    var index = this.GetBlockIndex(block);
+                    var cblock = clone.Blocks[index];
+                    clone.GrowValue(cblock);
+                }
+
+                var completeLines = clone.FindCompleteLines(new List<Block>());
+                var item = pairs.Select(b => this.GetBlockIndex(b)).ToArray();
+
+                if (completeLines > 0)
+                {
+                    var solution = new BoardSolution();
+                    solution.Indices.Add(item);
+                    solutions.Add(solution);
+
+                    if (first == true)
+                    {
+                        break;
+                    }
+
+                }
+
+                var childSolutions = clone.Solve(first);
+
+                if (childSolutions.Count > 0)
+                {
+                    foreach (var sol in childSolutions)
+                    {
+                        var solution = new BoardSolution();
+                        solution.Indices.Add(item);
+                        solution.Indices.AddRange(sol.Indices);
+                        solutions.Add(solution);
+
+                        if (first == true)
+                        {
+                            break;
+                        }
+
+                    }
+
+                    if (first == true)
+                    {
+                        break;
+                    }
+
+                }
+
+            }
+
+            return solutions;
         }
 
         public void Clear()
@@ -98,30 +200,63 @@ namespace Assets.ZeroToThree.Scripts
 
         public bool Step()
         {
-            if (this.BreakCompleteLines() == true)
+            if (this.Step0() == true)
             {
-                return true;
-            }
+                using (var fs = new FileStream("test.txt", FileMode.Create))
+                {
+                    using (var sw = new StreamWriter(fs))
+                    {
+                        var solutions = this.Solve(false);
+                        solutions.Sort((o1, o2) => o1.Indices.Count.CompareTo(o2.Indices.Count));
 
-            if (this.TryFall() == true)
-            {
-                return true;
-            }
+                        sw.WriteLine("Solutions : " + solutions.Count);
 
-            if (this.GenBlankBlocks() == true)
-            {
-                return true;
-            }
+                        foreach (var solution in solutions)
+                        {
+                            var line = string.Join(", ", solution.Indices.Select(array => $"[{string.Join(", ", array)}]"));
+                            sw.WriteLine(line);
+                        }
 
-            if (this.UpdateClicked() == true)
-            {
+                    }
+
+                }
+
                 return true;
             }
 
             return false;
         }
 
-        private void GetConnectedBlocks(Block baseBlock, List<Block> blocks)
+        private bool Step0()
+        {
+            if (this.BreakCompleteLines() == true)
+            {
+                UnityEngine.Debug.Log("BreakCompleteLines");
+                return true;
+            }
+
+            if (this.TryFall() == true)
+            {
+                UnityEngine.Debug.Log("TryFall");
+                return true;
+            }
+
+            if (this.GenBlankBlocks() == true)
+            {
+                UnityEngine.Debug.Log("GenBlankBlocks");
+                return true;
+            }
+
+            if (this.UpdateClicked() == true)
+            {
+                UnityEngine.Debug.Log("UpdateClicked");
+                return true;
+            }
+
+            return false;
+        }
+
+        private void GetConnectedBlocks(Block baseBlock, List<Block> blocks, Func<Block, Block, bool> func)
         {
             var directions = new List<Vector2Int>();
             directions.Add(Vector2Int.left);
@@ -140,10 +275,14 @@ namespace Assets.ZeroToThree.Scripts
                 {
                     var block = this[col, row];
 
-                    if (block != null && baseBlock.Value == block.Value && blocks.Contains(block) == false)
+                    if (block != null && blocks.Contains(block) == false)
                     {
-                        blocks.Add(block);
-                        this.GetConnectedBlocks(block, blocks);
+                        if (func == null || func(baseBlock, block) == true)
+                        {
+                            blocks.Add(block);
+                            this.GetConnectedBlocks(block, blocks, func);
+                        }
+
                     }
 
                 }
@@ -152,12 +291,12 @@ namespace Assets.ZeroToThree.Scripts
 
         }
 
-        private List<Block> GetConnectedBlocks(Block block)
+        private List<Block> GetConnectedBlocks(Block block, Func<Block, Block, bool> func)
         {
             var blocks = new List<Block>();
             blocks.Add(block);
 
-            this.GetConnectedBlocks(block, blocks);
+            this.GetConnectedBlocks(block, blocks, func);
 
             return blocks;
         }
@@ -253,13 +392,11 @@ namespace Assets.ZeroToThree.Scripts
 
                 if (block.Masking == false)
                 {
-                    var connecteds = this.GetConnectedBlocks(block);
-                    var valueRange = this.ValueRange;
+                    var connecteds = this.GetConnectedBlocks(block, (bb, b) => bb.Value == b.Value);
 
                     foreach (var cb in connecteds)
                     {
-                        cb.Value = (cb.Value + 1) % valueRange;
-                        cb.Masking = true;
+                        this.GrowValue(cb);
                     }
 
                     this.OnBlocksUpdate(new BlocksEventArgs(connecteds.ToArray()));
@@ -272,12 +409,16 @@ namespace Assets.ZeroToThree.Scripts
             return false;
         }
 
+        private void GrowValue(Block block)
+        {
+            block.Value = (block.Value + 1) % this.ValueRange;
+            block.Masking = true;
+        }
+
         private bool BreakCompleteLines()
         {
             var blockList = new List<Block>();
-            var lines = 0;
-            lines += this.FindCompleteCols(blockList);
-            lines += this.FinsCompleteRows(blockList);
+            int lines = FindCompleteLines(blockList);
 
             if (lines > 0)
             {
@@ -296,6 +437,15 @@ namespace Assets.ZeroToThree.Scripts
             }
 
             return false;
+        }
+
+        private int FindCompleteLines(List<Block> blockList)
+        {
+            var lines = 0;
+            lines += this.FindCompleteCols(blockList);
+            lines += this.FinsCompleteRows(blockList);
+
+            return lines;
         }
 
         private int FinsCompleteRows(List<Block> list)

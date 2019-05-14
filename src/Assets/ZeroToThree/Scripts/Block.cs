@@ -17,6 +17,17 @@ namespace Assets.ZeroToThree.Scripts
 
         }
 
+        public Block(Block other)
+        {
+            this.Value = other.Value;
+            this.Masking = other.Masking;
+        }
+
+        public Block Clone()
+        {
+            return new Block(this);
+        }
+
     }
 
 }
