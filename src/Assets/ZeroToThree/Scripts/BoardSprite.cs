@@ -287,16 +287,6 @@ namespace Assets.ZeroToThree.Scripts
 
         public void Update()
         {
-            var board = this.Board;
-
-            if (board != null)
-            {
-                if (this.CanStep() == true)
-                {
-                    board.Step();
-                }
-
-            }
 
         }
 

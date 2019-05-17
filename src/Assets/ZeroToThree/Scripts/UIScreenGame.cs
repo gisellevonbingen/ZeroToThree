@@ -38,6 +38,22 @@ namespace Assets.ZeroToThree.Scripts
             base.Start();
         }
 
+        private void Update()
+        {
+            var session = this.Session;
+
+            if (session != null)
+            {
+                if (this.BoardSprite?.CanStep() == true)
+                {
+                    session.Step();
+                }
+
+                this.ScoreText.SetScoreGoal(session.Score);
+            }
+
+        }
+
         private void OnBackButtonClick(object sender, UIEventArgs e)
         {
             UIManager.Instance.PopupYesNoDialog("Quit\nGame?").ListenDetermine(this.OnQuitClosed);
@@ -61,17 +77,6 @@ namespace Assets.ZeroToThree.Scripts
         private void Restart()
         {
             this.SetSession(new GameSession());
-        }
-
-        private void Update()
-        {
-            var session = this.Session;
-
-            if (session != null)
-            {
-                this.ScoreText.SetScoreGoal(session.Score);
-            }
-
         }
 
     }

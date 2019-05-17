@@ -46,13 +46,14 @@ namespace Assets.ZeroToThree.Scripts
 
         public List<BoardSolution> Solve(bool first)
         {
-            var solutions = new List<BoardSolution>();
             var blocks = this.Blocks;
 
             if (blocks.Any(b => b == null) == true)
             {
-                return solutions;
+                return null;
             }
+
+            var solutions = new List<BoardSolution>();
 
             var unmasks = blocks.Where(b => b != null && b.Masking == false).ToList();
             var connetedSets = new List<Block[]>();
@@ -203,56 +204,23 @@ namespace Assets.ZeroToThree.Scripts
 
         public bool Step()
         {
-            if (this.Step0() == true)
-            {
-                using (var fs = new FileStream("test.txt", FileMode.Create))
-                {
-                    using (var sw = new StreamWriter(fs))
-                    {
-                        var solutions = this.Solve(false);
-                        solutions.Sort((o1, o2) => o1.Indices.Count.CompareTo(o2.Indices.Count));
-
-                        sw.WriteLine("Solutions : " + solutions.Count);
-
-                        foreach (var solution in solutions)
-                        {
-                            var line = string.Join(", ", solution.Indices.Select(array => $"[{string.Join(", ", array)}]"));
-                            sw.WriteLine(line);
-                        }
-
-                    }
-
-                }
-
-                return true;
-            }
-
-            return false;
-        }
-
-        private bool Step0()
-        {
             if (this.BreakCompleteLines() == true)
             {
-                UnityEngine.Debug.Log("BreakCompleteLines");
                 return true;
             }
 
             if (this.TryFall() == true)
             {
-                UnityEngine.Debug.Log("TryFall");
                 return true;
             }
 
             if (this.GenBlankBlocks() == true)
             {
-                UnityEngine.Debug.Log("GenBlankBlocks");
                 return true;
             }
 
             if (this.UpdateClicked() == true)
             {
-                UnityEngine.Debug.Log("UpdateClicked");
                 return true;
             }
 
