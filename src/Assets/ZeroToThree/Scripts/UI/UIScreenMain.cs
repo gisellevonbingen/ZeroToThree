@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using UnityEditor;
 using UnityEngine;
 
-namespace Assets.ZeroToThree.Scripts
+namespace Assets.ZeroToThree.Scripts.UI
 {
     public class UIScreenMain : UIScreen
     {

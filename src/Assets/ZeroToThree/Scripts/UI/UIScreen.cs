@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Assets.ZeroToThree.Scripts
+namespace Assets.ZeroToThree.Scripts.UI
 {
     public class UIScreen : UIObject
     {

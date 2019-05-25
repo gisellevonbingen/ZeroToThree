@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Assets.ZeroToThree.Scripts;
+using Assets.ZeroToThree.Scripts.UI;
 using UnityEngine;
 
 namespace Assets.ZeroToThree.Scripts
@@ -285,9 +286,9 @@ namespace Assets.ZeroToThree.Scripts
             return true;
         }
 
-        public void Update()
+        protected override void Update()
         {
-
+            base.Update();
         }
 
     }

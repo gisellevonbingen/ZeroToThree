@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.Events;
 
-namespace Assets.ZeroToThree.Scripts
+namespace Assets.ZeroToThree.Scripts.UI
 {
     public class UIDialogYesNo : UIDialog
     {

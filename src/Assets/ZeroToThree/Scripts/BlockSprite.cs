@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Assets.ZeroToThree.Scripts;
+using Assets.ZeroToThree.Scripts.UI;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -114,9 +115,9 @@ namespace Assets.ZeroToThree.Scripts
             this.transform.localScale = new Vector3(scale, scale, scale);
         }
 
-        private void Update()
+        protected override void Update()
         {
-
+            base.Update();
         }
 
         public void UpdateValue()

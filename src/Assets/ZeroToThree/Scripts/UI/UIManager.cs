@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Assets.ZeroToThree.Scripts
+namespace Assets.ZeroToThree.Scripts.UI
 {
     public class UIManager : MonoBehaviour
     {

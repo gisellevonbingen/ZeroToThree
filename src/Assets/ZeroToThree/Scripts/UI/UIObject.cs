@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.Events;
 
-namespace Assets.ZeroToThree.Scripts
+namespace Assets.ZeroToThree.Scripts.UI
 {
     public class UIObject : PoolingObject
     {
@@ -14,7 +14,24 @@ namespace Assets.ZeroToThree.Scripts
 
         public event EventHandler<UIEventArgs> Click;
 
+        public List<UIAction> Actions { get; private set; }
+
         public UIObject()
+        {
+            this.Actions = new List<UIAction>();
+        }
+
+        protected virtual void Awake()
+        {
+
+        }
+
+        protected virtual void Start()
+        {
+
+        }
+
+        protected virtual void Update()
         {
 
         }
@@ -74,16 +91,6 @@ namespace Assets.ZeroToThree.Scripts
             }
 
             return null;
-        }
-
-        protected virtual void Awake()
-        {
-
-        }
-
-        protected virtual void Start()
-        {
-            
         }
 
         public void PerformClick()

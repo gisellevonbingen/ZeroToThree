@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
 
-namespace Assets.ZeroToThree.Scripts
+namespace Assets.ZeroToThree.Scripts.UI
 {
     public class UIScreenGame : UIScreen
     {
@@ -38,8 +38,10 @@ namespace Assets.ZeroToThree.Scripts
             base.Start();
         }
 
-        private void Update()
+        protected override void Update()
         {
+            base.Update();
+
             var session = this.Session;
 
             if (session != null)

@@ -5,11 +5,11 @@ using System.Text;
 using System.Threading.Tasks;
 using UnityEngine.UI;
 
-namespace Assets.ZeroToThree.Scripts
+namespace Assets.ZeroToThree.Scripts.UI
 {
-    public class UILabel : UIObject
+    public class UIImage : UIObject
     {
-        public Text Text;
+        public Image Image;
     }
 
 }
