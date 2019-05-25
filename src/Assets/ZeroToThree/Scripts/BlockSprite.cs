@@ -61,6 +61,7 @@ namespace Assets.ZeroToThree.Scripts
 
             var scale = this.ZoomMaxScale;
             this.transform.localScale = new Vector3(scale, scale, scale);
+            this.transform.localRotation = new Quaternion(0.0F, 0.0F, 0.0F, 0.0F);
         }
 
         protected override void Update()
@@ -90,37 +91,21 @@ namespace Assets.ZeroToThree.Scripts
         {
             this.IsBreaked = false;
             this.IsMasked = false;
-            var startStamp = Time.time;
 
-            var tileRenderer = this.TileRenderer;
-            tileRenderer.gameObject.SetActive(false);
+            var action = new UIActionSet();
+            action.Actions.Add(new UIActionScaleToTime() { Duration = this.BreakDuration, End = new Vector3(0.0F, 0.0F, 0.0F) });
+            action.Actions.Add(new UIActionRotateToTime() { Duration = this.BreakDuration, End = 3600.0F });
+            this.Actions.Add(action);
 
-            var text = this.Text;
-            text.gameObject.SetActive(false);
-
-            var breakRenderer = this.BreakRenderer;
-            breakRenderer.Image.color = tileRenderer.Image.color;
-            breakRenderer.gameObject.SetActive(true);
-
-            var tileMaskRenderer = this.TileMaskRenderer;
-            tileMaskRenderer.gameObject.SetActive(false);
-
-            this.Actions.Add(new UIActionTimeDelegate()
+            this.Actions.Add(new UIActionDelegate()
             {
-                Duration = this.BreakDuration,
                 CompleteHandler = target =>
                 {
                     this.IsBreaked = true;
-
-                    tileRenderer.gameObject.SetActive(true);
-                    text.gameObject.SetActive(true);
-                    breakRenderer.gameObject.SetActive(false);
-
                     this.Breaked?.Invoke(this, new EventArgs());
                 }
 
             });
-
         }
 
         public void MaskStart()

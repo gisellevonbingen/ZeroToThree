@@ -8,12 +8,12 @@ using UnityEngine;
 
 namespace Assets.ZeroToThree.Scripts.UI
 {
-    public class UIActionRotateTo : UIActionTime
+    public class UIActionRotateToTime : UIActionTime
     {
         private float Start;
         public float End { get; set; }
 
-        public UIActionRotateTo()
+        public UIActionRotateToTime()
         {
             this.Start = 0.0F;
             this.End = 0.0F;
