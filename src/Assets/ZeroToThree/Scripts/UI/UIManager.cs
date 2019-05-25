@@ -22,6 +22,7 @@ namespace Assets.ZeroToThree.Scripts.UI
         private bool QuitSure;
         private Coroutine QuitCoroutine;
 
+        [Header("Status")]
         public UIDialogYesNo YesNoDialogPref;
         private ObjectPool<UIDialogYesNo> YesNoDialogPool;
 
