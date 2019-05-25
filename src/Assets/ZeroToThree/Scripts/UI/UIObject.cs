@@ -33,6 +33,18 @@ namespace Assets.ZeroToThree.Scripts.UI
 
         protected virtual void Update()
         {
+            var delta = Time.deltaTime;
+            var actions = this.Actions;
+            var action = actions.FirstOrDefault();
+
+            if (action != null)
+            {
+                if (action.Act(this, delta) == true)
+                {
+                    actions.Remove(action);
+                }
+
+            }
 
         }
 

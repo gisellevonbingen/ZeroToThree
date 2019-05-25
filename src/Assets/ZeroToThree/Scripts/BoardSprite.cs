@@ -278,7 +278,7 @@ namespace Assets.ZeroToThree.Scripts
 
         public bool CanStep()
         {
-            if (this.BlockSprites.Any(b => b.AnimatingRoutine != null) == true)
+            if (this.BlockSprites.Any(b => b.Actions.Count > 0) == true)
             {
                 return false;
             }

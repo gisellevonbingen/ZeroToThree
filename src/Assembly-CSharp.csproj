@@ -76,7 +76,12 @@
     <Compile Include="Assets\ZeroToThree\Scripts\ScoreText.cs" />
     <Compile Include="Assets\ZeroToThree\Scripts\TimeIntTracker.cs" />
     <Compile Include="Assets\ZeroToThree\Scripts\UI\UIAction.cs" />
+    <Compile Include="Assets\ZeroToThree\Scripts\UI\UIActionDelegate.cs" />
+    <Compile Include="Assets\ZeroToThree\Scripts\UI\UIActionMoveToSpeed.cs" />
+    <Compile Include="Assets\ZeroToThree\Scripts\UI\UIActionRotateToTime.cs" />
+    <Compile Include="Assets\ZeroToThree\Scripts\UI\UIActionScaleToTime.cs" />
     <Compile Include="Assets\ZeroToThree\Scripts\UI\UIActionTime.cs" />
+    <Compile Include="Assets\ZeroToThree\Scripts\UI\UIActionTimeDelegate.cs" />
     <Compile Include="Assets\ZeroToThree\Scripts\UI\UICommonButton.cs" />
     <Compile Include="Assets\ZeroToThree\Scripts\UI\UIDialog.cs" />
     <Compile Include="Assets\ZeroToThree\Scripts\UI\UIDialogYesNo.cs" />

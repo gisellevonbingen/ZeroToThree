@@ -30,79 +30,27 @@ namespace Assets.ZeroToThree.Scripts
         public float Gravity;
 
         public Vector2 GoalPosition;
-        public bool InPosition;
         public bool IsBreaked;
         public bool IsMasked;
 
         public event EventHandler Breaked;
         public event EventHandler Masked;
 
-        public Coroutine AnimatingRoutine;
-
         protected override UIObject QueryChildren(Vector2 worldPosition)
         {
             return null;
         }
 
-        public Coroutine NewAnimationRoutine(IEnumerator routine)
-        {
-            var prev = this.AnimatingRoutine;
-
-            if (prev != null)
-            {
-                this.StopCoroutine(prev);
-            }
-
-            var next = this.StartCoroutine(this.Control(routine));
-            this.AnimatingRoutine = next;
-
-            return next;
-        }
-
-        private IEnumerator Control(IEnumerator routine)
-        {
-            yield return routine;
-            this.AnimatingRoutine = null;
-        }
-
         public void MoveStart(Vector2 newPosition)
         {
-            this.NewAnimationRoutine(this.MoveRoutine(newPosition));
-        }
-
-        private IEnumerator MoveRoutine(Vector2 goalPosition)
-        {
-            this.GoalPosition = goalPosition;
-            this.InPosition = false;
-
-            while (true)
-            {
-                var position = this.transform.localPosition;
-                var nextPosition = Vector2.MoveTowards(position, goalPosition, this.Gravity * Time.deltaTime);
-
-                this.transform.localPosition = nextPosition;
-
-                if (goalPosition.sqrMagnitude == nextPosition.sqrMagnitude)
-                {
-                    this.InPosition = true;
-                    break;
-                }
-                else
-                {
-                    yield return null;
-                }
-
-            }
-
+            this.Actions.Add(new UIActionMoveToSpeed() { End = newPosition, MaxDistanceDelta = this.Gravity });
         }
 
         public void Reset()
         {
             this.Block = null;
-            this.StopAllCoroutines();
 
             this.GoalPosition = new Vector2();
-            this.InPosition = false;
             this.IsBreaked = false;
             this.IsMasked = false;
 
@@ -140,11 +88,6 @@ namespace Assets.ZeroToThree.Scripts
 
         public void BreakStart()
         {
-            this.NewAnimationRoutine(this.BreakRoutine());
-        }
-
-        private IEnumerator BreakRoutine()
-        {
             this.IsBreaked = false;
             this.IsMasked = false;
             var startStamp = Time.time;
@@ -162,11 +105,10 @@ namespace Assets.ZeroToThree.Scripts
             var tileMaskRenderer = this.TileMaskRenderer;
             tileMaskRenderer.gameObject.SetActive(false);
 
-            while (true)
+            this.Actions.Add(new UIActionTimeDelegate()
             {
-                var time = Time.time;
-
-                if (time - startStamp >= this.BreakDuration)
+                Duration = this.BreakDuration,
+                CompleteHandler = target =>
                 {
                     this.IsBreaked = true;
 
@@ -175,83 +117,38 @@ namespace Assets.ZeroToThree.Scripts
                     breakRenderer.gameObject.SetActive(false);
 
                     this.Breaked?.Invoke(this, new EventArgs());
-                    break;
-                }
-                else
-                {
-                    yield return null;
                 }
 
-            }
+            });
 
         }
 
         public void MaskStart()
         {
-            this.NewAnimationRoutine(this.MaskRoutine());
-        }
-
-        public IEnumerator MaskRoutine()
-        {
-            this.IsMasked = false;
-            var startStamp = 0.0F;
             var min = this.ZoomMinScale;
             var max = this.ZoomMaxScale;
-
-            int phase = 0;
-
-            while (true)
+            this.Actions.Add(new UIActionScaleToTime() { Duration = this.ZoomOutDuration, End = new Vector3(min, min, min) });
+            this.Actions.Add(new UIActionDelegate()
             {
-                var time = Time.time;
-
-                if (phase == 0)
-                {
-                    startStamp = Time.time;
-                    phase = 1;
-                }
-                else if (phase == 1)
-                {
-                    var zoomOutDuration = this.ZoomOutDuration;
-                    var ratio = Math.Min((time - startStamp) / zoomOutDuration, 1.0F);
-                    var scale = max - (max - min) * ratio;
-                    this.transform.localScale = new Vector3(scale, scale, scale);
-
-                    if (time - startStamp >= zoomOutDuration)
-                    {
-                        startStamp = Time.time;
-                        phase = 2;
-                    }
-
-                }
-                else if (phase == 2)
+                CompleteHandler = (target) =>
                 {
                     this.UpdateValue();
 
                     var tileMaskRenderer = this.TileMaskRenderer;
                     tileMaskRenderer.gameObject.SetActive(true);
-
-                    var zoomInDuration = this.ZoomInDuration;
-                    var ratio = Math.Min((time - startStamp) / zoomInDuration, 1.0F);
-                    var scale = max - (max - min) * (1.0F - ratio);
-                    this.transform.localScale = new Vector3(scale, scale, scale);
-
-                    if (time - startStamp >= zoomInDuration)
-                    {
-                        startStamp = Time.time;
-                        phase = 3;
-                    }
-
                 }
-                else if (phase == 3)
+
+            });
+            this.Actions.Add(new UIActionScaleToTime() { Duration = this.ZoomInDuration, End = new Vector3(max, max, max) });
+            this.Actions.Add(new UIActionDelegate()
+            {
+                CompleteHandler = (target) =>
                 {
                     this.IsMasked = true;
                     this.OnMasked();
-
-                    break;
                 }
 
-                yield return null;
-            }
+            });
 
         }
 
@@ -262,7 +159,7 @@ namespace Assets.ZeroToThree.Scripts
 
         public bool CanMask()
         {
-            if (this.AnimatingRoutine != null || this.IsMasked == true)
+            if (this.IsMasked == true)
             {
                 return false;
             }
