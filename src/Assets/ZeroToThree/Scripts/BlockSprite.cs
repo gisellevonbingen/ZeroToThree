@@ -22,11 +22,12 @@ namespace Assets.ZeroToThree.Scripts
 
         public Block Block { get; set; }
 
+        public float ZoomMinDuration;
         public float ZoomMinScale;
+        public float ZoomMaxDuration;
         public float ZoomMaxScale;
-        public float ZoomOutDuration;
-        public float ZoomInDuration;
         public float BreakDuration;
+        public float BreakRotation;
         public float Gravity;
 
         public Vector2 GoalPosition;
@@ -94,7 +95,7 @@ namespace Assets.ZeroToThree.Scripts
 
             var action = new UIActionSet();
             action.Actions.Add(new UIActionScaleToTime() { Duration = this.BreakDuration, End = new Vector3(0.0F, 0.0F, 0.0F) });
-            action.Actions.Add(new UIActionRotateToTime() { Duration = this.BreakDuration, End = 3600.0F });
+            action.Actions.Add(new UIActionRotateToTime() { Duration = this.BreakDuration, End = this.BreakRotation });
             this.Actions.Add(action);
 
             this.Actions.Add(new UIActionDelegate()
@@ -112,7 +113,7 @@ namespace Assets.ZeroToThree.Scripts
         {
             var min = this.ZoomMinScale;
             var max = this.ZoomMaxScale;
-            this.Actions.Add(new UIActionScaleToTime() { Duration = this.ZoomOutDuration, End = new Vector3(min, min, min) });
+            this.Actions.Add(new UIActionScaleToTime() { Duration = this.ZoomMinDuration, End = new Vector3(min, min, min) });
             this.Actions.Add(new UIActionDelegate()
             {
                 CompleteHandler = (target) =>
@@ -124,7 +125,7 @@ namespace Assets.ZeroToThree.Scripts
                 }
 
             });
-            this.Actions.Add(new UIActionScaleToTime() { Duration = this.ZoomInDuration, End = new Vector3(max, max, max) });
+            this.Actions.Add(new UIActionScaleToTime() { Duration = this.ZoomMaxDuration, End = new Vector3(max, max, max) });
             this.Actions.Add(new UIActionDelegate()
             {
                 CompleteHandler = (target) =>

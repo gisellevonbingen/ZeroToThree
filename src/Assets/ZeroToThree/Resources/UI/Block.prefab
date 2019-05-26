@@ -61,14 +61,14 @@ MonoBehaviour:
   - {r: 0.7764706, g: 0.8235294, b: 0.68235296, a: 1}
   - {r: 0.654902, g: 0.8, b: 0.8352941, a: 1}
   - {r: 0.90588236, g: 0.76862746, b: 0.6509804, a: 1}
+  ZoomMinDuration: 0.05
   ZoomMinScale: 0.5
+  ZoomMaxDuration: 0.05
   ZoomMaxScale: 1
-  ZoomOutDuration: 0.05
-  ZoomInDuration: 0.05
   BreakDuration: 0.25
+  BreakRotation: 360
   Gravity: 5760
   GoalPosition: {x: 0, y: 0}
-  InPosition: 0
   IsBreaked: 0
   IsMasked: 0
 --- !u!1001 &128988935658599765
@@ -216,7 +216,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 089ac7219ce55514098c5dfbb29eba20, type: 3}
+  m_Script: {fileID: 11500000, guid: 41d163b17efcbcd48ac12744dfee8bf4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1001 &1946051201572922559
@@ -388,7 +388,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cea7772c9b4ed5d48991b38b783dc490, type: 3}
+  m_Script: {fileID: 11500000, guid: a51855b38ca404f4db3c7567c55ee857, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1001 &4582414559342944322
@@ -546,7 +546,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 089ac7219ce55514098c5dfbb29eba20, type: 3}
+  m_Script: {fileID: 11500000, guid: 41d163b17efcbcd48ac12744dfee8bf4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1001 &5009087683449377944
@@ -709,6 +709,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 089ac7219ce55514098c5dfbb29eba20, type: 3}
+  m_Script: {fileID: 11500000, guid: 41d163b17efcbcd48ac12744dfee8bf4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
