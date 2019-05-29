@@ -14,7 +14,8 @@ namespace Assets.ZeroToThree.Scripts.UI
         public UIImage BackButton;
         public UIImage ResetButton;
 
-        public GameSession Session { get; private set; }
+        public GameSession Session { get; private set; } = null;
+        public bool Resetting { get; private set; } = false;
 
         public void SetSession(GameSession session)
         {
@@ -46,14 +47,36 @@ namespace Assets.ZeroToThree.Scripts.UI
 
             if (session != null)
             {
-                if (this.BoardSprite?.CanStep() == true)
+                var resetting = this.Resetting;
+
+                if (this.BoardSprite.CanStep() == true)
                 {
-                    session.Step();
+                    if (resetting == true)
+                    {
+                        this.Resetting = false;
+                        this.OnReset();
+
+                        return;
+                    }
+                    else
+                    {
+                        session.Step();
+                    }
+
                 }
 
-                this.ScoreText.SetScoreGoal(session.Score);
+                if (resetting == false)
+                {
+                    this.ScoreText.SetScoreGoal(session.Score);
+                }
+
             }
 
+        }
+
+        private void OnReset()
+        {
+            this.SetSession(new GameSession());
         }
 
         private void OnBackButtonClick(object sender, UIEventArgs e)
@@ -73,12 +96,8 @@ namespace Assets.ZeroToThree.Scripts.UI
 
         private void OnResetButtonClick(object sender, UIEventArgs e)
         {
-            this.Restart();
-        }
-
-        private void Restart()
-        {
-            this.SetSession(new GameSession());
+            this.Resetting = true;
+            this.Session?.Clear();
         }
 
     }

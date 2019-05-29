@@ -46,7 +46,7 @@ namespace Assets.ZeroToThree.Scripts
 
         }
 
-        public void Restart()
+        public void Clear()
         {
             this.Board.Clear();
             this.Score = 0;

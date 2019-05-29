@@ -137,7 +137,7 @@ namespace Assets.ZeroToThree.Scripts
             this.ValueRange = 0;
             this.ClickIndex = -1;
 
-            this.ExhaustAll();
+            this.BreakAll();
         }
 
         public event EventHandler<BlocksEventArgs> BlocksGen;
@@ -175,17 +175,10 @@ namespace Assets.ZeroToThree.Scripts
             this.LineComplete?.Invoke(this, e);
         }
 
-        public event EventHandler<BlocksEventArgs> BlocksExhaust;
-
-        protected virtual void OnBlocksExhaust(BlocksEventArgs e)
-        {
-            this.BlocksExhaust?.Invoke(this, e);
-        }
-
-        public void ExhaustAll()
+        public void BreakAll()
         {
             var blocks = this.Blocks;
-            var exhauteds = new List<Block>();
+            var breaks = new List<Block>();
 
             for (int i = 0; i < blocks.Length; i++)
             {
@@ -194,12 +187,12 @@ namespace Assets.ZeroToThree.Scripts
 
                 if (block != null)
                 {
-                    exhauteds.Add(block);
+                    breaks.Add(block);
                 }
 
             }
 
-            this.OnBlocksExhaust(new BlocksEventArgs(exhauteds.ToArray()));
+            this.OnBlocksBreak(new BlocksEventArgs(breaks.ToArray()));
         }
 
         public bool Step()

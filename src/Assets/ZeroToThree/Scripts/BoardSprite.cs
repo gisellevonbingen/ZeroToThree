@@ -42,23 +42,8 @@ namespace Assets.ZeroToThree.Scripts
                 board.BlocksFall += this.OnBlocksFall;
                 board.BlocksUpdate += this.OnBlocksUpdate;
                 board.BlocksBreak += this.OnBlocksBreak;
-                board.BlocksExhaust += this.OnBlocksExhaust;
 
                 board.ValueRange = this.BlockPrefab.ValueColors.Length;
-            }
-
-        }
-
-        private void OnBlocksExhaust(object sender, BlocksEventArgs e)
-        {
-            var board = this.Board;
-
-            foreach (var block in e.Blocks)
-            {
-                var sprite = this.FindSprite(block);
-                this.Destory(sprite);
-
-                this.UpdateSpriteName(board, sprite);
             }
 
         }
