@@ -51,6 +51,8 @@ namespace Assets.ZeroToThree.Scripts
         {
             this.Block = null;
 
+            this.Actions.Clear();
+
             this.GoalPosition = new Vector2();
             this.IsBreaked = false;
             this.IsMasked = false;
