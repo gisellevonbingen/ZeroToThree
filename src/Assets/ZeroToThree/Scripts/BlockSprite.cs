@@ -44,7 +44,7 @@ namespace Assets.ZeroToThree.Scripts
 
         public void MoveStart(Vector2 newPosition)
         {
-            this.Actions.Add(new UIActionMoveToSpeed() { End = newPosition, MaxDistanceDelta = this.Gravity });
+            this.Actions.Add(new UIActionMoveToSpeed() { End = newPosition, Velocity = this.Gravity, Gain = 0.5F, InPosition = 90 });
         }
 
         public void Reset()
