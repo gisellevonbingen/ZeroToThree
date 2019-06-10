@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -55,9 +54,14 @@ namespace Assets.ZeroToThree.Scripts
             foreach (var block in e.Blocks)
             {
                 var sprite = this.FindSprite(block);
-                sprite.BreakStart();
 
-                this.UpdateSpriteName(board, sprite);
+                if (sprite != null)
+                {
+                    sprite.BreakStart();
+
+                    this.UpdateSpriteName(board, sprite);
+                }
+
             }
 
         }
@@ -69,9 +73,14 @@ namespace Assets.ZeroToThree.Scripts
             foreach (var block in e.Blocks)
             {
                 var sprite = this.FindSprite(block);
-                sprite.MaskStart();
 
-                this.UpdateSpriteName(board, sprite);
+                if (sprite != null)
+                {
+                    sprite.MaskStart();
+
+                    this.UpdateSpriteName(board, sprite);
+                }
+
             }
 
         }
@@ -83,10 +92,15 @@ namespace Assets.ZeroToThree.Scripts
             foreach (var block in e.Blocks)
             {
                 var sprite = this.FindSprite(block);
-                board.GetBlockIndex(block, out var col, out var row);
-                sprite.MoveStart(this.GetBlockGoalPosition(col, row));
 
-                this.UpdateSpriteName(board, sprite);
+                if (sprite != null)
+                {
+                    board.GetBlockIndex(block, out var col, out var row);
+                    sprite.MoveStart(this.GetBlockGoalPosition(col, row));
+
+                    this.UpdateSpriteName(board, sprite);
+                }
+
             }
 
         }
