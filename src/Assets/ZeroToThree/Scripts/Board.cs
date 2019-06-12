@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Linq;
@@ -513,9 +512,10 @@ namespace Assets.ZeroToThree.Scripts
             {
                 for (int col = 0; col < this.Width; col++)
                 {
-                    var block = this.TryFall(col, row);
+                    var block = this[col, row];
+                    var fallHeight = this.TryFall(col, row);
 
-                    if (block != null)
+                    if (fallHeight != 0)
                     {
                         blocks.Add(block);
                     }
@@ -534,26 +534,38 @@ namespace Assets.ZeroToThree.Scripts
             return false;
         }
 
-        private Block TryFall(int col, int row)
+        private int TryFall(int col, int row)
         {
-            var block = this[col, row];
+            int fallHeight = 0;
 
-            if (block != null)
+            for (int i = row; i < this.Height - 1; i++)
             {
-                var downRow = row + 1;
+                var downRow = i + 1;
+
+                var block = this[col, i];
+
+                if (block == null)
+                {
+                    break;
+                }
+
                 var down = this[col, downRow];
 
                 if (down == null)
                 {
                     this[col, downRow] = block;
-                    this[col, row] = null;
+                    this[col, i] = null;
 
-                    return block;
+                    fallHeight++;
+                }
+                else
+                {
+                    break;
                 }
 
             }
 
-            return null;
+            return fallHeight;
         }
 
     }
