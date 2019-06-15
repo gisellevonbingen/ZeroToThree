@@ -35,6 +35,7 @@ namespace Assets.ZeroToThree.Scripts.UI
 
             if (elapsed >= duration)
             {
+                this.OnAct(target, duration - elapsed, 1.0F);
                 return true;
             }
             else
