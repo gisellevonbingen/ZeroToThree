@@ -301,6 +301,7 @@
     <Compile Include="Assets\ZeroToThree\Scripts\PoolGrowEventArgs.cs" />
     <Compile Include="Assets\ZeroToThree\Scripts\PoolingObject.cs" />
     <Compile Include="Assets\ZeroToThree\Scripts\ScoreText.cs" />
+    <Compile Include="Assets\ZeroToThree\Scripts\StatisticsManager.cs" />
     <Compile Include="Assets\ZeroToThree\Scripts\TimeIntTracker.cs" />
     <Compile Include="Assets\ZeroToThree\Scripts\UI\UIAction.cs" />
     <Compile Include="Assets\ZeroToThree\Scripts\UI\UIActionDelegate.cs" />

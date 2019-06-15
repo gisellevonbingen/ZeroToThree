@@ -894,6 +894,7 @@
     <Compile Include="Assets\ZeroToThree\Scripts\UI\UIActionTimeDelegate.cs" />
     <Compile Include="Assets\ZeroToThree\Scripts\UI\UICommonButton.cs" />
     <Compile Include="Assets\ZeroToThree\Scripts\UI\UIDialog.cs" />
+    <Compile Include="Assets\ZeroToThree\Scripts\UI\UIDialogGameOver.cs" />
     <Compile Include="Assets\ZeroToThree\Scripts\UI\UIDialogYesNo.cs" />
     <Compile Include="Assets\ZeroToThree\Scripts\UI\UIEventArgs.cs" />
     <Compile Include="Assets\ZeroToThree\Scripts\UI\UIImage.cs" />
