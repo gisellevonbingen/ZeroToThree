@@ -85,6 +85,12 @@ namespace Assets.ZeroToThree.Scripts.UI
 
         }
 
+        public void ResetGame()
+        {
+            this.Resetting = true;
+            this.Session?.Clear();
+        }
+
         private void OnReset()
         {
             this.SetSession(new GameSession());
@@ -92,23 +98,12 @@ namespace Assets.ZeroToThree.Scripts.UI
 
         private void OnBackButtonClick(object sender, UIEventArgs e)
         {
-            UIManager.Instance.PopupYesNoDialog("Quit\nGame?").ListenDetermine(this.OnQuitClosed);
-        }
-
-        private void OnQuitClosed(object sender, YesNoDetermineEventArgs e)
-        {
-            if (e.Result == YesNoResult.Yes)
-            {
-                var ui = UIManager.Instance;
-                ui.ShowScreen(ui.Main);
-            }
-
+            this.Session.GameOvered = true;
         }
 
         private void OnResetButtonClick(object sender, UIEventArgs e)
         {
-            this.Resetting = true;
-            this.Session?.Clear();
+            this.ResetGame();
         }
 
     }
