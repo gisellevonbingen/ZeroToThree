@@ -22,10 +22,11 @@ namespace Assets.ZeroToThree.Scripts.UI
         private bool QuitSure;
         private Coroutine QuitCoroutine;
 
-        [Header("Status")]
         public UIDialogYesNo YesNoDialogPref;
         private ObjectPool<UIDialogYesNo> YesNoDialogPool;
+        public UIDialogGameOver GameOverDialog;
 
+        [Header("Status")]
         public Vector2 MousePosition;
         private bool PrevMouseDown;
         public bool MouseDown;

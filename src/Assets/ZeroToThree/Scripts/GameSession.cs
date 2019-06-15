@@ -11,6 +11,7 @@ namespace Assets.ZeroToThree.Scripts
     {
         public Board Board { get; }
         public int Score { get; set; }
+        public bool GameOvered { get; set; }
 
         public GameSession()
         {
@@ -18,6 +19,7 @@ namespace Assets.ZeroToThree.Scripts
             this.Board.LineComplete += this.OnBoardLineComplete;
 
             this.Score = 0;
+            this.GameOvered = false;
         }
 
         public void Step()
@@ -41,7 +43,7 @@ namespace Assets.ZeroToThree.Scripts
 
             if (solutions != null && solutions.Count == 0)
             {
-                Debug.Log("Shit!, Game Over!!");
+                this.GameOvered = true;
             }
 
         }
@@ -50,6 +52,7 @@ namespace Assets.ZeroToThree.Scripts
         {
             this.Board.Clear();
             this.Score = 0;
+            this.GameOvered = false;
         }
 
         private void OnBoardLineComplete(object sender, BoardLineEventArgs e)

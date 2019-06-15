@@ -58,6 +58,17 @@ namespace Assets.ZeroToThree.Scripts.UI
 
                         return;
                     }
+                    else if (session.GameOvered == true)
+                    {
+                        var um = UIManager.Instance;
+                        var gameOverDialog = um.GameOverDialog;
+
+                        if (gameOverDialog.Visible == false)
+                        {
+                            um.PopupWindow(gameOverDialog);
+                        }
+
+                    }
                     else
                     {
                         session.Step();
