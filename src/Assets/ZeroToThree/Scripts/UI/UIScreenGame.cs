@@ -12,7 +12,6 @@ namespace Assets.ZeroToThree.Scripts.UI
         public BoardSprite BoardSprite;
         public ScoreText ScoreText;
         public UIImage BackButton;
-        public UIImage ResetButton;
 
         public GameSession Session { get; private set; } = null;
         public bool Resetting { get; private set; } = false;
@@ -31,7 +30,6 @@ namespace Assets.ZeroToThree.Scripts.UI
             base.Awake();
 
             this.BackButton.Click += this.OnBackButtonClick;
-            this.ResetButton.Click += this.OnResetButtonClick;
         }
 
         protected override void Start()
@@ -103,11 +101,6 @@ namespace Assets.ZeroToThree.Scripts.UI
         private void OnBackButtonClick(object sender, UIEventArgs e)
         {
             this.Session.GameOvered = true;
-        }
-
-        private void OnResetButtonClick(object sender, UIEventArgs e)
-        {
-            this.ResetGame();
         }
 
     }
