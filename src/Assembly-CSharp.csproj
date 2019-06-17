@@ -296,11 +296,13 @@
     <Compile Include="Assets\ZeroToThree\Scripts\BoardSolution.cs" />
     <Compile Include="Assets\ZeroToThree\Scripts\BoardSprite.cs" />
     <Compile Include="Assets\ZeroToThree\Scripts\EnumerableUtils.cs" />
+    <Compile Include="Assets\ZeroToThree\Scripts\GameManager.cs" />
     <Compile Include="Assets\ZeroToThree\Scripts\GameSession.cs" />
     <Compile Include="Assets\ZeroToThree\Scripts\ObjectPool.cs" />
     <Compile Include="Assets\ZeroToThree\Scripts\PoolGrowEventArgs.cs" />
     <Compile Include="Assets\ZeroToThree\Scripts\PoolingObject.cs" />
     <Compile Include="Assets\ZeroToThree\Scripts\ScoreText.cs" />
+    <Compile Include="Assets\ZeroToThree\Scripts\StatisticsData.cs" />
     <Compile Include="Assets\ZeroToThree\Scripts\StatisticsManager.cs" />
     <Compile Include="Assets\ZeroToThree\Scripts\TimeIntTracker.cs" />
     <Compile Include="Assets\ZeroToThree\Scripts\UI\UIAction.cs" />

@@ -30,21 +30,21 @@ namespace Assets.ZeroToThree.Scripts.UI
 
         private void OnBackClick(object sender, UIEventArgs e)
         {
-            UIManager.Instance.QuitDialogStart();
+            GameManager.Instance.UIManager.QuitDialogStart();
         }
 
         private void OnStandardClick(object sender, UIEventArgs e)
         {
-            var um = UIManager.Instance;
+            var um = GameManager.Instance.UIManager;
             var screen = um.ShowScreen(um.Game);
 
-            var session = new GameSession();
+            var session = GameManager.Instance.CreateSession();
             screen.SetSession(session);
         }
 
         private void OnOptionClick(object sender, UIEventArgs e)
         {
-            UIManager.Instance.PopupYesNoDialog("Dialog\nTest");
+            GameManager.Instance.UIManager.PopupYesNoDialog("Dialog\nTest");
         }
 
     }

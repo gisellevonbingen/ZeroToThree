@@ -11,8 +11,6 @@ namespace Assets.ZeroToThree.Scripts.UI
 {
     public class UIManager : MonoBehaviour
     {
-        public static UIManager Instance { get; private set; }
-
         public Camera Camera;
         public UIWindow MainWindow;
         public UIScreenMain Main;
@@ -42,8 +40,6 @@ namespace Assets.ZeroToThree.Scripts.UI
             Application.wantsToQuit += this.OnApplicationWantsToQuit;
             this.QuitSure = false;
             this.QuitCoroutine = null;
-
-            Instance = this;
 
             this.YesNoDialogPool = new ObjectPool<UIDialogYesNo>(this.YesNoDialogPref);
             this.YesNoDialogPool.Growed += this.OnYesNoDialogPoolGrowed;
@@ -175,7 +171,7 @@ namespace Assets.ZeroToThree.Scripts.UI
 
         public void PopupWindow(UIWindow window)
         {
-            window.transform.SetParent(UIManager.Instance.transform, false);
+            window.transform.SetParent(this.transform, false);
             window.transform.SetAsLastSibling();
             window.Closed += this.OnWindowClosed;
             window.Open();

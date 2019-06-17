@@ -60,11 +60,14 @@ namespace Assets.ZeroToThree.Scripts.UI
                     }
                     else if (session.GameOvered == true)
                     {
-                        var um = UIManager.Instance;
+                        GameManager.Instance.OnGameOver(session);
+
+                        var um = GameManager.Instance.UIManager;
                         var gameOverDialog = um.GameOverDialog;
 
                         if (gameOverDialog.Visible == false)
                         {
+                            gameOverDialog.Session = this.Session;
                             um.PopupWindow(gameOverDialog);
                         }
 
@@ -93,7 +96,8 @@ namespace Assets.ZeroToThree.Scripts.UI
 
         private void OnReset()
         {
-            this.SetSession(new GameSession());
+            var session = GameManager.Instance.CreateSession();
+            this.SetSession(session);
         }
 
         private void OnBackButtonClick(object sender, UIEventArgs e)

@@ -119,6 +119,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1270474373}
     m_Modifications:
+    - target: {fileID: 7888525415450365378, guid: a1d46640ec22d674786146c035821126,
+        type: 3}
+      propertyPath: m_Name
+      value: Back
+      objectReference: {fileID: 0}
     - target: {fileID: 7888525415450365379, guid: a1d46640ec22d674786146c035821126,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -224,11 +229,6 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
-    - target: {fileID: 7888525415450365378, guid: a1d46640ec22d674786146c035821126,
-        type: 3}
-      propertyPath: m_Name
-      value: Back
-      objectReference: {fileID: 0}
     - target: {fileID: 7888525415450365377, guid: a1d46640ec22d674786146c035821126,
         type: 3}
       propertyPath: m_Sprite
@@ -262,6 +262,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1779484245}
     m_Modifications:
+    - target: {fileID: 6018075765761177572, guid: 18bfb75a53ea1b9468bf0d9ff765d4ee,
+        type: 3}
+      propertyPath: m_Name
+      value: Title
+      objectReference: {fileID: 0}
     - target: {fileID: 6018075765761177575, guid: 18bfb75a53ea1b9468bf0d9ff765d4ee,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -366,11 +371,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Pivot.y
       value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 6018075765761177572, guid: 18bfb75a53ea1b9468bf0d9ff765d4ee,
-        type: 3}
-      propertyPath: m_Name
-      value: Title
       objectReference: {fileID: 0}
     - target: {fileID: 6018075765761177569, guid: 18bfb75a53ea1b9468bf0d9ff765d4ee,
         type: 3}
@@ -496,6 +496,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1270474373}
     m_Modifications:
+    - target: {fileID: 7888525415450365378, guid: a1d46640ec22d674786146c035821126,
+        type: 3}
+      propertyPath: m_Name
+      value: ResetButton
+      objectReference: {fileID: 0}
     - target: {fileID: 7888525415450365379, guid: a1d46640ec22d674786146c035821126,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -601,11 +606,6 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
-    - target: {fileID: 7888525415450365378, guid: a1d46640ec22d674786146c035821126,
-        type: 3}
-      propertyPath: m_Name
-      value: ResetButton
-      objectReference: {fileID: 0}
     - target: {fileID: 7888525415450365377, guid: a1d46640ec22d674786146c035821126,
         type: 3}
       propertyPath: m_Sprite
@@ -639,6 +639,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 2669458501187916062}
     m_Modifications:
+    - target: {fileID: 7888525415450365378, guid: a1d46640ec22d674786146c035821126,
+        type: 3}
+      propertyPath: m_Name
+      value: BackButton
+      objectReference: {fileID: 0}
     - target: {fileID: 7888525415450365379, guid: a1d46640ec22d674786146c035821126,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -744,11 +749,6 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
-    - target: {fileID: 7888525415450365378, guid: a1d46640ec22d674786146c035821126,
-        type: 3}
-      propertyPath: m_Name
-      value: BackButton
-      objectReference: {fileID: 0}
     - target: {fileID: 7888525415450365377, guid: a1d46640ec22d674786146c035821126,
         type: 3}
       propertyPath: m_Sprite
@@ -786,6 +786,7 @@ GameObject:
   - component: {fileID: 519420033}
   - component: {fileID: 519420031}
   - component: {fileID: 519420029}
+  - component: {fileID: 519420030}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -801,6 +802,19 @@ AudioListener:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 519420028}
   m_Enabled: 1
+--- !u!114 &519420030
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 519420028}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: afbe1d04d4987b64e8e6db26e84def97, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  UIManager: {fileID: 854465049}
 --- !u!20 &519420031
 Camera:
   m_ObjectHideFlags: 0
@@ -869,6 +883,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1270474373}
     m_Modifications:
+    - target: {fileID: 6018075765761177572, guid: 18bfb75a53ea1b9468bf0d9ff765d4ee,
+        type: 3}
+      propertyPath: m_Name
+      value: Score
+      objectReference: {fileID: 0}
     - target: {fileID: 6018075765761177575, guid: 18bfb75a53ea1b9468bf0d9ff765d4ee,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -973,11 +992,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Pivot.y
       value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 6018075765761177572, guid: 18bfb75a53ea1b9468bf0d9ff765d4ee,
-        type: 3}
-      propertyPath: m_Name
-      value: Score
       objectReference: {fileID: 0}
     - target: {fileID: 6018075765761177569, guid: 18bfb75a53ea1b9468bf0d9ff765d4ee,
         type: 3}
@@ -1199,6 +1213,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 2669458501187916062}
     m_Modifications:
+    - target: {fileID: 7888525415450365378, guid: a1d46640ec22d674786146c035821126,
+        type: 3}
+      propertyPath: m_Name
+      value: UIImage
+      objectReference: {fileID: 0}
     - target: {fileID: 7888525415450365379, guid: a1d46640ec22d674786146c035821126,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1303,11 +1322,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Pivot.y
       value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 7888525415450365378, guid: a1d46640ec22d674786146c035821126,
-        type: 3}
-      propertyPath: m_Name
-      value: UIImage
       objectReference: {fileID: 0}
     - target: {fileID: 7888525415450365377, guid: a1d46640ec22d674786146c035821126,
         type: 3}
@@ -1539,6 +1553,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 5062838999870775331}
     m_Modifications:
+    - target: {fileID: 7888525415450365378, guid: a1d46640ec22d674786146c035821126,
+        type: 3}
+      propertyPath: m_Name
+      value: BackButton
+      objectReference: {fileID: 0}
     - target: {fileID: 7888525415450365379, guid: a1d46640ec22d674786146c035821126,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1644,11 +1663,6 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
-    - target: {fileID: 7888525415450365378, guid: a1d46640ec22d674786146c035821126,
-        type: 3}
-      propertyPath: m_Name
-      value: BackButton
-      objectReference: {fileID: 0}
     - target: {fileID: 7888525415450365377, guid: a1d46640ec22d674786146c035821126,
         type: 3}
       propertyPath: m_Sprite
@@ -1722,6 +1736,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1270474373}
     m_Modifications:
+    - target: {fileID: 6018075765761177572, guid: 18bfb75a53ea1b9468bf0d9ff765d4ee,
+        type: 3}
+      propertyPath: m_Name
+      value: Text
+      objectReference: {fileID: 0}
     - target: {fileID: 6018075765761177575, guid: 18bfb75a53ea1b9468bf0d9ff765d4ee,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1827,11 +1846,6 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
-    - target: {fileID: 6018075765761177572, guid: 18bfb75a53ea1b9468bf0d9ff765d4ee,
-        type: 3}
-      propertyPath: m_Name
-      value: Text
-      objectReference: {fileID: 0}
     - target: {fileID: 6018075765761177569, guid: 18bfb75a53ea1b9468bf0d9ff765d4ee,
         type: 3}
       propertyPath: m_Text
@@ -1882,6 +1896,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1270474373}
     m_Modifications:
+    - target: {fileID: 7888525415450365378, guid: a1d46640ec22d674786146c035821126,
+        type: 3}
+      propertyPath: m_Name
+      value: BackButton
+      objectReference: {fileID: 0}
     - target: {fileID: 7888525415450365379, guid: a1d46640ec22d674786146c035821126,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1987,11 +2006,6 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
-    - target: {fileID: 7888525415450365378, guid: a1d46640ec22d674786146c035821126,
-        type: 3}
-      propertyPath: m_Name
-      value: BackButton
-      objectReference: {fileID: 0}
     - target: {fileID: 7888525415450365377, guid: a1d46640ec22d674786146c035821126,
         type: 3}
       propertyPath: m_Sprite
@@ -2025,6 +2039,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 2669458501187916062}
     m_Modifications:
+    - target: {fileID: 7888525415450365378, guid: a1d46640ec22d674786146c035821126,
+        type: 3}
+      propertyPath: m_Name
+      value: ResetButton
+      objectReference: {fileID: 0}
     - target: {fileID: 7888525415450365379, guid: a1d46640ec22d674786146c035821126,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -2129,11 +2148,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Pivot.y
       value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 7888525415450365378, guid: a1d46640ec22d674786146c035821126,
-        type: 3}
-      propertyPath: m_Name
-      value: ResetButton
       objectReference: {fileID: 0}
     - target: {fileID: 7888525415450365377, guid: a1d46640ec22d674786146c035821126,
         type: 3}

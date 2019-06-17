@@ -21,6 +21,8 @@ namespace Assets.ZeroToThree.Scripts.UI
         public float ScoreFadeInDuration;
         public float ButtonFadeInDuration;
 
+        public GameSession Session { get; set; }
+
         protected override void Awake()
         {
             base.Awake();
@@ -33,7 +35,7 @@ namespace Assets.ZeroToThree.Scripts.UI
         {
             this.Close();
 
-            var ui = UIManager.Instance;
+            var ui = GameManager.Instance.UIManager;
             ui.ShowScreen(ui.Main);
         }
 
@@ -41,13 +43,15 @@ namespace Assets.ZeroToThree.Scripts.UI
         {
             this.Close();
 
-            var ui = UIManager.Instance;
+            var ui = GameManager.Instance.UIManager;
             ui.Game.ResetGame();
         }
 
         protected override void OnOpened(UIEventArgs e)
         {
             base.OnOpened(e);
+
+            var session = this.Session;
 
             this.ScoreLabel.gameObject.SetActive(false);
             this.BackButton.gameObject.SetActive(false);
@@ -72,10 +76,10 @@ namespace Assets.ZeroToThree.Scripts.UI
                 Duration = this.ScoreFadeInDuration,
                 ActHandler = (target, delta, percent) =>
                 {
-                    var session = UIManager.Instance.Game.Session;
+                    var highScore = GameManager.Instance.StatisticsManager.Data.HighScore;
 
                     this.ScoreLabel.gameObject.SetActive(true);
-                    this.ScoreLabel.Text.text = $"Score : {(session.Score * percent).ToString("#,##0")}\nCombo : {0}";
+                    this.ScoreLabel.Text.text = $"High Score : {(highScore * percent).ToString("#,##0")}\n\nScore : {(session.Score * percent).ToString("#,##0")}\nCombo : {0}";
                     this.SetAlpha(this.ScoreLabel.Text, percent);
                 }
 
@@ -85,8 +89,6 @@ namespace Assets.ZeroToThree.Scripts.UI
                 Duration = this.ScoreFadeInDuration,
                 ActHandler = (target, delta, percent) =>
                 {
-                    var session = UIManager.Instance.Game.Session;
-
                     this.BackButton.gameObject.SetActive(true);
                     this.SetAlpha(this.BackButton.Image, percent);
                     this.ResetButton.gameObject.SetActive(true);
