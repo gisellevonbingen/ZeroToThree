@@ -813,7 +813,7 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 2
-  m_BackGroundColor: {r: 1, g: 1, b: 1, a: 1}
+  m_BackGroundColor: {r: 0.1254902, g: 0.1254902, b: 0.1254902, a: 1}
   m_projectionMatrixMode: 1
   m_SensorSize: {x: 36, y: 24}
   m_LensShift: {x: 0, y: 0}
@@ -2424,4 +2424,3 @@ MonoBehaviour:
   BoardSprite: {fileID: 1019116747}
   ScoreText: {fileID: 2669458502996338186}
   BackButton: {fileID: 633535845}
-  ResetButton: {fileID: 0}
