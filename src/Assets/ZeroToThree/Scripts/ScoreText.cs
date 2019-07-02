@@ -17,6 +17,8 @@ namespace Assets.ZeroToThree.Scripts
         public void Awake()
         {
             this.Tracker = new TimeIntTracker();
+
+            this.Update();
         }
 
         public void Update()
