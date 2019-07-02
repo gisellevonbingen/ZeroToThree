@@ -10,6 +10,9 @@ namespace Assets.ZeroToThree.Scripts
 {
     public class ScoreText : MonoBehaviour
     {
+        public string NumberFormat;
+        [Multiline]
+        public string TextFormat;
         public Text Text;
 
         private TimeIntTracker Tracker;
@@ -26,7 +29,9 @@ namespace Assets.ZeroToThree.Scripts
             this.Tracker.Update();
             var trackingScore = this.Tracker.Tracking;
 
-            this.Text.text = "Score\n" + trackingScore.ToString("#,##0");
+            var numberToString = trackingScore.ToString(this.NumberFormat);
+            var text = this.TextFormat.Replace("{=Score}", numberToString);
+            this.Text.text = text;
         }
 
         public void SetScoreGoal(int score)

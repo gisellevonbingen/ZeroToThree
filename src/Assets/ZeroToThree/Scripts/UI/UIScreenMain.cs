@@ -13,6 +13,7 @@ namespace Assets.ZeroToThree.Scripts.UI
         public UICommonButton Standard;
         public UICommonButton Option;
         public UIImage Back;
+        public ScoreText HighScore;
 
         protected override void Awake()
         {
@@ -26,6 +27,14 @@ namespace Assets.ZeroToThree.Scripts.UI
         protected override void Start()
         {
             base.Start();
+        }
+
+        public override void OnOpen()
+        {
+            base.OnOpen();
+
+            var highScore = GameManager.Instance.StatisticsManager.Data.HighScore;
+            this.HighScore.SetScoreImmediately(highScore);
         }
 
         private void OnBackClick(object sender, UIEventArgs e)

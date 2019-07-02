@@ -8,12 +8,12 @@ namespace Assets.ZeroToThree.Scripts.UI
 {
     public class UIScreen : UIObject
     {
-        public void OnOpen()
+        public virtual void OnOpen()
         {
             this.gameObject.SetActive(true);
         }
 
-        public void OnClose()
+        public virtual void OnClose()
         {
             this.gameObject.SetActive(false);
         }
