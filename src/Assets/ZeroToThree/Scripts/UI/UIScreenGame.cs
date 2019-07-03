@@ -102,7 +102,7 @@ namespace Assets.ZeroToThree.Scripts.UI
             this.SetSession(session);
         }
 
-        private void OnBackButtonClick(object sender, UIEventArgs e)
+        private void OnBackButtonClick(object sender, UIClickEventArgs e)
         {
             this.Session.GameOvered = true;
         }

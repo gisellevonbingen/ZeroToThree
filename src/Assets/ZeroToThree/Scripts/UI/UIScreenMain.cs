@@ -37,12 +37,12 @@ namespace Assets.ZeroToThree.Scripts.UI
             this.HighScore.SetScoreImmediately(highScore);
         }
 
-        private void OnBackClick(object sender, UIEventArgs e)
+        private void OnBackClick(object sender, UIClickEventArgs e)
         {
             GameManager.Instance.UIManager.QuitDialogStart();
         }
 
-        private void OnStandardClick(object sender, UIEventArgs e)
+        private void OnStandardClick(object sender, UIClickEventArgs e)
         {
             var um = GameManager.Instance.UIManager;
             var screen = um.ShowScreen(um.Game);
@@ -51,7 +51,7 @@ namespace Assets.ZeroToThree.Scripts.UI
             screen.SetSession(session);
         }
 
-        private void OnOptionClick(object sender, UIEventArgs e)
+        private void OnOptionClick(object sender, UIClickEventArgs e)
         {
             GameManager.Instance.UIManager.PopupYesNoDialog("Dialog\nTest");
         }

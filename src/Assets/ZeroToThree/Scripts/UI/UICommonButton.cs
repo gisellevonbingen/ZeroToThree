@@ -18,9 +18,9 @@ namespace Assets.ZeroToThree.Scripts.UI
             this.Image.Click += this.OnImageClick;
         }
 
-        private void OnImageClick(object sender, UIEventArgs e)
+        private void OnImageClick(object sender, UIClickEventArgs e)
         {
-            this.PerformClick();
+            this.PerformClick(e);
         }
 
     }

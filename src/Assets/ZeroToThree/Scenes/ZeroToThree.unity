@@ -1057,7 +1057,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f68ce017c9489b54f972730fa30a51c1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  NumberFormat: '#,##0'
   TextFormat: 'High Score
 
     {=Score}'
@@ -1478,9 +1477,10 @@ MonoBehaviour:
     type: 3}
   GameOverDialog: {fileID: 1270474374}
   MousePosition: {x: 0, y: 0}
-  MouseDown: 0
+  PrevMouseDowns: 
+  MouseDowns: 
   HoveringObject: {fileID: 0}
-  DownObject: {fileID: 0}
+  DownObjects: []
 --- !u!114 &854465050
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2698,7 +2698,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f68ce017c9489b54f972730fa30a51c1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  NumberFormat: '#,##0'
   TextFormat: 'Score
 
     {=Score}'
@@ -2847,7 +2846,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!1001 &7441535982742310753
 PrefabInstance:
   m_ObjectHideFlags: 0

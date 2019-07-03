@@ -43,7 +43,7 @@ namespace Assets.ZeroToThree.Scripts
             this.ClickIndex = other.ClickIndex;
         }
 
-        public List<BoardSolution> Solve(bool first)
+        public List<BoardSolution> Solve(bool single)
         {
             var blocks = this.Blocks;
 
@@ -91,7 +91,7 @@ namespace Assets.ZeroToThree.Scripts
                     solution.Indices.Add(item);
                     solutions.Add(solution);
 
-                    if (first == true)
+                    if (single == true)
                     {
                         break;
                     }
@@ -99,7 +99,7 @@ namespace Assets.ZeroToThree.Scripts
                 }
                 else
                 {
-                    var childSolutions = clone.Solve(first);
+                    var childSolutions = clone.Solve(single);
 
                     if (childSolutions.Count > 0)
                     {
@@ -110,14 +110,14 @@ namespace Assets.ZeroToThree.Scripts
                             solution.Indices.AddRange(sol.Indices);
                             solutions.Add(solution);
 
-                            if (first == true)
+                            if (single == true)
                             {
                                 break;
                             }
 
                         }
 
-                        if (first == true)
+                        if (single == true)
                         {
                             break;
                         }
@@ -372,7 +372,7 @@ namespace Assets.ZeroToThree.Scripts
             return false;
         }
 
-        private void GrowValue(Block block)
+        public void GrowValue(Block block)
         {
             block.Value = (block.Value + 1) % this.ValueRange;
             block.Masking = true;
@@ -381,7 +381,7 @@ namespace Assets.ZeroToThree.Scripts
         private bool BreakCompleteLines()
         {
             var blockList = new List<Block>();
-            int lines = FindCompleteLines(blockList);
+            int lines = this.FindCompleteLines(blockList);
 
             if (lines > 0)
             {

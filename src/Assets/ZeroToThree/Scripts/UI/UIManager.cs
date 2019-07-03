@@ -24,12 +24,14 @@ namespace Assets.ZeroToThree.Scripts.UI
         private ObjectPool<UIDialogYesNo> YesNoDialogPool;
         public UIDialogGameOver GameOverDialog;
 
+        public static int MouseButtons { get; } = 2;
+
         [Header("Status")]
         public Vector2 MousePosition;
-        private bool PrevMouseDown;
-        public bool MouseDown;
+        public bool[] PrevMouseDowns;
+        public bool[] MouseDowns;
         public UIObject HoveringObject;
-        public UIObject DownObject;
+        public UIObject[] DownObjects;
 
         public new RectTransform transform { get { return base.transform as RectTransform; } }
         public List<UIWindow> Windows { get; private set; }
@@ -43,6 +45,12 @@ namespace Assets.ZeroToThree.Scripts.UI
 
             this.YesNoDialogPool = new ObjectPool<UIDialogYesNo>(this.YesNoDialogPref);
             this.YesNoDialogPool.Growed += this.OnYesNoDialogPoolGrowed;
+
+            this.MousePosition = new Vector2();
+            this.PrevMouseDowns = new bool[MouseButtons];
+            this.MouseDowns = new bool[MouseButtons];
+            this.HoveringObject = null;
+            this.DownObjects = new UIObject[MouseButtons];
 
             this.Windows = new List<UIWindow>() { this.MainWindow };
 
@@ -58,7 +66,7 @@ namespace Assets.ZeroToThree.Scripts.UI
         private IEnumerator QuitDialogRoutine()
         {
             var dialog = this.PopupYesNoDialog("Quit\nApplication");
-            dialog.ListenDetermine((sender, e)=>
+            dialog.ListenDetermine((sender, e) =>
             {
                 if (e.Result == YesNoResult.Yes)
                 {
@@ -101,7 +109,7 @@ namespace Assets.ZeroToThree.Scripts.UI
 
         private void OnYesNoDialogClosed(object sender, UIEventArgs e)
         {
-            this.YesNoDialogPool.Free(e.Source as UIDialogYesNo);
+            this.YesNoDialogPool.Free(sender as UIDialogYesNo);
         }
 
         private void Update()
@@ -118,37 +126,47 @@ namespace Assets.ZeroToThree.Scripts.UI
         private void UpdateDown()
         {
             var hovering = this.HoveringObject;
-            var downing = this.DownObject;
 
-            if (this.PrevMouseDown != this.MouseDown)
+            for (int i = 0; i < MouseButtons; i++)
             {
+                var downing = this.DownObjects[i];
 
-                if (this.MouseDown == true)
+                if (this.PrevMouseDowns[i] != this.MouseDowns[i])
                 {
-                    if (hovering != null)
+                    if (this.MouseDowns[i] == true)
                     {
-                        this.DownObject = hovering;
+                        if (hovering != null)
+                        {
+                            this.DownObjects[i] = hovering;
+                        }
+
                     }
-
-                }
-                else
-                {
-                    if (downing != null && hovering == downing)
+                    else
                     {
-                        downing.PerformClick();
+                        if (downing != null && hovering == downing)
+                        {
+                            downing.PerformClick(new UIClickEventArgs(this.MousePosition, i));
+                        }
+
                     }
 
                 }
 
             }
 
+
         }
 
         private void UpdateInput()
         {
             this.MousePosition = this.Camera.ScreenToWorldPoint(Input.mousePosition);
-            this.PrevMouseDown = this.MouseDown;
-            this.MouseDown = Input.GetMouseButton(0);
+
+            for (int i = 0; i < MouseButtons; i++)
+            {
+                this.PrevMouseDowns[i] = this.MouseDowns[i];
+                this.MouseDowns[i] = Input.GetMouseButton(i);
+            }
+
         }
 
         private void UpdateHover()
@@ -181,7 +199,7 @@ namespace Assets.ZeroToThree.Scripts.UI
 
         private void OnWindowClosed(object sender, UIEventArgs e)
         {
-            var window = e.Source as UIWindow;
+            var window = sender as UIWindow;
             window.Closed -= this.OnWindowClosed;
 
             this.Windows.Remove(window);

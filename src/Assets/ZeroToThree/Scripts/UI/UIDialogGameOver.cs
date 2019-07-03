@@ -31,7 +31,7 @@ namespace Assets.ZeroToThree.Scripts.UI
             this.ResetButton.Click += this.OnResetButtonClick;
         }
 
-        private void OnBackButtonClick(object sender, UIEventArgs e)
+        private void OnBackButtonClick(object sender, UIClickEventArgs e)
         {
             this.Close();
 
@@ -39,7 +39,7 @@ namespace Assets.ZeroToThree.Scripts.UI
             ui.ShowScreen(ui.Main);
         }
 
-        private void OnResetButtonClick(object sender, UIEventArgs e)
+        private void OnResetButtonClick(object sender, UIClickEventArgs e)
         {
             this.Close();
 

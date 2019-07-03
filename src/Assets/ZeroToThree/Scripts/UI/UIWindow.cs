@@ -37,14 +37,14 @@ namespace Assets.ZeroToThree.Scripts.UI
         {
             this.gameObject.SetActive(true);
 
-            this.OnOpened(new UIEventArgs(this));
+            this.OnOpened(new UIEventArgs());
         }
 
         public virtual void Close()
         {
             this.gameObject.SetActive(false);
 
-            this.OnClosed(new UIEventArgs(this));
+            this.OnClosed(new UIEventArgs());
         }
 
         protected virtual void OnOpened(UIEventArgs e)

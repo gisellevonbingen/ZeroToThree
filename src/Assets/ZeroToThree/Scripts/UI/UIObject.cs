@@ -12,7 +12,7 @@ namespace Assets.ZeroToThree.Scripts.UI
     {
         public new RectTransform transform { get { return base.transform as RectTransform; } }
 
-        public event EventHandler<UIEventArgs> Click;
+        public event EventHandler<UIClickEventArgs> Click;
 
         public List<UIAction> Actions { get; private set; }
 
@@ -105,12 +105,12 @@ namespace Assets.ZeroToThree.Scripts.UI
             return null;
         }
 
-        public void PerformClick()
+        public void PerformClick(UIClickEventArgs e)
         {
-            this.OnClick(new UIEventArgs(this));
+            this.OnClick(e);
         }
 
-        protected virtual void OnClick(UIEventArgs e)
+        protected virtual void OnClick(UIClickEventArgs e)
         {
             this.Click?.Invoke(this, e);
         }

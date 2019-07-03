@@ -229,16 +229,24 @@ namespace Assets.ZeroToThree.Scripts
             this.BlockSprites.Remove(sprite);
         }
 
-        private void OnBlockClick(object sender, EventArgs e)
+        private void OnBlockClick(object sender, UIClickEventArgs e)
         {
             var sprite = (BlockSprite)sender;
+            var block = sprite.Block;
 
-            if (this.CanStep() == true && sprite.CanMask() == true)
+            if (e.Button == 0)
             {
-                var block = sprite.Block;
-                var index = this.Board.GetBlockIndex(block);
+                if (this.CanStep() == true && sprite.CanMask() == true)
+                {
+                    var index = this.Board.GetBlockIndex(block);
+                    this.Board.ClickIndex = index;
+                }
 
-                this.Board.ClickIndex = index;
+            }
+            else if (ApplicationUtils.IsPlayingInEditor() == true)
+            {
+                this.Board.GrowValue(block);
+                this.OnBlocksUpdate(this, new BlocksEventArgs(new Block[] { block }));
             }
 
         }

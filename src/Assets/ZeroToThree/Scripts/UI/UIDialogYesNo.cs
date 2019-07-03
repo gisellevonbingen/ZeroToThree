@@ -41,13 +41,13 @@ namespace Assets.ZeroToThree.Scripts.UI
             base.OnOpened(e);
         }
 
-        private void OnYesButtonClick(object sender, UIEventArgs e)
+        private void OnYesButtonClick(object sender, UIClickEventArgs e)
         {
             this.OnDetermine(new YesNoDetermineEventArgs(YesNoResult.Yes));
             this.Close();
         }
 
-        private void OnNoButtonClick(object sender, UIEventArgs e)
+        private void OnNoButtonClick(object sender, UIClickEventArgs e)
         {
             this.OnDetermine(new YesNoDetermineEventArgs(YesNoResult.No));
             this.Close();
