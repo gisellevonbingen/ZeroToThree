@@ -299,6 +299,7 @@
     <Compile Include="Assets\ZeroToThree\Scripts\EnumerableUtils.cs" />
     <Compile Include="Assets\ZeroToThree\Scripts\GameManager.cs" />
     <Compile Include="Assets\ZeroToThree\Scripts\GameSession.cs" />
+    <Compile Include="Assets\ZeroToThree\Scripts\NumberUtils.cs" />
     <Compile Include="Assets\ZeroToThree\Scripts\ObjectPool.cs" />
     <Compile Include="Assets\ZeroToThree\Scripts\PoolGrowEventArgs.cs" />
     <Compile Include="Assets\ZeroToThree\Scripts\PoolingObject.cs" />

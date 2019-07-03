@@ -78,8 +78,14 @@ namespace Assets.ZeroToThree.Scripts.UI
                 {
                     var highScore = GameManager.Instance.StatisticsManager.Data.HighScore;
 
+                    var lines = new List<string>();
+                    lines.Add($"High Score : {(highScore * percent).ToNumberString()}");
+                    lines.Add($"");
+                    lines.Add($"Score : {(session.Score * percent).ToNumberString()}");
+                    lines.Add($"Combo : {(session.HighCombo * percent).ToNumberString()}");
+
                     this.ScoreLabel.gameObject.SetActive(true);
-                    this.ScoreLabel.Text.text = $"High Score : {(highScore * percent).ToString("#,##0")}\n\nScore : {(session.Score * percent).ToString("#,##0")}\nCombo : {(session.HighCombo * percent).ToString("#,##0")}";
+                    this.ScoreLabel.Text.text = string.Join("\n", lines);
                     this.SetAlpha(this.ScoreLabel.Text, percent);
                 }
 

@@ -27,7 +27,7 @@ namespace Assets.ZeroToThree.Scripts
 
             if (combo > 0)
             {
-                this.Text.Text.text = $"Combo {combo.ToString("#,##0")}";
+                this.Text.Text.text = $"Combo {combo.ToNumberString()}";
             }
             else
             {
