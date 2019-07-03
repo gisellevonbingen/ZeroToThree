@@ -51,6 +51,10 @@ namespace Assets.ZeroToThree.Scripts
             {
                 return null;
             }
+            else if (this.FindCompleteLines(new List<Block>()) > 0)
+            {
+                return null;
+            }
 
             var solutions = new List<BoardSolution>();
 
@@ -101,7 +105,7 @@ namespace Assets.ZeroToThree.Scripts
                 {
                     var childSolutions = clone.Solve(single);
 
-                    if (childSolutions.Count > 0)
+                    if (childSolutions != null && childSolutions.Count > 0)
                     {
                         foreach (var sol in childSolutions)
                         {
