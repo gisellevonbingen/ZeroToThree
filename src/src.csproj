@@ -876,6 +876,7 @@
     <Compile Include="Assets\ZeroToThree\Scripts\BoardLineEventArgs.cs" />
     <Compile Include="Assets\ZeroToThree\Scripts\BoardSolution.cs" />
     <Compile Include="Assets\ZeroToThree\Scripts\BoardSprite.cs" />
+    <Compile Include="Assets\ZeroToThree\Scripts\ComboBar.cs" />
     <Compile Include="Assets\ZeroToThree\Scripts\EnumerableUtils.cs" />
     <Compile Include="Assets\ZeroToThree\Scripts\GameManager.cs" />
     <Compile Include="Assets\ZeroToThree\Scripts\GameSession.cs" />

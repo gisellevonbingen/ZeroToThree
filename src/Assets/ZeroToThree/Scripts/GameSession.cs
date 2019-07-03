@@ -11,6 +11,10 @@ namespace Assets.ZeroToThree.Scripts
     {
         public Board Board { get; }
         public int Score { get; set; }
+        public int HighCombo { get; set; }
+        public int Combo { get; set; }
+        public float ComboTimeout { get; set; }
+        public float ComboRemainTime { get; set; }
         public bool GameOvered { get; set; }
 
         public GameSession()
@@ -19,10 +23,14 @@ namespace Assets.ZeroToThree.Scripts
             this.Board.LineComplete += this.OnBoardLineComplete;
 
             this.Score = 0;
+            this.HighCombo = 0;
+            this.Combo = 0;
+            this.ComboTimeout = 1.0F;
+            this.ComboRemainTime = 0.0F;
             this.GameOvered = false;
         }
 
-        public void Step()
+        public void Step(float deltaTime)
         {
             var board = this.Board;
 
@@ -32,7 +40,26 @@ namespace Assets.ZeroToThree.Scripts
                 {
                     this.CheckGameOver(board);
                 }
+                else
+                {
+                    this.UpdateCombo(deltaTime);
+                }
 
+            }
+
+        }
+
+        private void UpdateCombo(float deltaTime)
+        {
+            var comboRemainTime = this.ComboRemainTime;
+
+            if (comboRemainTime > 0.0F)
+            {
+                this.ComboRemainTime = Math.Max(0.0F, comboRemainTime - deltaTime);
+            }
+            else
+            {
+                this.Combo = 0;
             }
 
         }
@@ -48,16 +75,12 @@ namespace Assets.ZeroToThree.Scripts
 
         }
 
-        public void Clear()
-        {
-            this.Board.Clear();
-            this.Score = 0;
-            this.GameOvered = false;
-        }
-
         private void OnBoardLineComplete(object sender, BoardLineEventArgs e)
         {
             this.Score += e.Lines * e.Blocks.Length * 10;
+            this.Combo++;
+            this.HighCombo = Math.Max(this.HighCombo, this.Combo);
+            this.ComboRemainTime = this.ComboTimeout;
         }
 
     }

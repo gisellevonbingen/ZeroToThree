@@ -12,6 +12,7 @@ namespace Assets.ZeroToThree.Scripts.UI
         public BoardSprite BoardSprite;
         public ScoreText ScoreText;
         public UIImage BackButton;
+        public ComboBar ComboBar;
 
         public GameSession Session { get; private set; } = null;
         public bool Resetting { get; private set; } = false;
@@ -23,6 +24,7 @@ namespace Assets.ZeroToThree.Scripts.UI
 
             this.BoardSprite.Init(board);
             this.ScoreText.SetScoreImmediately(session.Score);
+            this.ComboBar.Reset();
         }
 
         protected override void Awake()
@@ -72,7 +74,7 @@ namespace Assets.ZeroToThree.Scripts.UI
                     }
                     else
                     {
-                        session.Step();
+                        session.Step(Time.deltaTime);
                     }
 
                 }
@@ -80,6 +82,9 @@ namespace Assets.ZeroToThree.Scripts.UI
                 if (resetting == false)
                 {
                     this.ScoreText.SetScoreGoal(session.Score);
+                    this.ComboBar.Combo = session.Combo;
+                    var ratio = session.ComboRemainTime / session.ComboTimeout;
+                    this.ComboBar.Ratio = ratio;
                 }
 
             }
@@ -89,7 +94,6 @@ namespace Assets.ZeroToThree.Scripts.UI
         public void ResetGame()
         {
             this.Resetting = true;
-            this.Session?.Clear();
         }
 
         private void OnReset()
