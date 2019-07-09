@@ -880,6 +880,7 @@
     <Compile Include="Assets\ZeroToThree\Scripts\EnumerableUtils.cs" />
     <Compile Include="Assets\ZeroToThree\Scripts\GameManager.cs" />
     <Compile Include="Assets\ZeroToThree\Scripts\GameSession.cs" />
+    <Compile Include="Assets\ZeroToThree\Scripts\NumberUtils.cs" />
     <Compile Include="Assets\ZeroToThree\Scripts\ObjectPool.cs" />
     <Compile Include="Assets\ZeroToThree\Scripts\PoolGrowEventArgs.cs" />
     <Compile Include="Assets\ZeroToThree\Scripts\PoolingObject.cs" />
@@ -895,6 +896,7 @@
     <Compile Include="Assets\ZeroToThree\Scripts\UI\UIActionSet.cs" />
     <Compile Include="Assets\ZeroToThree\Scripts\UI\UIActionTime.cs" />
     <Compile Include="Assets\ZeroToThree\Scripts\UI\UIActionTimeDelegate.cs" />
+    <Compile Include="Assets\ZeroToThree\Scripts\UI\UIClickEventArgs.cs" />
     <Compile Include="Assets\ZeroToThree\Scripts\UI\UICommonButton.cs" />
     <Compile Include="Assets\ZeroToThree\Scripts\UI\UIDialog.cs" />
     <Compile Include="Assets\ZeroToThree\Scripts\UI\UIDialogGameOver.cs" />

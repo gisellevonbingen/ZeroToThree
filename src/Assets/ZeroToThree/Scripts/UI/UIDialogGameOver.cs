@@ -76,10 +76,13 @@ namespace Assets.ZeroToThree.Scripts.UI
                 Duration = this.ScoreFadeInDuration,
                 ActHandler = (target, delta, percent) =>
                 {
-                    var highScore = GameManager.Instance.StatisticsManager.Data.HighScore;
+                    var data = GameManager.Instance.StatisticsManager.Data;
+                    var highScore = data.HighScore;
+                    var highCombo = data.HighCombo;
 
                     var lines = new List<string>();
                     lines.Add($"High Score : {(highScore * percent).ToNumberString()}");
+                    lines.Add($"High Combo : {(highCombo * percent).ToNumberString()}");
                     lines.Add($"");
                     lines.Add($"Score : {(session.Score * percent).ToNumberString()}");
                     lines.Add($"Combo : {(session.HighCombo * percent).ToNumberString()}");

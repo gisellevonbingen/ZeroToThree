@@ -39,6 +39,7 @@ namespace Assets.ZeroToThree.Scripts
         {
             var sm = this.StatisticsManager;
             sm.Data.HighScore = Math.Max(sm.Data.HighScore, session?.Score ?? 0);
+            sm.Data.HighCombo = Math.Max(sm.Data.HighCombo, session?.HighCombo ?? 0);
             sm.Save();
         }
 
