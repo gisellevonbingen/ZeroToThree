@@ -322,6 +322,37 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6657789664163951624, guid: 3913dd650b4b581428795c3fea251729,
+        type: 3}
+      propertyPath: m_Name
+      value: BackLight
+      objectReference: {fileID: 0}
+    - target: {fileID: 6657789664163951627, guid: 3913dd650b4b581428795c3fea251729,
+        type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 02352f7ed9da8da479d8f4dffdd7abf9,
+        type: 3}
+    - target: {fileID: 6657789664163951627, guid: 3913dd650b4b581428795c3fea251729,
+        type: 3}
+      propertyPath: m_Type
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 6657789664163951627, guid: 3913dd650b4b581428795c3fea251729,
+        type: 3}
+      propertyPath: m_FillAmount
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6657789664163951627, guid: 3913dd650b4b581428795c3fea251729,
+        type: 3}
+      propertyPath: m_FillMethod
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6657789664163951627, guid: 3913dd650b4b581428795c3fea251729,
+        type: 3}
+      propertyPath: m_PreserveAspect
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2768553664380084532, guid: 3913dd650b4b581428795c3fea251729,
         type: 3}
       propertyPath: m_RootOrder

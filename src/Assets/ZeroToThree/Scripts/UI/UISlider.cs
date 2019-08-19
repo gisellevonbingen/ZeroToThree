@@ -9,11 +9,12 @@ namespace Assets.ZeroToThree.Scripts.UI
 {
     public class UISlider : UIObject
     {
-        public UIImage Back;
+        public UIImage BackLight;
+        public UIImage BackDark;
         public UIImage Handle;
 
         private float _Value;
-        public float Value { get => this._Value; set { this._Value = value; this.OnValueChagned(EventArgs.Empty); } }
+        public float Value { get => this._Value; set { this._Value = Mathf.Clamp01(value); this.OnValueChagned(EventArgs.Empty); } }
 
         private bool Handling;
 
@@ -27,18 +28,26 @@ namespace Assets.ZeroToThree.Scripts.UI
 
             this.Handle.TouchButtonDown += this.OnTouchButtonDown;
             this.Handle.TouchButtonUp += this.OnTouchButtonUp;
-            this.Back.TouchButtonDown += this.OnTouchButtonDown;
-            this.Back.TouchButtonUp += this.OnTouchButtonUp;
+            this.BackLight.TouchButtonDown += this.OnTouchButtonDown;
+            this.BackLight.TouchButtonUp += this.OnTouchButtonUp;
+            this.BackDark.TouchButtonDown += this.OnTouchButtonDown;
+            this.BackDark.TouchButtonUp += this.OnTouchButtonUp;
         }
 
         protected virtual void OnValueChagned(EventArgs e)
         {
+            var backLight = this.BackLight;
+            var backDark = this.BackDark;
             var handle = this.Handle;
-            var width = this.Back.transform.rect.width;
+            var width = backLight.transform.rect.width;
             var handlePosition = handle.transform.localPosition;
+            var value = this.Value;
 
-            handlePosition.x = this.Value - width / 2.0F;
+            handlePosition.x = (value * width) - width / 2.0F;
             handle.transform.localPosition = handlePosition;
+
+            backLight.Image.fillAmount = value;
+            backDark.Image.fillAmount = 1.0F - value;
         }
 
         protected override void Update()
@@ -54,12 +63,13 @@ namespace Assets.ZeroToThree.Scripts.UI
 
         private void UpdateValue()
         {
+            var backLight = this.BackLight;
             var center = this.transform.position;
-            var width = this.Back.transform.rect.width;
+            var width = backLight.transform.rect.width;
 
             var minPosition = new Vector3(center.x - width / 2.0F, center.y, center.z);
             var mousePosition = GameManager.Instance.UIManager.MousePosition;
-            var value = Mathf.Clamp(mousePosition.x - minPosition.x, 0.0F, width);
+            var value = Mathf.Clamp01((mousePosition.x - minPosition.x) / width);
 
             this.Value = value;
         }
