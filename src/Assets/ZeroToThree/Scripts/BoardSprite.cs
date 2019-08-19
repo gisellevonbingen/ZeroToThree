@@ -203,7 +203,7 @@ namespace Assets.ZeroToThree.Scripts
         {
             var sprite = e.Obj;
             sprite.transform.SetParent(this.transform);
-            sprite.Click += this.OnBlockClick;
+            sprite.TouchButtonClick += this.OnBlockClick;
             sprite.Breaked += this.OnBlockBreaked;
         }
 
@@ -229,7 +229,7 @@ namespace Assets.ZeroToThree.Scripts
             this.BlockSprites.Remove(sprite);
         }
 
-        private void OnBlockClick(object sender, UIClickEventArgs e)
+        private void OnBlockClick(object sender, UITouchButtonEventArgs e)
         {
             var sprite = (BlockSprite)sender;
             var block = sprite.Block;

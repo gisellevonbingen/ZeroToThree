@@ -7,15 +7,13 @@ using UnityEngine;
 
 namespace Assets.ZeroToThree.Scripts.UI
 {
-    public class UIClickEventArgs : UIEventArgs
+    public class UITouchEventArgs : UIEventArgs
     {
         public Vector3 MousePosition { get; }
-        public int Button { get; }
 
-        public UIClickEventArgs(Vector3 mousePosition, int button) : base()
+        public UITouchEventArgs(Vector3 mousePosition) : base()
         {
             this.MousePosition = mousePosition;
-            this.Button = button;
         }
 
     }

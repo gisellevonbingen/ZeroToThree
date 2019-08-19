@@ -27,11 +27,11 @@ namespace Assets.ZeroToThree.Scripts.UI
         {
             base.Awake();
 
-            this.BackButton.Click += this.OnBackButtonClick;
-            this.ResetButton.Click += this.OnResetButtonClick;
+            this.BackButton.TouchButtonClick += this.OnBackButtonClick;
+            this.ResetButton.TouchButtonClick += this.OnResetButtonClick;
         }
 
-        private void OnBackButtonClick(object sender, UIClickEventArgs e)
+        private void OnBackButtonClick(object sender, UITouchEventArgs e)
         {
             this.Close();
 
@@ -39,7 +39,7 @@ namespace Assets.ZeroToThree.Scripts.UI
             ui.ShowScreen(ui.Main);
         }
 
-        private void OnResetButtonClick(object sender, UIClickEventArgs e)
+        private void OnResetButtonClick(object sender, UITouchEventArgs e)
         {
             this.Close();
 

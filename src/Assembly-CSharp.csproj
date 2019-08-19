@@ -315,7 +315,6 @@
     <Compile Include="Assets\ZeroToThree\Scripts\UI\UIActionSet.cs" />
     <Compile Include="Assets\ZeroToThree\Scripts\UI\UIActionTime.cs" />
     <Compile Include="Assets\ZeroToThree\Scripts\UI\UIActionTimeDelegate.cs" />
-    <Compile Include="Assets\ZeroToThree\Scripts\UI\UIClickEventArgs.cs" />
     <Compile Include="Assets\ZeroToThree\Scripts\UI\UICommonButton.cs" />
     <Compile Include="Assets\ZeroToThree\Scripts\UI\UIDialog.cs" />
     <Compile Include="Assets\ZeroToThree\Scripts\UI\UIDialogGameOver.cs" />
@@ -328,6 +327,8 @@
     <Compile Include="Assets\ZeroToThree\Scripts\UI\UIScreen.cs" />
     <Compile Include="Assets\ZeroToThree\Scripts\UI\UIScreenGame.cs" />
     <Compile Include="Assets\ZeroToThree\Scripts\UI\UIScreenMain.cs" />
+    <Compile Include="Assets\ZeroToThree\Scripts\UI\UITouchButtonEventArgs.cs" />
+    <Compile Include="Assets\ZeroToThree\Scripts\UI\UITouchEventArgs.cs" />
     <Compile Include="Assets\ZeroToThree\Scripts\UI\UIWindow.cs" />
     <Compile Include="Assets\ZeroToThree\Scripts\UpdateArgs.cs" />
     <Compile Include="Assets\ZeroToThree\Scripts\YesNoDetermineEventArgs.cs" />

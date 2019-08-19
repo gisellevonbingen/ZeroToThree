@@ -19,9 +19,9 @@ namespace Assets.ZeroToThree.Scripts.UI
         {
             base.Awake();
 
-            this.Standard.Click += this.OnStandardClick;
-            this.Option.Click += this.OnOptionClick;
-            this.Back.Click += this.OnBackClick;
+            this.Standard.TouchButtonClick += this.OnStandardClick;
+            this.Option.TouchButtonClick += this.OnOptionClick;
+            this.Back.TouchButtonClick += this.OnBackClick;
         }
 
         protected override void Start()
@@ -37,12 +37,12 @@ namespace Assets.ZeroToThree.Scripts.UI
             this.HighScore.SetScoreImmediately(highScore);
         }
 
-        private void OnBackClick(object sender, UIClickEventArgs e)
+        private void OnBackClick(object sender, UITouchEventArgs e)
         {
             GameManager.Instance.UIManager.QuitDialogStart();
         }
 
-        private void OnStandardClick(object sender, UIClickEventArgs e)
+        private void OnStandardClick(object sender, UITouchEventArgs e)
         {
             var um = GameManager.Instance.UIManager;
             var screen = um.ShowScreen(um.Game);
@@ -51,7 +51,7 @@ namespace Assets.ZeroToThree.Scripts.UI
             screen.SetSession(session);
         }
 
-        private void OnOptionClick(object sender, UIClickEventArgs e)
+        private void OnOptionClick(object sender, UITouchEventArgs e)
         {
             GameManager.Instance.UIManager.PopupYesNoDialog("Dialog\nTest");
         }

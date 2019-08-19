@@ -138,14 +138,21 @@ namespace Assets.ZeroToThree.Scripts.UI
                         if (hovering != null)
                         {
                             this.DownObjects[i] = hovering;
+                            hovering.PerformTouchButtonDown(new UITouchButtonEventArgs(this.MousePosition, i));
                         }
 
                     }
                     else
                     {
-                        if (downing != null && hovering == downing)
+                        if (downing != null)
                         {
-                            downing.PerformClick(new UIClickEventArgs(this.MousePosition, i));
+                            downing.PerformTouchButtonUp(new UITouchButtonEventArgs(this.MousePosition, i));
+
+                            if (hovering == downing)
+                            {
+                                downing.PerformTouchButtonClick(new UITouchButtonEventArgs(this.MousePosition, i));
+                            }
+
                         }
 
                     }
@@ -174,8 +181,18 @@ namespace Assets.ZeroToThree.Scripts.UI
             var windows = this.Windows;
             var topWindow = windows[windows.Count - 1];
 
-            var nextHover = topWindow.Query(this.MousePosition);
+            var mousePosition = this.MousePosition;
+            var prevHover = this.HoveringObject;
+            var nextHover = topWindow.Query(mousePosition);
             this.HoveringObject = nextHover;
+
+            if (prevHover != nextHover)
+            {
+                var e = new UITouchEventArgs(mousePosition);
+                prevHover?.PerformTouchLeave(e);
+                nextHover?.PerformTouchHover(e);
+            }
+
         }
 
         public UIDialogYesNo PopupYesNoDialog(string message)

@@ -32,8 +32,8 @@ namespace Assets.ZeroToThree.Scripts.UI
         {
             base.Awake();
 
-            this.YesButton.Click += this.OnYesButtonClick;
-            this.NoButton.Click += this.OnNoButtonClick;
+            this.YesButton.TouchButtonClick += this.OnYesButtonClick;
+            this.NoButton.TouchButtonClick += this.OnNoButtonClick;
         }
 
         protected override void OnOpened(UIEventArgs e)
@@ -41,13 +41,13 @@ namespace Assets.ZeroToThree.Scripts.UI
             base.OnOpened(e);
         }
 
-        private void OnYesButtonClick(object sender, UIClickEventArgs e)
+        private void OnYesButtonClick(object sender, UITouchEventArgs e)
         {
             this.OnDetermine(new YesNoDetermineEventArgs(YesNoResult.Yes));
             this.Close();
         }
 
-        private void OnNoButtonClick(object sender, UIClickEventArgs e)
+        private void OnNoButtonClick(object sender, UITouchEventArgs e)
         {
             this.OnDetermine(new YesNoDetermineEventArgs(YesNoResult.No));
             this.Close();

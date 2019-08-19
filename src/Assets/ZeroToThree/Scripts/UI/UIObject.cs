@@ -12,7 +12,11 @@ namespace Assets.ZeroToThree.Scripts.UI
     {
         public new RectTransform transform { get { return base.transform as RectTransform; } }
 
-        public event EventHandler<UIClickEventArgs> Click;
+        public event EventHandler<UITouchButtonEventArgs> TouchButtonClick;
+        public event EventHandler<UITouchButtonEventArgs> TouchButtonDown;
+        public event EventHandler<UITouchButtonEventArgs> TouchButtonUp;
+        public event EventHandler<UITouchEventArgs> TouchHover;
+        public event EventHandler<UITouchEventArgs> TouchLeave;
 
         public List<UIAction> Actions { get; private set; }
 
@@ -105,14 +109,54 @@ namespace Assets.ZeroToThree.Scripts.UI
             return null;
         }
 
-        public void PerformClick(UIClickEventArgs e)
+        public void PerformTouchButtonClick(UITouchButtonEventArgs e)
         {
-            this.OnClick(e);
+            this.OnTouchButtonClick(e);
         }
 
-        protected virtual void OnClick(UIClickEventArgs e)
+        protected virtual void OnTouchButtonClick(UITouchButtonEventArgs e)
         {
-            this.Click?.Invoke(this, e);
+            this.TouchButtonClick?.Invoke(this, e);
+        }
+
+        public void PerformTouchButtonDown(UITouchButtonEventArgs e)
+        {
+            this.OnTouchButtonDown(e);
+        }
+
+        protected virtual void OnTouchButtonDown(UITouchButtonEventArgs e)
+        {
+            this.TouchButtonDown?.Invoke(this, e);
+        }
+
+        public void PerformTouchButtonUp(UITouchButtonEventArgs e)
+        {
+            this.OnTouchButtonUp(e);
+        }
+
+        protected virtual void OnTouchButtonUp(UITouchButtonEventArgs e)
+        {
+            this.TouchButtonUp?.Invoke(this, e);
+        }
+
+        public void PerformTouchHover(UITouchEventArgs e)
+        {
+            this.OnTouchHover(e);
+        }
+
+        protected virtual void OnTouchHover(UITouchEventArgs e)
+        {
+            this.TouchHover?.Invoke(this, e);
+        }
+
+        public void PerformTouchLeave(UITouchEventArgs e)
+        {
+            this.OnTouchLeave(e);
+        }
+
+        protected virtual void OnTouchLeave(UITouchEventArgs e)
+        {
+            this.TouchLeave?.Invoke(this, e);
         }
 
         public IEnumerable<UIObject> Children

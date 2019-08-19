@@ -15,12 +15,12 @@ namespace Assets.ZeroToThree.Scripts.UI
         {
             base.Awake();
 
-            this.Image.Click += this.OnImageClick;
+            this.Image.TouchButtonClick += this.OnImageClick;
         }
 
-        private void OnImageClick(object sender, UIClickEventArgs e)
+        private void OnImageClick(object sender, UITouchButtonEventArgs e)
         {
-            this.PerformClick(e);
+            this.PerformTouchButtonClick(e);
         }
 
     }
