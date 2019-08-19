@@ -43,7 +43,7 @@ namespace Assets.ZeroToThree.Scripts.UI
             var handlePosition = handle.transform.localPosition;
             var value = this.Value;
 
-            handlePosition.x = (value * width) - width / 2.0F;
+            handlePosition.x = width * (value - 0.5F);
             handle.transform.localPosition = handlePosition;
 
             backLight.Image.fillAmount = value;
@@ -56,12 +56,12 @@ namespace Assets.ZeroToThree.Scripts.UI
 
             if (this.Handling == true)
             {
-                this.UpdateValue();
+                this.UpdateValueByHandle();
             }
 
         }
 
-        private void UpdateValue()
+        private void UpdateValueByHandle()
         {
             var backLight = this.BackLight;
             var center = this.transform.position;
@@ -77,7 +77,7 @@ namespace Assets.ZeroToThree.Scripts.UI
         private void OnTouchButtonDown(object sender, UITouchButtonEventArgs e)
         {
             this.Handling = true;
-            this.UpdateValue();
+            this.UpdateValueByHandle();
         }
 
         private void OnTouchButtonUp(object sender, UITouchButtonEventArgs e)
