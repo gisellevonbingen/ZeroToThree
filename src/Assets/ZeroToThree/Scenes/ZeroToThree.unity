@@ -324,7 +324,11 @@ MonoBehaviour:
   Plus: {fileID: 1894629198}
   Slider: {fileID: 383629658}
   Text: {fileID: 986507042}
-  ButtonAmount: 0.1
+  ClickAmount: 0.1
+  PushModeEnterDuration: 0.5
+  PushDuration: 0
+  PushButton: {fileID: 0}
+  PushMode: 0
 --- !u!1001 &175204773
 PrefabInstance:
   m_ObjectHideFlags: 0
