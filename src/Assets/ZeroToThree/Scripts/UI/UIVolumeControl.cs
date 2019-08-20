@@ -14,7 +14,8 @@ namespace Assets.ZeroToThree.Scripts.UI
         public UIImage Minus;
         public UIImage Plus;
         public UISlider Slider;
-        public UILabel Text;
+        public UILabel Name;
+        public UILabel Value;
         public float ClickAmount;
         public float PushModeEnterDuration;
 
@@ -108,7 +109,7 @@ namespace Assets.ZeroToThree.Scripts.UI
 
         private void UpdateText()
         {
-            this.Text.Text.text = (this.Slider.Value * 100.0F).ToString("0") + "%";
+            this.Value.Text.text = (this.Slider.Value * 100.0F).ToString("0") + "%";
         }
 
     }

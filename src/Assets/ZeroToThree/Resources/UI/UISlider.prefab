@@ -28,9 +28,9 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 3538866672407230929}
-  - {fileID: 5168412726159135547}
-  - {fileID: 3538866671880978561}
+  - {fileID: 6657789664163951625}
+  - {fileID: 3080550021341224675}
+  - {fileID: 6657789664694373721}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -51,9 +51,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2a12fde6a0c09fb4da9466c5516c9ff4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  BackLight: {fileID: 3538866672407230947}
-  BackDark: {fileID: 5168412726159135497}
-  Handle: {fileID: 3538866671880978611}
+  BackLight: {fileID: 6657789664163951626}
+  BackDark: {fileID: 3080550021341224672}
+  Handle: {fileID: 6657789664694373722}
 --- !u!1001 &3538866671880978586
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -134,12 +134,12 @@ PrefabInstance:
     - target: {fileID: 7888525415450365379, guid: a1d46640ec22d674786146c035821126,
         type: 3}
       propertyPath: m_SizeDelta.x
-      value: 72
+      value: 80
       objectReference: {fileID: 0}
     - target: {fileID: 7888525415450365379, guid: a1d46640ec22d674786146c035821126,
         type: 3}
       propertyPath: m_SizeDelta.y
-      value: 72
+      value: 80
       objectReference: {fileID: 0}
     - target: {fileID: 7888525415450365379, guid: a1d46640ec22d674786146c035821126,
         type: 3}
@@ -179,13 +179,13 @@ PrefabInstance:
         type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a1d46640ec22d674786146c035821126, type: 3}
---- !u!224 &3538866671880978561 stripped
+--- !u!224 &6657789664694373721 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 7888525415450365379, guid: a1d46640ec22d674786146c035821126,
     type: 3}
   m_PrefabInstance: {fileID: 3538866671880978586}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &3538866671880978611 stripped
+--- !u!114 &6657789664694373722 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 7888525415450365376, guid: a1d46640ec22d674786146c035821126,
     type: 3}
@@ -277,12 +277,12 @@ PrefabInstance:
     - target: {fileID: 7888525415450365379, guid: a1d46640ec22d674786146c035821126,
         type: 3}
       propertyPath: m_SizeDelta.x
-      value: 440
+      value: 640
       objectReference: {fileID: 0}
     - target: {fileID: 7888525415450365379, guid: a1d46640ec22d674786146c035821126,
         type: 3}
       propertyPath: m_SizeDelta.y
-      value: 36
+      value: 40
       objectReference: {fileID: 0}
     - target: {fileID: 7888525415450365379, guid: a1d46640ec22d674786146c035821126,
         type: 3}
@@ -347,13 +347,13 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a1d46640ec22d674786146c035821126, type: 3}
---- !u!224 &3538866672407230929 stripped
+--- !u!224 &6657789664163951625 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 7888525415450365379, guid: a1d46640ec22d674786146c035821126,
     type: 3}
   m_PrefabInstance: {fileID: 3538866672407230922}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &3538866672407230947 stripped
+--- !u!114 &6657789664163951626 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 7888525415450365376, guid: a1d46640ec22d674786146c035821126,
     type: 3}
@@ -445,12 +445,12 @@ PrefabInstance:
     - target: {fileID: 7888525415450365379, guid: a1d46640ec22d674786146c035821126,
         type: 3}
       propertyPath: m_SizeDelta.x
-      value: 440
+      value: 640
       objectReference: {fileID: 0}
     - target: {fileID: 7888525415450365379, guid: a1d46640ec22d674786146c035821126,
         type: 3}
       propertyPath: m_SizeDelta.y
-      value: 36
+      value: 40
       objectReference: {fileID: 0}
     - target: {fileID: 7888525415450365379, guid: a1d46640ec22d674786146c035821126,
         type: 3}
@@ -515,13 +515,13 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a1d46640ec22d674786146c035821126, type: 3}
---- !u!224 &5168412726159135547 stripped
+--- !u!224 &3080550021341224675 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 7888525415450365379, guid: a1d46640ec22d674786146c035821126,
     type: 3}
   m_PrefabInstance: {fileID: 5168412726159135520}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &5168412726159135497 stripped
+--- !u!114 &3080550021341224672 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 7888525415450365376, guid: a1d46640ec22d674786146c035821126,
     type: 3}

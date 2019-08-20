@@ -912,6 +912,7 @@
     <Compile Include="Assets\ZeroToThree\Scripts\UI\UISlider.cs" />
     <Compile Include="Assets\ZeroToThree\Scripts\UI\UITouchButtonEventArgs.cs" />
     <Compile Include="Assets\ZeroToThree\Scripts\UI\UITouchEventArgs.cs" />
+    <Compile Include="Assets\ZeroToThree\Scripts\UI\UIVolumeControl.cs" />
     <Compile Include="Assets\ZeroToThree\Scripts\UI\UIWindow.cs" />
     <Compile Include="Assets\ZeroToThree\Scripts\UpdateArgs.cs" />
     <Compile Include="Assets\ZeroToThree\Scripts\YesNoDetermineEventArgs.cs" />
