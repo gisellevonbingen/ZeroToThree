@@ -9,6 +9,7 @@ namespace Assets.ZeroToThree.Scripts.UI
 {
     public class UISlider : UIObject
     {
+        [Header("Editor")]
         public UIImage BackLight;
         public UIImage BackDark;
         public UIImage Handle;
@@ -41,10 +42,10 @@ namespace Assets.ZeroToThree.Scripts.UI
             var backDark = this.BackDark;
             var handle = this.Handle;
             var width = backLight.transform.rect.width;
-            var handlePosition = handle.transform.localPosition;
             var value = this.Value;
 
-            handlePosition.x = width * (value - 0.5F);
+            var handlePosition = handle.transform.localPosition;
+            handlePosition.x = this.ValueToPoint(value);
             handle.transform.localPosition = handlePosition;
 
             backLight.Image.fillAmount = value;
@@ -66,15 +67,40 @@ namespace Assets.ZeroToThree.Scripts.UI
 
         private void UpdateValueByHandle()
         {
-            var backLight = this.BackLight;
-            var center = this.transform.position;
-            var width = backLight.transform.rect.width;
-
-            var minPosition = new Vector3(center.x - width / 2.0F, center.y, center.z);
             var mousePosition = GameManager.Instance.UIManager.MousePosition;
-            var value = Mathf.Clamp01((mousePosition.x - minPosition.x) / width);
+            var value = this.PointToValue(mousePosition.x);
 
             this.Value = value;
+        }
+
+        private float ValueToPoint(float value)
+        {
+            var handle = this.Handle;
+            var backLight = this.BackLight;
+            var backLightRect = backLight.transform.rect;
+            var padding = (handle.transform.rect.width - backLightRect.height) / 2.0F;
+            var barWidth = backLightRect.width - padding - padding;
+            var center = this.transform.position;
+
+            var minPosition = new Vector3(center.x - barWidth / 2.0F, center.y, center.z);
+            var point = minPosition.x + barWidth * value;
+
+            return point;
+        }
+
+        private float PointToValue(float point)
+        {
+            var handle = this.Handle;
+            var backLight = this.BackLight;
+            var backLightRect = backLight.transform.rect;
+            var padding = (handle.transform.rect.width - backLightRect.height) / 2.0F;
+            var barWidth = backLightRect.width - padding - padding;
+            var center = this.transform.position;
+
+            var minPosition = new Vector3(center.x - barWidth / 2.0F, center.y, center.z);
+            var value = Mathf.Clamp01((point - minPosition.x) / barWidth);
+
+            return value;
         }
 
         private void OnTouchButtonDown(object sender, UITouchButtonEventArgs e)
