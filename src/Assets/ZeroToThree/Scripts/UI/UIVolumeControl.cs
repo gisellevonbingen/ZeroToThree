@@ -18,11 +18,14 @@ namespace Assets.ZeroToThree.Scripts.UI
         public UILabel Value;
         public float ClickAmount;
         public float PushModeEnterDuration;
+        public float PushModeAmount;
+        public float PushModeAccel;
 
         [Header("Status")]
         public float PushDuration;
         public UIImage PushButton;
         public bool PushMode;
+        public float PushSpeed;
 
         protected override void Awake()
         {
@@ -59,7 +62,8 @@ namespace Assets.ZeroToThree.Scripts.UI
                 {
                     this.PushMode = true;
 
-                    this.UpdateValue(pushButton, delta * this.ClickAmount);
+                    this.UpdateValue(pushButton, delta * this.PushSpeed);
+                    this.PushSpeed += this.PushModeAccel * delta;
                 }
 
                 this.PushDuration += delta;
@@ -77,6 +81,7 @@ namespace Assets.ZeroToThree.Scripts.UI
             this.PushDuration = 0.0F;
             this.PushButton = button;
             this.PushMode = false;
+            this.PushSpeed = this.PushModeAmount;
         }
 
         private void OnButtonTouchUp(object sender, UITouchButtonEventArgs e)

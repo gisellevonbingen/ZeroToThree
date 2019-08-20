@@ -326,11 +326,14 @@ MonoBehaviour:
   Slider: {fileID: 383629658}
   Name: {fileID: 1704754085}
   Value: {fileID: 986507042}
-  ClickAmount: 0.1
+  ClickAmount: 0.01
   PushModeEnterDuration: 0.5
+  PushModeAmount: 0.01
+  PushModeAccel: 0.4
   PushDuration: 0
   PushButton: {fileID: 0}
   PushMode: 0
+  PushSpeed: 0
 --- !u!1001 &175204773
 PrefabInstance:
   m_ObjectHideFlags: 0
