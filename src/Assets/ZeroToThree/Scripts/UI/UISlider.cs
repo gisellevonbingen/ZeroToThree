@@ -15,6 +15,7 @@ namespace Assets.ZeroToThree.Scripts.UI
 
         private float _Value;
         public float Value { get => this._Value; set { this._Value = Mathf.Clamp01(value); this.OnValueChagned(EventArgs.Empty); } }
+        public event EventHandler ValueChanged;
 
         private bool Handling;
 
@@ -48,6 +49,8 @@ namespace Assets.ZeroToThree.Scripts.UI
 
             backLight.Image.fillAmount = value;
             backDark.Image.fillAmount = 1.0F - value;
+
+            this.ValueChanged?.Invoke(this, e);
         }
 
         protected override void Update()
