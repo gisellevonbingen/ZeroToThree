@@ -321,19 +321,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2ffadad48586445478831a77b28cfe3e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Minus: {fileID: 1644625425}
-  Plus: {fileID: 1894629198}
+  MinusButton: {fileID: 1644625425}
+  PlusButton: {fileID: 1894629198}
   Slider: {fileID: 383629658}
-  Name: {fileID: 1704754085}
-  Value: {fileID: 986507042}
-  ClickAmount: 0.01
+  NameLabel: {fileID: 1704754085}
+  ValueLabel: {fileID: 986507042}
+  ClickAmount: 1
   PushModeEnterDuration: 0.5
-  PushModeAmount: 0.01
-  PushModeAccel: 0.4
+  PushModeAmount: 1
+  PushModeAccel: 0.05
   PushDuration: 0
   PushButton: {fileID: 0}
   PushMode: 0
-  PushSpeed: 0
+  PushStartValue: 0
+  PushedValue: 0
 --- !u!1001 &175204773
 PrefabInstance:
   m_ObjectHideFlags: 0

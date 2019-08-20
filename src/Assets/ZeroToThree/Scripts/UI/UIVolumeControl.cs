@@ -10,12 +10,14 @@ namespace Assets.ZeroToThree.Scripts.UI
 {
     public class UIVolumeControl : UIObject
     {
+        public const int Factor = 100;
+
         [Header("Editor")]
-        public UIImage Minus;
-        public UIImage Plus;
+        public UIImage MinusButton;
+        public UIImage PlusButton;
         public UISlider Slider;
-        public UILabel Name;
-        public UILabel Value;
+        public UILabel NameLabel;
+        public UILabel ValueLabel;
         public float ClickAmount;
         public float PushModeEnterDuration;
         public float PushModeAmount;
@@ -25,23 +27,44 @@ namespace Assets.ZeroToThree.Scripts.UI
         public float PushDuration;
         public UIImage PushButton;
         public bool PushMode;
-        public float PushSpeed;
+        public float PushStartValue;
+        public float PushedValue;
 
         protected override void Awake()
         {
             base.Awake();
 
-            this.Minus.TouchButtonDown += this.OnButtonTouchDown;
-            this.Minus.TouchButtonUp += this.OnButtonTouchUp;
+            this.MinusButton.TouchButtonDown += this.OnButtonTouchDown;
+            this.MinusButton.TouchButtonUp += this.OnButtonTouchUp;
 
-            this.Plus.TouchButtonDown += this.OnButtonTouchDown;
-            this.Plus.TouchButtonUp += this.OnButtonTouchUp;
+            this.PlusButton.TouchButtonDown += this.OnButtonTouchDown;
+            this.PlusButton.TouchButtonUp += this.OnButtonTouchUp;
 
             this.Slider.ValueChanged += this.OnSliderValueChanged;
 
-            this.PushDuration = 0.0F;
-            this.PushButton = null;
-            this.PushMode = false;
+            this.ResetPushState(null);
+        }
+
+        public float Value
+        {
+            get
+            {
+                return this.Slider.Value / Factor;
+            }
+
+            set
+            {
+                this.Slider.Value = value * Factor;
+            }
+
+        }
+
+        protected override void Start()
+        {
+            base.Start();
+
+            this.Slider.MinValue = 0.0F * Factor;
+            this.Slider.MaxValue = 1.0F * Factor;
 
             this.UpdateText();
         }
@@ -61,9 +84,10 @@ namespace Assets.ZeroToThree.Scripts.UI
                 if (pushDuration >= pushModeEnterDuration)
                 {
                     this.PushMode = true;
+                    var pushedValue = this.PushedValue;
 
-                    this.UpdateValue(pushButton, delta * this.PushSpeed);
-                    this.PushSpeed += this.PushModeAccel * delta;
+                    this.Slider.Value = this.PushStartValue + this.GetDirectedAmount(this.PushButton, pushedValue);
+                    this.PushedValue = ((pushedValue + this.PushModeAmount * delta) + (pushedValue * this.PushModeAccel));
                 }
 
                 this.PushDuration += delta;
@@ -81,40 +105,51 @@ namespace Assets.ZeroToThree.Scripts.UI
             this.PushDuration = 0.0F;
             this.PushButton = button;
             this.PushMode = false;
-            this.PushSpeed = this.PushModeAmount;
+            this.PushStartValue = this.Slider.Value;
+            this.PushedValue = 0.0F;
         }
 
         private void OnButtonTouchUp(object sender, UITouchButtonEventArgs e)
         {
             if (this.PushMode == false)
             {
-                this.UpdateValue(this.PushButton, this.ClickAmount);
+                this.Slider.Value += this.GetDirectedAmount(this.PushButton, this.ClickAmount);
             }
 
             this.ResetPushState(null);
         }
 
-        private void UpdateValue(UIImage image, float amount)
+        private float GetDirectedAmount(UIImage image, float amount)
         {
-            if (image == this.Minus)
+            if (image == this.MinusButton)
             {
-                this.Slider.Value -= amount;
+                return -amount;
             }
-            else if (image == this.Plus)
+            else if (image == this.PlusButton)
             {
-                this.Slider.Value += amount;
+                return +amount;
             }
 
+            return 0.0F;
         }
 
         private void OnSliderValueChanged(object sender, EventArgs e)
         {
+            var slider = this.Slider;
+            var value = slider.Value;
+            var floor = Mathf.Floor(slider.Value);
+
+            if (value != floor)
+            {
+                slider.Value = floor;
+            }
+
             this.UpdateText();
         }
 
         private void UpdateText()
         {
-            this.Value.Text.text = (this.Slider.Value * 100.0F).ToString("0") + "%";
+            this.ValueLabel.Text.text = this.Slider.Value.ToString("0") + "%";
         }
 
     }
