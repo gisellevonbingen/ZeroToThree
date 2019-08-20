@@ -14,8 +14,16 @@ namespace Assets.ZeroToThree.Scripts.UI
         public UIImage BackDark;
         public UIImage Handle;
 
+        private float _MinValue;
+        public float MinValue { get => this._MinValue; set { this._MinValue = value; this.OnMinValueChagned(EventArgs.Empty); } }
+        public event EventHandler MinValueChanged;
+
+        private float _MaxValue;
+        public float MaxValue { get => this._MaxValue; set { this._MaxValue = value; this.OnMaxValueChagned(EventArgs.Empty); } }
+        public event EventHandler MaxValueChanged;
+
         private float _Value;
-        public float Value { get => this._Value; set { this._Value = Mathf.Clamp01(value); this.OnValueChagned(EventArgs.Empty); } }
+        public float Value { get => this._Value; set { this._Value = Mathf.Clamp(value, this.MinValue, this.MaxValue); this.OnValueChagned(EventArgs.Empty); } }
         public event EventHandler ValueChanged;
 
         private bool Handling;
@@ -24,6 +32,8 @@ namespace Assets.ZeroToThree.Scripts.UI
         {
             base.Awake();
 
+            this.MinValue = 0.0F;
+            this.MaxValue = 1.0F;
             this.Value = 0.0F;
 
             this.Handling = false;
@@ -36,6 +46,20 @@ namespace Assets.ZeroToThree.Scripts.UI
             this.BackDark.TouchButtonUp += this.OnTouchButtonUp;
         }
 
+        protected virtual void OnMinValueChagned(EventArgs e)
+        {
+            this.Value = this.Value;
+
+            this.MinValueChanged?.Invoke(this, e);
+        }
+
+        protected virtual void OnMaxValueChagned(EventArgs e)
+        {
+            this.Value = this.Value;
+
+            this.MaxValueChanged?.Invoke(this, e);
+        }
+
         protected virtual void OnValueChagned(EventArgs e)
         {
             var backLight = this.BackLight;
@@ -43,13 +67,15 @@ namespace Assets.ZeroToThree.Scripts.UI
             var handle = this.Handle;
             var width = backLight.transform.rect.width;
             var value = this.Value;
+            var percent = this.ValueToPercent(value);
+            var point = this.PercentToPoint(percent);
 
             var handlePosition = handle.transform.localPosition;
-            handlePosition.x = this.ValueToPoint(value);
+            handlePosition.x = point.IsGeneral() ? point : 0.0F;
             handle.transform.localPosition = handlePosition;
 
-            backLight.Image.fillAmount = value;
-            backDark.Image.fillAmount = 1.0F - value;
+            backLight.Image.fillAmount = percent;
+            backDark.Image.fillAmount = 1.0F - percent;
 
             this.ValueChanged?.Invoke(this, e);
         }
@@ -68,12 +94,31 @@ namespace Assets.ZeroToThree.Scripts.UI
         private void UpdateValueByHandle()
         {
             var mousePosition = GameManager.Instance.UIManager.MousePosition;
-            var value = this.PointToValue(mousePosition.x);
+            var percent = this.PointToPercent(mousePosition.x);
+            var value = this.PercentToValue(percent);
 
             this.Value = value;
         }
 
-        private float ValueToPoint(float value)
+        public float ValueToPercent(float value)
+        {
+            var minValue = this.MinValue;
+            var maxValue = this.MaxValue;
+            var percent = Mathf.Clamp01((value - minValue) / (maxValue - minValue));
+
+            return percent;
+        }
+
+        public float PercentToValue(float percent)
+        {
+            var minValue = this.MinValue;
+            var maxValue = this.MaxValue;
+            var value = minValue + (maxValue - minValue) * percent;
+
+            return value;
+        }
+
+        public float PercentToPoint(float percent)
         {
             var handle = this.Handle;
             var backLight = this.BackLight;
@@ -83,12 +128,12 @@ namespace Assets.ZeroToThree.Scripts.UI
             var center = this.transform.position;
 
             var minPosition = new Vector3(center.x - barWidth / 2.0F, center.y, center.z);
-            var point = minPosition.x + barWidth * value;
+            var point = minPosition.x + barWidth * percent;
 
             return point;
         }
 
-        private float PointToValue(float point)
+        public float PointToPercent(float point)
         {
             var handle = this.Handle;
             var backLight = this.BackLight;
@@ -98,9 +143,9 @@ namespace Assets.ZeroToThree.Scripts.UI
             var center = this.transform.position;
 
             var minPosition = new Vector3(center.x - barWidth / 2.0F, center.y, center.z);
-            var value = Mathf.Clamp01((point - minPosition.x) / barWidth);
+            var percent = Mathf.Clamp01((point - minPosition.x) / barWidth);
 
-            return value;
+            return percent;
         }
 
         private void OnTouchButtonDown(object sender, UITouchButtonEventArgs e)
