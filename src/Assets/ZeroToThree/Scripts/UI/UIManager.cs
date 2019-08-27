@@ -15,6 +15,7 @@ namespace Assets.ZeroToThree.Scripts.UI
         public UIWindow MainWindow;
         public UIScreenMain Main;
         public UIScreenGame Game;
+        public AudioClip BackgroundAudio;
         private UIScreen Current;
 
         private bool QuitSure;
@@ -55,6 +56,13 @@ namespace Assets.ZeroToThree.Scripts.UI
             this.Windows = new List<UIWindow>() { this.MainWindow };
 
             this.ShowScreen(this.Main);
+        }
+
+        private void Start()
+        {
+            var am = GameManager.Instance.AudioManager;
+            am.DefaultBackground = this.BackgroundAudio;
+            am.PlayBackground(null);
         }
 
         public void QuitDialogStart()

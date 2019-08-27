@@ -59,6 +59,9 @@ namespace Assets.ZeroToThree.Scripts
                 {
                     sprite.BreakStart();
 
+                    var breakAudio = sprite.BreakAudio;
+                    GameManager.Instance.AudioManager.PlayEffect(breakAudio);
+
                     this.UpdateSpriteName(board, sprite);
                 }
 
@@ -77,6 +80,9 @@ namespace Assets.ZeroToThree.Scripts
                 if (sprite != null)
                 {
                     sprite.MaskStart();
+
+                    var maskAudio = sprite.MaskAudio;
+                    GameManager.Instance.AudioManager.PlayEffect(maskAudio);
 
                     this.UpdateSpriteName(board, sprite);
                 }

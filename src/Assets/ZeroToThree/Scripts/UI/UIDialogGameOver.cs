@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using UnityEngine;
 using UnityEngine.UI;
 
 namespace Assets.ZeroToThree.Scripts.UI
@@ -11,11 +12,11 @@ namespace Assets.ZeroToThree.Scripts.UI
     {
         public UIImage Back;
         public UILabel Text;
-
         public UILabel ScoreLabel;
-
         public UIImage BackButton;
         public UIImage ResetButton;
+
+        public AudioClip GameOverAudio;
 
         public float DialogFadeInDuration;
         public float ScoreFadeInDuration;
@@ -106,6 +107,14 @@ namespace Assets.ZeroToThree.Scripts.UI
 
             });
 
+            GameManager.Instance.AudioManager.PlayBackground(this.GameOverAudio);
+        }
+
+        protected override void OnClosed(UIEventArgs e)
+        {
+            base.OnClosed(e);
+
+            GameManager.Instance.AudioManager.PlayBackground(null);
         }
 
         private void SetAlpha(Graphic g, float alpha)

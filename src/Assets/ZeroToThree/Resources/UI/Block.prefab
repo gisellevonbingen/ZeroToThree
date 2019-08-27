@@ -61,6 +61,8 @@ MonoBehaviour:
   - {r: 0.7764706, g: 0.8235294, b: 0.68235296, a: 1}
   - {r: 0.654902, g: 0.8, b: 0.8352941, a: 1}
   - {r: 0.90588236, g: 0.76862746, b: 0.6509804, a: 1}
+  BreakAudio: {fileID: 8300000, guid: fb8d03ea838cba242bfef6366e67f6c0, type: 3}
+  MaskAudio: {fileID: 8300000, guid: 052d96c987cc0b54182afb20183366f5, type: 3}
   ZoomMinDuration: 0.05
   ZoomMinScale: 0.5
   ZoomMaxDuration: 0.05

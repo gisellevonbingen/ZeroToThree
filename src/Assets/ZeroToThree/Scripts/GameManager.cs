@@ -1,4 +1,5 @@
-﻿using Assets.ZeroToThree.Scripts.UI;
+﻿using Assets.ZeroToThree.Scripts.Audio;
+using Assets.ZeroToThree.Scripts.UI;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,6 +14,7 @@ namespace Assets.ZeroToThree.Scripts
         public static GameManager Instance { get; private set; }
 
         public UIManager UIManager;
+        public AudioManager AudioManager;
 
         public StatisticsManager StatisticsManager { get; private set; }
 

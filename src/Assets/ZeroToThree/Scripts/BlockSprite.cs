@@ -19,6 +19,8 @@ namespace Assets.ZeroToThree.Scripts
         public UIImage TileMaskRenderer;
         public UILabel Text;
         public Color[] ValueColors;
+        public AudioClip BreakAudio;
+        public AudioClip MaskAudio;
 
         public Block Block { get; set; }
 
