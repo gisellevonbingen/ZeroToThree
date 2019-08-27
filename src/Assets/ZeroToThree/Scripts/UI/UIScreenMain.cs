@@ -53,7 +53,9 @@ namespace Assets.ZeroToThree.Scripts.UI
 
         private void OnOptionClick(object sender, UITouchEventArgs e)
         {
-            GameManager.Instance.UIManager.PopupYesNoDialog("Dialog\nTest");
+            var um = GameManager.Instance.UIManager;
+            um.ShowScreen(um.Option);
+
         }
 
     }

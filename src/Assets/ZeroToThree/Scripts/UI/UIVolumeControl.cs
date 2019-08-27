@@ -30,6 +30,8 @@ namespace Assets.ZeroToThree.Scripts.UI
         public float PushStartValue;
         public float PushedValue;
 
+        public event EventHandler ValueChanged;
+
         protected override void Awake()
         {
             base.Awake();
@@ -57,6 +59,11 @@ namespace Assets.ZeroToThree.Scripts.UI
                 this.Slider.Value = value * Factor;
             }
 
+        }
+
+        protected virtual void OnValueChanged(EventArgs e)
+        {
+            this.ValueChanged?.Invoke(this, e);
         }
 
         protected override void Start()
@@ -145,6 +152,8 @@ namespace Assets.ZeroToThree.Scripts.UI
             }
 
             this.UpdateText();
+
+            this.OnValueChanged(e);
         }
 
         private void UpdateText()

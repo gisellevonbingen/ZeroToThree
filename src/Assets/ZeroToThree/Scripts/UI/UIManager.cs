@@ -15,6 +15,7 @@ namespace Assets.ZeroToThree.Scripts.UI
         public UIWindow MainWindow;
         public UIScreenMain Main;
         public UIScreenGame Game;
+        public UIScreenOption Option;
         public AudioClip BackgroundAudio;
         private UIScreen Current;
 
