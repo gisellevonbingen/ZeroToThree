@@ -23,12 +23,12 @@ namespace Assets.ZeroToThree.Scripts.UI
 
         private void OnBGMControlValueChanged(object sender, EventArgs e)
         {
-            GameManager.Instance.AudioManager.Background.volume = this.BGMControl.Value;
+            GameManager.Instance.AudioManager.Background.Volume = this.BGMControl.Value;
         }
 
         private void OnEffectControlValueChanged(object sender, EventArgs e)
         {
-            GameManager.Instance.AudioManager.Effect.volume = this.EffectControl.Value;
+            GameManager.Instance.AudioManager.Effect.Volume = this.EffectControl.Value;
         }
 
         private void OnBackButtonClick(object sender, UITouchEventArgs e)

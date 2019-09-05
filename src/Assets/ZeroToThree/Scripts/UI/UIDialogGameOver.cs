@@ -107,14 +107,14 @@ namespace Assets.ZeroToThree.Scripts.UI
 
             });
 
-            GameManager.Instance.AudioManager.PlayBackground(this.GameOverAudio);
+            GameManager.Instance.AudioManager.Background.Play(this.GameOverAudio);
         }
 
         protected override void OnClosed(UIEventArgs e)
         {
             base.OnClosed(e);
 
-            GameManager.Instance.AudioManager.PlayBackground(null);
+            GameManager.Instance.AudioManager.Background.Play(null);
         }
 
         private void SetAlpha(Graphic g, float alpha)

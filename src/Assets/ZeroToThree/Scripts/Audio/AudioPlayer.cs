@@ -7,12 +7,9 @@ using UnityEngine;
 
 namespace Assets.ZeroToThree.Scripts.Audio
 {
-    public class AudioManager : MonoBehaviour
+    public class AudioPlayer : PoolingObject
     {
-        public AudioListener Listener;
-        public AudioChannelBackground Background;
-        public AudioChannelEffect Effect;
-
+        public AudioSource Source;
     }
 
 }

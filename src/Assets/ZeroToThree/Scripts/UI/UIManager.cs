@@ -62,8 +62,8 @@ namespace Assets.ZeroToThree.Scripts.UI
         private void Start()
         {
             var am = GameManager.Instance.AudioManager;
-            am.DefaultBackground = this.BackgroundAudio;
-            am.PlayBackground(null);
+            am.Background.Default = this.BackgroundAudio;
+            am.Background.Play(null);
         }
 
         public void QuitDialogStart()
