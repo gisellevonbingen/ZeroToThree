@@ -44,6 +44,15 @@ namespace Assets.ZeroToThree.Scripts.UI
         {
             var um = GameManager.Instance.UIManager;
             um.ShowScreen(um.Main);
+
+            var am = GameManager.Instance.AudioManager;
+
+            var om = GameManager.Instance.OptionsManager;
+            var options = om.Data;
+            options.BackgroundVolume = am.Background.Volume;
+            options.EffectVolume = am.Effect.Volume;
+
+            om.Save();
         }
 
     }

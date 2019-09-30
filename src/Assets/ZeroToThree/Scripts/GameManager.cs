@@ -16,11 +16,17 @@ namespace Assets.ZeroToThree.Scripts
         public UIManager UIManager;
         public AudioManager AudioManager;
 
+        public AudioClip BackgroundAudio;
+
+        public OptionsManager OptionsManager { get; private set; }
         public StatisticsManager StatisticsManager { get; private set; }
 
         private void Awake()
         {
             Instance = this;
+
+            var om = this.OptionsManager = new OptionsManager();
+            om.Load();
 
             var sm = this.StatisticsManager = new StatisticsManager();
             sm.Load();
@@ -28,8 +34,15 @@ namespace Assets.ZeroToThree.Scripts
 
         private void Start()
         {
-            this.AudioManager.Background.Volume = 1.0F;
-            this.AudioManager.Effect.Volume = 1.0F;
+            var options = this.OptionsManager.Data;
+            var am = this.AudioManager;
+            am.Background.Volume = options.BackgroundVolume;
+            am.Effect.Volume = options.EffectVolume;
+
+            am.Background.Default = this.BackgroundAudio;
+            am.Background.Play(null);
+
+            this.UIManager.ShowScreen(this.UIManager.Main);
         }
 
         public GameSession CreateSession()

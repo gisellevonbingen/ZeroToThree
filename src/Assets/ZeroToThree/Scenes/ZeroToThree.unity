@@ -1147,6 +1147,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   UIManager: {fileID: 854465049}
   AudioManager: {fileID: 572150878}
+  BackgroundAudio: {fileID: 8300000, guid: 75ca4243723c52f45a362eb4d9c21d60, type: 3}
 --- !u!20 &519420031
 Camera:
   m_ObjectHideFlags: 0
@@ -1929,7 +1930,6 @@ MonoBehaviour:
   Main: {fileID: 5062838999870775330}
   Game: {fileID: 8250078554586350910}
   Option: {fileID: 736614519}
-  BackgroundAudio: {fileID: 8300000, guid: 75ca4243723c52f45a362eb4d9c21d60, type: 3}
   YesNoDialogPref: {fileID: 426224128621396019, guid: 5621d3fe19a6afd49bda77c82a2bbbb2,
     type: 3}
   GameOverDialog: {fileID: 1270474374}

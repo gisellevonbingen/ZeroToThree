@@ -20,8 +20,7 @@ namespace Assets.ZeroToThree.Scripts.Audio
 
         public void Start()
         {
-            this.Background.Volume = 1.0F;
-            this.Effect.Volume = 1.0F;
+
         }
 
     }

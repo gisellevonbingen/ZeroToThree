@@ -308,6 +308,8 @@
     <Compile Include="Assets\ZeroToThree\Scripts\GameSession.cs" />
     <Compile Include="Assets\ZeroToThree\Scripts\NumberUtils.cs" />
     <Compile Include="Assets\ZeroToThree\Scripts\ObjectPool.cs" />
+    <Compile Include="Assets\ZeroToThree\Scripts\OptionsData.cs" />
+    <Compile Include="Assets\ZeroToThree\Scripts\OptionsManager.cs" />
     <Compile Include="Assets\ZeroToThree\Scripts\PoolGrowEventArgs.cs" />
     <Compile Include="Assets\ZeroToThree\Scripts\PoolingObject.cs" />
     <Compile Include="Assets\ZeroToThree\Scripts\ScoreText.cs" />
