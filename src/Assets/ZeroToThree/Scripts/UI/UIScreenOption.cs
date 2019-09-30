@@ -16,15 +16,18 @@ namespace Assets.ZeroToThree.Scripts.UI
         {
             base.OnAwake();
 
-            var am = GameManager.Instance.AudioManager;
-
-            this.BGMControl.Value = am.Background.Volume;
             this.BGMControl.ValueChanged += this.OnBGMControlValueChanged;
-
-            this.EffectControl.Value = am.Effect.Volume;
             this.EffectControl.ValueChanged += this.OnEffectControlValueChanged;
-
             this.BackButton.TouchButtonClick += this.OnBackButtonClick;
+        }
+
+        public override void OnOpen()
+        {
+            base.OnOpen();
+
+            var am = GameManager.Instance.AudioManager;
+            this.BGMControl.Value = am.Background.Volume;
+            this.EffectControl.Value = am.Effect.Volume;
         }
 
         private void OnBGMControlValueChanged(object sender, EventArgs e)
