@@ -20,22 +20,51 @@ namespace Assets.ZeroToThree.Scripts.UI
 
         public List<UIAction> Actions { get; private set; }
 
+        private bool Awaked { get; set; }
+
         public UIObject()
         {
             this.Actions = new List<UIAction>();
+            this.Awaked = false;
         }
 
-        protected virtual void Awake()
+        public void Awake()
+        {
+            if (this.Awaked == false)
+            {
+                this.Awaked = true;
+
+                foreach (var child in this.Children)
+                {
+                    child.Awake();
+                }
+
+                this.OnAwake();
+            }
+
+        }
+
+        public void Start()
+        {
+            this.OnStart();
+        }
+
+        public void Update()
+        {
+            this.OnUpdate();
+        }
+
+        protected virtual void OnAwake()
         {
 
         }
 
-        protected virtual void Start()
+        protected virtual void OnStart()
         {
 
         }
 
-        protected virtual void Update()
+        protected virtual void OnUpdate()
         {
             var delta = Time.deltaTime;
             var actions = this.Actions;
@@ -163,9 +192,12 @@ namespace Assets.ZeroToThree.Scripts.UI
         {
             get
             {
-                foreach (var obj in this.transform.OfType<RectTransform>())
+                var tr = this.transform;
+                var childCount = tr.childCount;
+
+                for (int i = 0; i < childCount; i++)
                 {
-                     var child = obj.GetComponent<UIObject>();
+                    var child = tr.GetChild(i).GetComponent<UIObject>();
 
                     if (child != null)
                     {

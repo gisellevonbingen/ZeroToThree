@@ -28,9 +28,9 @@ namespace Assets.ZeroToThree.Scripts.UI
             this.Determine += wrapper;
         }
 
-        protected override void Awake()
+        protected override void OnAwake()
         {
-            base.Awake();
+            base.OnAwake();
 
             this.YesButton.TouchButtonClick += this.OnYesButtonClick;
             this.NoButton.TouchButtonClick += this.OnNoButtonClick;

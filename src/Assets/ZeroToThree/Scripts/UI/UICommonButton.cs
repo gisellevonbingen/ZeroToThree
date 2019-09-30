@@ -11,9 +11,9 @@ namespace Assets.ZeroToThree.Scripts.UI
         public UIImage Image;
         public UILabel Label;
 
-        protected override void Awake()
+        protected override void OnAwake()
         {
-            base.Awake();
+            base.OnAwake();
 
             this.Image.TouchButtonClick += this.OnImageClick;
         }

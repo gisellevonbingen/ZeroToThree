@@ -13,6 +13,11 @@ namespace Assets.ZeroToThree.Scripts.Audio
         public float Volume { get => this._Volume; set { this._Volume = Mathf.Clamp01(value); this.OnVolumeChanged(EventArgs.Empty); } }
         public event EventHandler VolumeChanged;
 
+        public virtual void Awake()
+        {
+
+        }
+
         public abstract void Play(AudioClip clip);
 
         public abstract void Stop();

@@ -32,9 +32,9 @@ namespace Assets.ZeroToThree.Scripts.UI
 
         public event EventHandler ValueChanged;
 
-        protected override void Awake()
+        protected override void OnAwake()
         {
-            base.Awake();
+            base.OnAwake();
 
             this.MinusButton.TouchButtonDown += this.OnButtonTouchDown;
             this.MinusButton.TouchButtonUp += this.OnButtonTouchUp;
@@ -42,7 +42,11 @@ namespace Assets.ZeroToThree.Scripts.UI
             this.PlusButton.TouchButtonDown += this.OnButtonTouchDown;
             this.PlusButton.TouchButtonUp += this.OnButtonTouchUp;
 
+            this.Slider.MinValue = 0.0F * Factor;
+            this.Slider.MaxValue = 1.0F * Factor;
             this.Slider.ValueChanged += this.OnSliderValueChanged;
+
+            this.UpdateText();
 
             this.ResetPushState(null);
         }
@@ -66,19 +70,9 @@ namespace Assets.ZeroToThree.Scripts.UI
             this.ValueChanged?.Invoke(this, e);
         }
 
-        protected override void Start()
+        protected override void OnUpdate()
         {
-            base.Start();
-
-            this.Slider.MinValue = 0.0F * Factor;
-            this.Slider.MaxValue = 1.0F * Factor;
-
-            this.UpdateText();
-        }
-
-        protected override void Update()
-        {
-            base.Update();
+            base.OnUpdate();
 
             var pushButton = this.PushButton;
 

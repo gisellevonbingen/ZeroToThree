@@ -69,9 +69,9 @@ namespace Assets.ZeroToThree.Scripts
             this.transform.localRotation = new Quaternion(0.0F, 0.0F, 0.0F, 0.0F);
         }
 
-        protected override void Update()
+        protected override void OnUpdate()
         {
-            base.Update();
+            base.OnUpdate();
         }
 
         public void UpdateValue()

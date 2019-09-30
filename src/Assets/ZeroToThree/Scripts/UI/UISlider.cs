@@ -28,15 +28,13 @@ namespace Assets.ZeroToThree.Scripts.UI
 
         private bool Handling;
 
-        protected override void Awake()
+        protected override void OnAwake()
         {
-            base.Awake();
+            base.OnAwake();
 
             this.MinValue = 0.0F;
             this.MaxValue = 1.0F;
             this.Value = 0.0F;
-
-            this.Handling = false;
 
             this.Handle.TouchButtonDown += this.OnTouchButtonDown;
             this.Handle.TouchButtonUp += this.OnTouchButtonUp;
@@ -44,6 +42,8 @@ namespace Assets.ZeroToThree.Scripts.UI
             this.BackLight.TouchButtonUp += this.OnTouchButtonUp;
             this.BackDark.TouchButtonDown += this.OnTouchButtonDown;
             this.BackDark.TouchButtonUp += this.OnTouchButtonUp;
+
+            this.Handling = false;
         }
 
         protected virtual void OnMinValueChagned(EventArgs e)
@@ -80,9 +80,9 @@ namespace Assets.ZeroToThree.Scripts.UI
             this.ValueChanged?.Invoke(this, e);
         }
 
-        protected override void Update()
+        protected override void OnUpdate()
         {
-            base.Update();
+            base.OnUpdate();
 
             if (this.Handling == true)
             {

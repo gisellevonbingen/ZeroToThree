@@ -27,21 +27,21 @@ namespace Assets.ZeroToThree.Scripts.UI
             this.ComboBar.Reset();
         }
 
-        protected override void Awake()
+        protected override void OnAwake()
         {
-            base.Awake();
+            base.OnAwake();
 
             this.BackButton.TouchButtonClick += this.OnBackButtonClick;
         }
 
-        protected override void Start()
+        protected override void OnStart()
         {
-            base.Start();
+            base.OnStart();
         }
 
-        protected override void Update()
+        protected override void OnUpdate()
         {
-            base.Update();
+            base.OnUpdate();
 
             var session = this.Session;
 

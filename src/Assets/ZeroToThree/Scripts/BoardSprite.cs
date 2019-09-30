@@ -20,9 +20,9 @@ namespace Assets.ZeroToThree.Scripts
         private ObjectPool<BlockSprite> BlockSpritePool;
         private List<BlockSprite> BlockSprites;
 
-        protected override void Awake()
+        protected override void OnAwake()
         {
-            base.Awake();
+            base.OnAwake();
 
             this.BlockSpritePool = new ObjectPool<BlockSprite>(this.BlockPrefab);
             this.BlockSpritePool.Growed += this.OnBlockPoolGrowed;
@@ -299,9 +299,9 @@ namespace Assets.ZeroToThree.Scripts
             return true;
         }
 
-        protected override void Update()
+        protected override void OnUpdate()
         {
-            base.Update();
+            base.OnUpdate();
         }
 
     }

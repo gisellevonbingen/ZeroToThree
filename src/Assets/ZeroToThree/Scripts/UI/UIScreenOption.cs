@@ -12,12 +12,18 @@ namespace Assets.ZeroToThree.Scripts.UI
         public UIVolumeControl EffectControl;
         public UIImage BackButton;
 
-        protected override void Awake()
+        protected override void OnAwake()
         {
-            base.Awake();
+            base.OnAwake();
 
+            var am = GameManager.Instance.AudioManager;
+
+            this.BGMControl.Value = am.Background.Volume;
             this.BGMControl.ValueChanged += this.OnBGMControlValueChanged;
+
+            this.EffectControl.Value = am.Effect.Volume;
             this.EffectControl.ValueChanged += this.OnEffectControlValueChanged;
+
             this.BackButton.TouchButtonClick += this.OnBackButtonClick;
         }
 

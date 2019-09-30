@@ -26,6 +26,12 @@ namespace Assets.ZeroToThree.Scripts
             sm.Load();
         }
 
+        private void Start()
+        {
+            this.AudioManager.Background.Volume = 1.0F;
+            this.AudioManager.Effect.Volume = 1.0F;
+        }
+
         public GameSession CreateSession()
         {
             var session = new GameSession();

@@ -12,8 +12,10 @@ namespace Assets.ZeroToThree.Scripts.Audio
         protected ObjectPool<AudioPlayer> Pool { get; private set; }
         public AudioPlayer PlayerPrefab;
 
-        private void Awake()
+        public override void Awake()
         {
+            base.Awake();
+
             this.Pool = new ObjectPool<AudioPlayer>(this.PlayerPrefab);
         }
 

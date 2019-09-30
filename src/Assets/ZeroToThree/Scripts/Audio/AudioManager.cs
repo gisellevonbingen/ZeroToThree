@@ -13,6 +13,17 @@ namespace Assets.ZeroToThree.Scripts.Audio
         public AudioChannelBackground Background;
         public AudioChannelEffect Effect;
 
+        public void Awake()
+        {
+            
+        }
+
+        public void Start()
+        {
+            this.Background.Volume = 1.0F;
+            this.Effect.Volume = 1.0F;
+        }
+
     }
 
 }

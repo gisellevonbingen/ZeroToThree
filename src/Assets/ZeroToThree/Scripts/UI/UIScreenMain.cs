@@ -15,18 +15,18 @@ namespace Assets.ZeroToThree.Scripts.UI
         public UIImage Back;
         public ScoreText HighScore;
 
-        protected override void Awake()
+        protected override void OnAwake()
         {
-            base.Awake();
+            base.OnAwake();
 
             this.Standard.TouchButtonClick += this.OnStandardClick;
             this.Option.TouchButtonClick += this.OnOptionClick;
             this.Back.TouchButtonClick += this.OnBackClick;
         }
 
-        protected override void Start()
+        protected override void OnStart()
         {
-            base.Start();
+            base.OnStart();
         }
 
         public override void OnOpen()

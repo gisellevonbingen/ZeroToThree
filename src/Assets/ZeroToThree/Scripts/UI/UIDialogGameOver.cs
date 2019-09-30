@@ -24,9 +24,9 @@ namespace Assets.ZeroToThree.Scripts.UI
 
         public GameSession Session { get; set; }
 
-        protected override void Awake()
+        protected override void OnAwake()
         {
-            base.Awake();
+            base.OnAwake();
 
             this.BackButton.TouchButtonClick += this.OnBackButtonClick;
             this.ResetButton.TouchButtonClick += this.OnResetButtonClick;

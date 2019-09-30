@@ -8,9 +8,9 @@ namespace Assets.ZeroToThree.Scripts.UI
 {
     public class UIDialog : UIWindow
     {
-        protected override void Awake()
+        protected override void OnAwake()
         {
-            base.Awake();
+            base.OnAwake();
         }
 
     }

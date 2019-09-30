@@ -17,9 +17,9 @@ namespace Assets.ZeroToThree.Scripts
         public int Combo { get; set; }
         public float Ratio { get; set; }
 
-        protected override void Update()
+        protected override void OnUpdate()
         {
-            base.Update();
+            base.OnUpdate();
 
             this.Bar.Image.fillAmount = Math.Max(0.0F, Math.Min(1.0F, this.Ratio));
 

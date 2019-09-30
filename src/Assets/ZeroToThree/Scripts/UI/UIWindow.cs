@@ -12,9 +12,9 @@ namespace Assets.ZeroToThree.Scripts.UI
         public event EventHandler<UIEventArgs> Opened;
         public event EventHandler<UIEventArgs> Closed;
 
-        protected override void Awake()
+        protected override void OnAwake()
         {
-            base.Awake();
+            base.OnAwake();
         }
 
         public IEnumerator WaitForClose()
