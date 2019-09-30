@@ -50,6 +50,7 @@ namespace Assets.ZeroToThree.Scripts
         private void OnBlocksBreak(object sender, BlocksEventArgs e)
         {
             var board = this.Board;
+            var clips = new List<AudioClip>();
 
             foreach (var block in e.Blocks)
             {
@@ -58,20 +59,20 @@ namespace Assets.ZeroToThree.Scripts
                 if (sprite != null)
                 {
                     sprite.BreakStart();
-
-                    var breakAudio = sprite.BreakAudio;
-                    GameManager.Instance.AudioManager.Effect.Play(breakAudio);
+                    clips.Add(sprite.BreakAudio);
 
                     this.UpdateSpriteName(board, sprite);
                 }
 
             }
 
+            GameManager.Instance.AudioManager.Effect.PlayDistincts(clips);
         }
 
         private void OnBlocksUpdate(object sender, BlocksEventArgs e)
         {
             var board = this.Board;
+            var clips = new List<AudioClip>();
 
             foreach (var block in e.Blocks)
             {
@@ -80,15 +81,14 @@ namespace Assets.ZeroToThree.Scripts
                 if (sprite != null)
                 {
                     sprite.MaskStart();
-
-                    var maskAudio = sprite.MaskAudio;
-                    GameManager.Instance.AudioManager.Effect.Play(maskAudio);
+                    clips.Add(sprite.MaskAudio);
 
                     this.UpdateSpriteName(board, sprite);
                 }
 
             }
 
+            GameManager.Instance.AudioManager.Effect.PlayDistincts(clips);
         }
 
         private void OnBlocksFall(object sender, BlocksEventArgs e)

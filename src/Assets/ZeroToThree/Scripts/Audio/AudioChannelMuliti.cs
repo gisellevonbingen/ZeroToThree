@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -17,6 +18,15 @@ namespace Assets.ZeroToThree.Scripts.Audio
             base.Awake();
 
             this.Pool = new ObjectPool<AudioPlayer>(this.PlayerPrefab);
+        }
+
+        public void PlayDistincts(IEnumerable<AudioClip>  clips)
+        {
+            foreach (var clip in clips.Distinct())
+            {
+                this.Play(clip);
+            }
+
         }
 
         protected virtual void FreeNotPlaying()
