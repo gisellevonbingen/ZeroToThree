@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using static Assets.ZeroToThree.Scripts.BlocksEventArgs;
 
 namespace Assets.ZeroToThree.Scripts
 {
@@ -186,7 +187,6 @@ namespace Assets.ZeroToThree.Scripts
             for (int i = 0; i < blocks.Length; i++)
             {
                 var block = blocks[i];
-                blocks[i] = null;
 
                 if (block != null)
                 {
@@ -195,7 +195,14 @@ namespace Assets.ZeroToThree.Scripts
 
             }
 
-            this.OnBlocksBreak(new BlocksEventArgs(breaks.ToArray()));
+            this.OnBlocksBreak(new BlocksEventArgs(breaks.ToArray(), EventPhase.Pre));
+
+            for (int i = 0; i < blocks.Length; i++)
+            {
+                blocks[i] = null;
+            }
+
+            this.OnBlocksBreak(new BlocksEventArgs(breaks.ToArray(), EventPhase.Post));
         }
 
         public bool Step()
@@ -225,23 +232,15 @@ namespace Assets.ZeroToThree.Scripts
 
         private void GetConnectedBlocks(Block baseBlock, List<Block> blocks)
         {
-            var directions = new List<Vector2Int>();
-            directions.Add(Vector2Int.left);
-            directions.Add(Vector2Int.up);
-            directions.Add(Vector2Int.right);
-            directions.Add(Vector2Int.down);
-
             this.GetBlockIndex(baseBlock, out var baseCol, out var baseRow);
 
-            foreach (var direction in directions)
+            foreach (var direction in BlockDirection.Values)
             {
-                var col = baseCol + direction.x;
-                var row = baseRow + direction.y;
+                var col = baseCol + direction.X;
+                var row = baseRow + direction.Y;
 
-                if (this.IsInBoard(col, row) == true)
+                if (this.TryGetBlock(col, row, out var block) == true)
                 {
-                    var block = this[col, row];
-
                     if (block != null && blocks.Contains(block) == false)
                     {
                         if (baseBlock.Value == block.Value)
@@ -258,7 +257,7 @@ namespace Assets.ZeroToThree.Scripts
 
         }
 
-        private List<Block> GetConnectedBlocks(Block block)
+        public List<Block> GetConnectedBlocks(Block block)
         {
             var blocks = new List<Block>();
             blocks.Add(block);
@@ -288,6 +287,25 @@ namespace Assets.ZeroToThree.Scripts
         {
             row = index / this.Width;
             col = index % this.Width;
+        }
+
+        public bool TryGetBlock(int col, int row, out Block block)
+        {
+            block = null;
+            var index = this.GetBlockIndex(col, row);
+
+            if (this.IsInBoard(col, row) == true)
+            {
+                block = this[col, row];
+                return true;
+            }
+
+            return false;
+        }
+
+        public bool IsInBoard(int index)
+        {
+            return 0 <= index && index < this.Blocks.Length;
         }
 
         public bool IsInBoard(int col, int row)
@@ -341,7 +359,7 @@ namespace Assets.ZeroToThree.Scripts
 
             if (blocks.Count > 0)
             {
-                this.OnBlocksGen(new BlocksEventArgs(blocks.ToArray()));
+                this.OnBlocksGen(new BlocksEventArgs(blocks.ToArray(), EventPhase.Post));
                 return true;
             }
 
@@ -361,12 +379,14 @@ namespace Assets.ZeroToThree.Scripts
                 {
                     var connecteds = this.GetConnectedBlocks(block);
 
+                    this.OnBlocksUpdate(new BlocksEventArgs(connecteds.ToArray(), EventPhase.Pre));
+
                     foreach (var cb in connecteds)
                     {
                         this.GrowValue(cb);
                     }
 
-                    this.OnBlocksUpdate(new BlocksEventArgs(connecteds.ToArray()));
+                    this.OnBlocksUpdate(new BlocksEventArgs(connecteds.ToArray(), EventPhase.Post));
 
                     return true;
                 }
@@ -392,13 +412,15 @@ namespace Assets.ZeroToThree.Scripts
                 var blocks = blockList.Distinct().ToArray();
                 this.OnLineComplete(new BoardLineEventArgs(lines, blocks));
 
+                this.OnBlocksBreak(new BlocksEventArgs(blocks, EventPhase.Pre));
+
                 foreach (var block in blocks)
                 {
                     var index = this.GetBlockIndex(block);
                     this[index] = null;
                 }
 
-                this.OnBlocksBreak(new BlocksEventArgs(blocks));
+                this.OnBlocksBreak(new BlocksEventArgs(blocks, EventPhase.Post));
 
                 return true;
             }
@@ -517,9 +539,8 @@ namespace Assets.ZeroToThree.Scripts
                 for (int col = 0; col < this.Width; col++)
                 {
                     var block = this[col, row];
-                    var fallHeight = this.TryFall(col, row);
 
-                    if (fallHeight != 0)
+                    if (this.TryFall(block, true) > 0)
                     {
                         blocks.Add(block);
                     }
@@ -530,7 +551,14 @@ namespace Assets.ZeroToThree.Scripts
 
             if (blocks.Count > 0)
             {
-                this.OnBlocksFall(new BlocksEventArgs(blocks.ToArray()));
+                this.OnBlocksFall(new BlocksEventArgs(blocks.ToArray(), EventPhase.Pre));
+
+                foreach (var block in blocks)
+                {
+                    this.TryFall(block, false);
+                }
+
+                this.OnBlocksFall(new BlocksEventArgs(blocks.ToArray(), EventPhase.Post));
 
                 return true;
             }
@@ -538,17 +566,19 @@ namespace Assets.ZeroToThree.Scripts
             return false;
         }
 
-        private int TryFall(int col, int row)
+        private int TryFall(Block block, bool simulate)
         {
+            this.GetBlockIndex(block, out var col, out var row);
+
             int fallHeight = 0;
 
             for (int i = row; i < this.Height - 1; i++)
             {
                 var downRow = i + 1;
 
-                var block = this[col, i];
+                var b = this[col, i];
 
-                if (block == null)
+                if (b == null)
                 {
                     break;
                 }
@@ -557,12 +587,15 @@ namespace Assets.ZeroToThree.Scripts
 
                 if (down == null)
                 {
-                    this[col, downRow] = block;
-                    this[col, i] = null;
+                    if (simulate == false)
+                    {
+                        this[col, downRow] = b;
+                        this[col, i] = null;
+                    }
 
                     fallHeight++;
                 }
-                else
+                else if (simulate == false)
                 {
                     break;
                 }

@@ -19,6 +19,7 @@ namespace Assets.ZeroToThree.Scripts
 
         private ObjectPool<BlockSprite> BlockSpritePool;
         private List<BlockSprite> BlockSprites;
+        private bool LastBoardStepped;
 
         protected override void OnAwake()
         {
@@ -27,6 +28,7 @@ namespace Assets.ZeroToThree.Scripts
             this.BlockSpritePool = new ObjectPool<BlockSprite>(this.BlockPrefab);
             this.BlockSpritePool.Growed += this.OnBlockPoolGrowed;
             this.BlockSprites = new List<BlockSprite>();
+            this.LastBoardStepped = false;
         }
 
         public void Init(Board board)
@@ -49,62 +51,115 @@ namespace Assets.ZeroToThree.Scripts
 
         private void OnBlocksBreak(object sender, BlocksEventArgs e)
         {
-            var board = this.Board;
-            var clips = new List<AudioClip>();
-
-            foreach (var block in e.Blocks)
+            if (e.Phase == BlocksEventArgs.EventPhase.Pre)
             {
-                var sprite = this.FindSprite(block);
+                this.ClearConnection(e.Blocks);
+            }
+            else if (e.Phase == BlocksEventArgs.EventPhase.Post)
+            {
+                var board = this.Board;
+                var clips = new List<AudioClip>();
 
-                if (sprite != null)
+                foreach (var block in e.Blocks)
                 {
-                    sprite.BreakStart();
-                    clips.Add(sprite.BreakAudio);
+                    var sprite = this.FindSprite(block);
 
-                    this.UpdateSpriteName(board, sprite);
+                    if (sprite != null)
+                    {
+                        sprite.BreakStart();
+                        clips.Add(sprite.BreakAudio);
+
+                        this.UpdateSpriteName(board, sprite);
+                    }
+
                 }
 
+                GameManager.Instance.AudioManager.Effect.PlayDistincts(clips);
             }
 
-            GameManager.Instance.AudioManager.Effect.PlayDistincts(clips);
         }
 
         private void OnBlocksUpdate(object sender, BlocksEventArgs e)
         {
-            var board = this.Board;
-            var clips = new List<AudioClip>();
-
-            foreach (var block in e.Blocks)
+            if (e.Phase == BlocksEventArgs.EventPhase.Pre)
             {
-                var sprite = this.FindSprite(block);
+                this.ClearConnection(e.Blocks);
+            }
+            else if (e.Phase == BlocksEventArgs.EventPhase.Post)
+            {
+                var board = this.Board;
+                var clips = new List<AudioClip>();
 
-                if (sprite != null)
+                foreach (var block in e.Blocks)
                 {
-                    sprite.MaskStart();
-                    clips.Add(sprite.MaskAudio);
+                    var sprite = this.FindSprite(block);
 
-                    this.UpdateSpriteName(board, sprite);
+                    if (sprite != null)
+                    {
+                        sprite.MaskStart();
+                        clips.Add(sprite.MaskAudio);
+
+                        this.UpdateSpriteName(board, sprite);
+                    }
+
+                }
+
+                GameManager.Instance.AudioManager.Effect.PlayDistincts(clips);
+            }
+
+        }
+
+        public void OnSessionStepped(bool boardStepped)
+        {
+            if (this.LastBoardStepped != boardStepped)
+            {
+                if (boardStepped == false)
+                {
+                    this.ConnectBlocks();
                 }
 
             }
 
-            GameManager.Instance.AudioManager.Effect.PlayDistincts(clips);
+            this.LastBoardStepped = boardStepped;
         }
 
         private void OnBlocksFall(object sender, BlocksEventArgs e)
         {
-            var board = this.Board;
+            if (e.Phase == BlocksEventArgs.EventPhase.Pre)
+            {
+                this.ClearConnection(e.Blocks);
+            }
+            else if (e.Phase == BlocksEventArgs.EventPhase.Post)
+            {
+                var board = this.Board;
 
-            foreach (var block in e.Blocks)
+                foreach (var block in e.Blocks)
+                {
+                    var sprite = this.FindSprite(block);
+
+                    if (sprite != null)
+                    {
+                        board.GetBlockIndex(block, out var col, out var row);
+                        sprite.MoveStart(this.GetBlockGoalPosition(col, row));
+
+                        this.UpdateSpriteName(board, sprite);
+                    }
+
+                }
+
+            }
+
+        }
+
+        private void ClearConnection(Block[] blocks)
+        {
+            foreach (var block in blocks)
             {
                 var sprite = this.FindSprite(block);
 
                 if (sprite != null)
                 {
-                    board.GetBlockIndex(block, out var col, out var row);
-                    sprite.MoveStart(this.GetBlockGoalPosition(col, row));
-
-                    this.UpdateSpriteName(board, sprite);
+                    this.ClearConnection(sprite);
                 }
 
             }
@@ -251,8 +306,79 @@ namespace Assets.ZeroToThree.Scripts
             }
             else if (ApplicationUtils.IsPlayingInEditor() == true)
             {
+                this.OnBlocksUpdate(this, new BlocksEventArgs(new Block[] { block }, BlocksEventArgs.EventPhase.Pre));
                 this.Board.GrowValue(block);
-                this.OnBlocksUpdate(this, new BlocksEventArgs(new Block[] { block }));
+                this.OnBlocksUpdate(this, new BlocksEventArgs(new Block[] { block }, BlocksEventArgs.EventPhase.Post));
+            }
+
+        }
+
+        private void ClearConnection(BlockSprite sprite)
+        {
+            var board = this.Board;
+            var block = sprite.Block;
+
+            sprite.ClearConnection();
+
+            if (block == null)
+            {
+                return;
+            }
+
+            board.GetBlockIndex(sprite.Block, out var col, out var row);
+
+            foreach (var direction in BlockDirection.Values)
+            {
+                if (board.TryGetBlock(col + direction.X, row + direction.Y, out var b) == true)
+                {
+                    var sprite2 = this.FindSprite(b);
+                    sprite2?.ClearConnection(direction.Opposite);
+                }
+
+            }
+
+        }
+
+        private void ConnectBlocks()
+        {
+            var board = this.Board;
+
+            for (var i = 0; i < board.Width; i++)
+            {
+                for (var j = 0; j < board.Height; j++)
+                {
+                    var block = board[i, j];
+
+                    var sprite1 = this.FindSprite(block);
+
+                    if (sprite1 == null)
+                    {
+                        continue;
+                    }
+
+                    foreach (var direction in BlockDirection.Values)
+                    {
+                        if (board.TryGetBlock(i + direction.X, j + direction.Y, out var b) == true)
+                        {
+                            if (b != null && block.Value == b.Value)
+                            {
+                                sprite1.CreateConnection(direction);
+                            }
+                            else
+                            {
+                                sprite1.ClearConnection(direction);
+                            }
+
+                        }
+                        else
+                        {
+                            sprite1.ClearConnection(direction);
+                        }
+
+                    }
+
+                }
+
             }
 
         }

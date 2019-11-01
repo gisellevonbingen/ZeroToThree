@@ -15,12 +15,13 @@ namespace Assets.ZeroToThree.Scripts
     public class BlockSprite : UIObject
     {
         public UIImage TileRenderer;
-        public UIImage BreakRenderer;
+        public UIObject ConnectionContainer;
         public UIImage TileMaskRenderer;
         public UILabel Text;
         public Color[] ValueColors;
         public AudioClip BreakAudio;
         public AudioClip MaskAudio;
+        public BlockConnect BlockConnectPrefab;
 
         public Block Block { get; set; }
 
@@ -39,6 +40,71 @@ namespace Assets.ZeroToThree.Scripts
         public event EventHandler Breaked;
         public event EventHandler Masked;
 
+        private Dictionary<BlockDirection, BlockConnect> Connections;
+
+        protected override void OnAwake()
+        {
+            base.OnAwake();
+
+            this.Connections = new Dictionary<BlockDirection, BlockConnect>();
+            var prefab = this.BlockConnectPrefab;
+            var transform = this.ConnectionContainer.transform;
+
+            foreach (var direction in BlockDirection.Values)
+            {
+                var connection = GameObject.Instantiate(prefab);
+                connection.gameObject.SetActive(false);
+                connection.transform.SetParent(transform);
+                connection.name = "C:" + direction.Name;
+
+                this.Connections[direction] = connection;
+            }
+
+            this.ClearConnection();
+        }
+
+        public void ClearConnection()
+        {
+            foreach (var pair in this.Connections)
+            {
+                var connection = pair.Value;
+                connection.gameObject.SetActive(false);
+            }
+
+        }
+
+        public void ClearConnection(BlockDirection direction)
+        {
+            var connection = this.Connections[direction];
+            connection.gameObject.SetActive(false);
+        }
+
+        public void CreateConnection(BlockDirection direction)
+        {
+            var tileSize = this.GetTileSize();
+            var connection = this.Connections[direction];
+            var active = connection.gameObject.activeSelf;
+
+            if (active == false)
+            {
+                connection.gameObject.SetActive(true);
+                connection.Image.color = this.TileRenderer.Image.color;
+
+                var width = Mathf.Lerp(connection.Short, connection.Long, Math.Abs(direction.Y));
+                var height = Mathf.Lerp(connection.Short, connection.Long, Math.Abs(direction.X));
+                var size = new Vector2(width, height);
+                connection.transform.sizeDelta = size;
+                connection.transform.localPosition = new Vector2(0.0F, 0.0F);
+
+                var offsetX = +Mathf.LerpUnclamped(0.0F, tileSize.x / 2.0F, direction.X);
+                var offsetY = -Mathf.LerpUnclamped(0.0F, tileSize.y / 2.0F, direction.Y);
+                var offset = new Vector2(offsetX, offsetY);
+
+                connection.Actions.Add(new UIActionMoveToSpeed() { End = offset, Velocity = 1920.0F * 0.5F });
+            }
+
+        }
+
         protected override UIObject QueryChildren(Vector2 worldPosition)
         {
             return null;
@@ -53,20 +119,19 @@ namespace Assets.ZeroToThree.Scripts
         {
             this.Block = null;
 
-            this.Actions.Clear();
-
             this.GoalPosition = new Vector2();
             this.IsBreaked = false;
             this.IsMasked = false;
 
             this.Text.gameObject.SetActive(true);
             this.TileRenderer.gameObject.SetActive(true);
-            this.BreakRenderer.gameObject.SetActive(false);
             this.TileMaskRenderer.gameObject.SetActive(false);
 
             var scale = this.ZoomMaxScale;
             this.transform.localScale = new Vector3(scale, scale, scale);
             this.transform.localRotation = new Quaternion(0.0F, 0.0F, 0.0F, 0.0F);
+
+            this.ClearConnection();
         }
 
         protected override void OnUpdate()
@@ -85,6 +150,7 @@ namespace Assets.ZeroToThree.Scripts
                 this.Text.Text.text = value.ToString();
             }
 
+            this.ClearConnection();
         }
 
         public Vector2 GetTileSize()
@@ -111,6 +177,8 @@ namespace Assets.ZeroToThree.Scripts
                 }
 
             });
+
+            this.ClearConnection();
         }
 
         public void MaskStart()

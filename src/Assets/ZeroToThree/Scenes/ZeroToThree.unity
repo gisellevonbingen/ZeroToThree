@@ -2030,6 +2030,8 @@ MonoBehaviour:
   BoardObject: {fileID: 7888525414706000138}
   BlockPrefab: {fileID: 3017962703488742302, guid: e6715362539e1bc4f982add14c1fc52c,
     type: 3}
+  BlockConnectPrefab: {fileID: 798505450251063730, guid: 28cdc6897afffa7448c7084fecee7514,
+    type: 3}
   Offset: 36
 --- !u!114 &1118381687 stripped
 MonoBehaviour:
@@ -2164,6 +2166,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Text
       value: Effect
+      objectReference: {fileID: 0}
+    - target: {fileID: 1779967276795040592, guid: 42aa14c2f6c15854f9bd5fedbba047fd,
+        type: 3}
+      propertyPath: m_FillOrigin
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 42aa14c2f6c15854f9bd5fedbba047fd, type: 3}

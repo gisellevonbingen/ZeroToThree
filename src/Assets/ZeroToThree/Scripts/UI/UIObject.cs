@@ -28,6 +28,13 @@ namespace Assets.ZeroToThree.Scripts.UI
             this.Awaked = false;
         }
 
+        public override void OnFree()
+        {
+            base.OnFree();
+
+            this.Actions.Clear();
+        }
+
         public void Awake()
         {
             if (this.Awaked == false)

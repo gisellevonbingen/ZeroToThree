@@ -30,23 +30,21 @@ namespace Assets.ZeroToThree.Scripts
             this.GameOvered = false;
         }
 
-        public void Step(float deltaTime)
+        public bool Step(float deltaTime)
         {
             var board = this.Board;
+            var stepped = board.Step();
 
-            if (board != null)
+            if (stepped == true)
             {
-                if (board.Step() == true)
-                {
-                    this.CheckGameOver(board);
-                }
-                else
-                {
-                    this.UpdateCombo(deltaTime);
-                }
-
+                this.CheckGameOver(board);
+            }
+            else
+            {
+                this.UpdateCombo(deltaTime);
             }
 
+            return stepped;
         }
 
         private void UpdateCombo(float deltaTime)

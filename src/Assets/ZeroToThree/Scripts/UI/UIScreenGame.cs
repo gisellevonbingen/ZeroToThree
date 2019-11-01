@@ -74,7 +74,8 @@ namespace Assets.ZeroToThree.Scripts.UI
                     }
                     else
                     {
-                        session.Step(Time.deltaTime);
+                        var boardStepped = session.Step(Time.deltaTime);
+                        this.BoardSprite.OnSessionStepped(boardStepped);
                     }
 
                 }

@@ -869,6 +869,13 @@
     <Compile Include="Assets\Newtonsoft.Json\Utilities\ValidationUtils.cs" />
     <Compile Include="Assets\Newtonsoft.Json\WriteState.cs" />
     <Compile Include="Assets\ZeroToThree\Scripts\ApplicationUtils.cs" />
+    <Compile Include="Assets\ZeroToThree\Scripts\Audio\AudioChannel.cs" />
+    <Compile Include="Assets\ZeroToThree\Scripts\Audio\AudioChannelBackground.cs" />
+    <Compile Include="Assets\ZeroToThree\Scripts\Audio\AudioChannelEffect.cs" />
+    <Compile Include="Assets\ZeroToThree\Scripts\Audio\AudioChannelMuliti.cs" />
+    <Compile Include="Assets\ZeroToThree\Scripts\Audio\AudioChannelSingle.cs" />
+    <Compile Include="Assets\ZeroToThree\Scripts\Audio\AudioManager.cs" />
+    <Compile Include="Assets\ZeroToThree\Scripts\Audio\AudioPlayer.cs" />
     <Compile Include="Assets\ZeroToThree\Scripts\Block.cs" />
     <Compile Include="Assets\ZeroToThree\Scripts\BlocksEventArgs.cs" />
     <Compile Include="Assets\ZeroToThree\Scripts\BlockSprite.cs" />
@@ -882,6 +889,8 @@
     <Compile Include="Assets\ZeroToThree\Scripts\GameSession.cs" />
     <Compile Include="Assets\ZeroToThree\Scripts\NumberUtils.cs" />
     <Compile Include="Assets\ZeroToThree\Scripts\ObjectPool.cs" />
+    <Compile Include="Assets\ZeroToThree\Scripts\OptionsData.cs" />
+    <Compile Include="Assets\ZeroToThree\Scripts\OptionsManager.cs" />
     <Compile Include="Assets\ZeroToThree\Scripts\PoolGrowEventArgs.cs" />
     <Compile Include="Assets\ZeroToThree\Scripts\PoolingObject.cs" />
     <Compile Include="Assets\ZeroToThree\Scripts\ScoreText.cs" />
