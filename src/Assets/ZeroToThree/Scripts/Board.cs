@@ -1,19 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Drawing;
-using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using UnityEngine;
-using UnityEngine.EventSystems;
 using static Assets.ZeroToThree.Scripts.BlocksEventArgs;
 
 namespace Assets.ZeroToThree.Scripts
 {
     public class Board
     {
-        private Block[] Blocks;
+        private readonly Block[] Blocks;
 
         public int ValueRange { get; set; }
         public int ClickIndex { get; set; }
@@ -44,7 +40,12 @@ namespace Assets.ZeroToThree.Scripts
             this.ClickIndex = other.ClickIndex;
         }
 
-        public List<BoardSolution> Solve(bool single)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="first">모든 해법을 찾지 않음, 1개 이상 해법이 존재하는 경우 해당 해법만 반환</param>
+        /// <returns>null : 해답을 찾을 수 없는 상태, Count=0 : 해답 없음(게임오버)</returns>
+        public List<BoardSolution> Solve(bool first)
         {
             var blocks = this.Blocks;
 
@@ -96,7 +97,7 @@ namespace Assets.ZeroToThree.Scripts
                     solution.Indices.Add(item);
                     solutions.Add(solution);
 
-                    if (single == true)
+                    if (first == true)
                     {
                         break;
                     }
@@ -104,7 +105,7 @@ namespace Assets.ZeroToThree.Scripts
                 }
                 else
                 {
-                    var childSolutions = clone.Solve(single);
+                    var childSolutions = clone.Solve(first);
 
                     if (childSolutions != null && childSolutions.Count > 0)
                     {
@@ -115,14 +116,14 @@ namespace Assets.ZeroToThree.Scripts
                             solution.Indices.AddRange(sol.Indices);
                             solutions.Add(solution);
 
-                            if (single == true)
+                            if (first == true)
                             {
                                 break;
                             }
 
                         }
 
-                        if (single == true)
+                        if (first == true)
                         {
                             break;
                         }
@@ -259,9 +260,7 @@ namespace Assets.ZeroToThree.Scripts
 
         public List<Block> GetConnectedBlocks(Block block)
         {
-            var blocks = new List<Block>();
-            blocks.Add(block);
-
+            var blocks = new List<Block> { block };
             this.GetConnectedBlocks(block, blocks);
 
             return blocks;
@@ -292,7 +291,6 @@ namespace Assets.ZeroToThree.Scripts
         public bool TryGetBlock(int col, int row, out Block block)
         {
             block = null;
-            var index = this.GetBlockIndex(col, row);
 
             if (this.IsInBoard(col, row) == true)
             {
@@ -346,8 +344,10 @@ namespace Assets.ZeroToThree.Scripts
                 {
                     if (this[col, row] == null)
                     {
-                        var block = new Block();
-                        block.Value = UnityEngine.Random.Range(0, this.ValueRange);
+                        var block = new Block()
+                        {
+                            Value = UnityEngine.Random.Range(0, this.ValueRange)
+                        };
 
                         this[col, row] = block;
                         blocks.Add(block);
